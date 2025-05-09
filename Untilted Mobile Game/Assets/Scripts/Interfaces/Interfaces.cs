@@ -7,5 +7,5 @@ public interface IInteractable
 
 public interface IDamageable
 {
-    public void OnDamage();
+    public void OnDamage(float damage);
 } 

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    private float health;
+    [SerializeField, Range(0f, 100f)] private float health;
     private const float maxHealth = 100f;
 
     private float CurrentHealth
@@ -35,15 +35,26 @@ public class Health : MonoBehaviour
         
     }
 
-    private void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
         Debug.Log($"Se ha recibido {damage} pts de daño. Vida actual = {CurrentHealth}");
+
+        if (CurrentHealth <= 0 )
+        {
+            Death();
+        }
     }
 
     public void SetHealth(float health)
     {
         CurrentHealth += health;
         Debug.Log($"Se ha recibido {health} pts de vida. Vida actual = {CurrentHealth}");
+    }
+
+    private void Death()
+    {
+        Debug.Log("Enemy died");
+        Destroy(gameObject);
     }
 }

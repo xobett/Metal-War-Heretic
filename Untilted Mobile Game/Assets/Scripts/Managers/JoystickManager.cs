@@ -17,27 +17,9 @@ public class JoystickManager : MonoBehaviour, IDragHandler, IPointerDownHandler,
     //Joystick drag settings
     private const float dragLimit = 6f;
 
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
-    }
-
     private void Start()
     {
         GetClickableArea();
-    }
-
-    private void Update()
-    {
-        Debug.Log($"{HorizontalInput()} / {ForwardInput()} -- {posInput}");
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -50,7 +32,6 @@ public class JoystickManager : MonoBehaviour, IDragHandler, IPointerDownHandler,
             //Divides the pointer input position by the clickable area size
             posInput.x /= inputAreaSize.x;
             posInput.y /= inputAreaSize.y;
-            Debug.Log(posInput);
 
             //To avoid joystick handler from exits the clickable area, normalizes the vector
             if (posInput.magnitude > 1)

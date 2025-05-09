@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     private const float radius = 0.2f;
 
 
-
     void Start()
     {
         GetReferences();
@@ -33,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     private void GetReferences()
     {
         charCtrlr = GetComponent<CharacterController>();
-        joystick = JoystickManager.Instance;
+        joystick = FindFirstObjectByType<JoystickManager>();
         groundCheck = transform.GetChild(0);
     }
 
