@@ -4,6 +4,8 @@ using UnityEngine.UI;
 
 public class JoystickManager : MonoBehaviour, IDragHandler, IPointerDownHandler, IPointerUpHandler
 {
+    public static JoystickManager Instance;
+
     //Joystick Images & Params
     [SerializeField] private Image joystick_Handler;
     [SerializeField] private Image joystick_Bckgrnd;
@@ -14,6 +16,19 @@ public class JoystickManager : MonoBehaviour, IDragHandler, IPointerDownHandler,
 
     //Joystick drag settings
     private const float dragLimit = 6f;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     private void Start()
     {
