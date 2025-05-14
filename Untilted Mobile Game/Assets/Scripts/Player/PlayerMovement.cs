@@ -39,8 +39,11 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement();
-        Gravity();
+        if (!PauseManager.Instance.GamePaused)
+        {
+            Movement();
+            Gravity(); 
+        }
     }
 
     private void Movement()
