@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyBase : MonoBehaviour, IDamageable
 {
@@ -8,16 +9,79 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] protected float damage;
     [SerializeField] protected float attackCooldown;
 
+    [SerializeField] protected float playerDetection_Radius;
+    [SerializeField] protected float playerDetection_Distance;
+
     [SerializeField] protected LayerMask whatIsPlayer;
 
     [Header("ENEMY MOVEMENT SETTINGS")]
-    [SerializeField] protected float speed;
+    [SerializeField] protected const float walkSpeed = 1.5f;
+    private NavMeshAgent agent;
 
+    //Player references
+    private Transform player_transform;
 
-    protected abstract void Attack();
+    private void Start()
+    {
+        GetReferences();
+        SetAgentSettings();
+    }
+
+    protected void Update()
+    {
+        FollowPlayer();
+        LookAtPlayer();
+    }
+
+    //Attack Methods
 
     public void OnDamage(float damage)
     {
         GetComponent<Health>().TakeDamage(damage);
     }
+
+    protected virtual void Attack()
+    {
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, playerDetection_Radius, transform.forward, out hit, playerDetection_Distance, whatIsPlayer, QueryTriggerInteraction.UseGlobal))
+        {
+            Debug.Log("Hitting player");
+        }
+    }
+
+    //Movement and rotation Methods
+
+    protected void FollowPlayer()
+    {
+        agent.destination = player_transform.position;
+
+        if (agent.velocity.magnitude <= 0)
+        {
+            Attack();
+        }
+    }
+
+    private void LookAtPlayer()
+    {
+        Vector3 lookDirection = player_transform.position - transform.position;
+        Quaternion lookRotation = Quaternion.LookRotation(lookDirection);
+
+        transform.rotation = lookRotation;
+    }
+
+
+    //Start Methods
+
+    private void GetReferences()
+    {
+        player_transform = GameObject.FindGameObjectWithTag("Player").transform;
+        agent = GetComponent<NavMeshAgent>();
+    }
+
+    private void SetAgentSettings()
+    {
+        agent.speed = walkSpeed;
+        agent.stoppingDistance = 1.85f;
+    }
+
 }
