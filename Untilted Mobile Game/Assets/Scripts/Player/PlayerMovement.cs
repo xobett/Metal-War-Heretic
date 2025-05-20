@@ -48,6 +48,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
+        if (aimAssistActive)
+        {
+            AimMovement();
+        }
+        else
+        {
+            NormalMovement();
+        }
+    }
+
+    private void NormalMovement()
+    {
         Vector3 move = new Vector3(joystick.HorizontalInput(), 0, joystick.ForwardInput());
 
         if (move.magnitude != 0)
@@ -63,6 +75,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void AimMovement()
+    {
+        Vector3 aimMove = Vector3.right * joystick.HorizontalInput() + Vector3.forward * joystick.ForwardInput();
+        charCtrlr.Move(aimMove * movementSpeed * Time.deltaTime);
+    }
+
     private void Gravity()
     {
         gravity.y -= gravityForce * Time.deltaTime;
@@ -74,6 +92,8 @@ public class PlayerMovement : MonoBehaviour
 
         charCtrlr.Move(gravity * Time.deltaTime);
     }
+
+    private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
 
     private bool IsGrounded()
     {

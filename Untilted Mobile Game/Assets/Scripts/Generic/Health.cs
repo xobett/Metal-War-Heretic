@@ -1,44 +1,24 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField, Range(0f, 100f)] private float health;
+    public float CurrentHealth { get; private set; }
     private const float maxHealth = 100f;
 
-    private float CurrentHealth
-    {
-        get { return health;}
-        set
-        {
-            if (value > maxHealth)
-            {
-                health = maxHealth;
-            }
-            else if (value < 0)
-            {
-                health = 0;
-            }
-            else
-            {
-                health = value;
-            }
-        }
-    }
+    [SerializeField] private Slider lifebar;
 
     void Start()
     {
         SetHealth(maxHealth);
     }
 
-    void Update()
-    {
-        
-    }
-
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
         Debug.Log($"Se ha recibido {damage} pts de daño. Vida actual = {CurrentHealth}");
+
+        SetLifebarValue();
 
         if (CurrentHealth <= 0 )
         {
@@ -50,11 +30,34 @@ public class Health : MonoBehaviour
     {
         CurrentHealth += health;
         Debug.Log($"Se ha recibido {health} pts de vida. Vida actual = {CurrentHealth}");
+        
+        SetLifebarValue();
+    }
+
+    private void SetLifebarValue()
+    {
+        lifebar.value = CurrentHealth / maxHealth;
     }
 
     private void Death()
     {
-        Debug.Log($"{name} died");
-        Destroy(gameObject);
+        if (gameObject.CompareTag("Player"))
+        {
+            PlayerDeath();
+        }
+        else
+        {
+            Debug.Log($"{name} died");
+            Destroy(gameObject);
+        }
+    }
+
+    public void PlayerDeath()
+    {
+        gameObject.GetComponent<CharacterController>().enabled = false;
+        transform.position = gameObject.GetComponent<CheckpointSaver>().lastCheckpoint;
+        gameObject.GetComponent<CharacterController>().enabled = true;
+
+        SetHealth(maxHealth);
     }
 }

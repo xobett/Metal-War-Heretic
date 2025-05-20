@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +14,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] protected float playerDetection_Distance;
 
     [SerializeField] protected LayerMask whatIsPlayer;
+
+    private bool isAttacking;
 
     [Header("ENEMY MOVEMENT SETTINGS")]
     [SerializeField] protected const float walkSpeed = 1.5f;
@@ -45,8 +48,21 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         RaycastHit hit;
         if (Physics.SphereCast(transform.position, playerDetection_Radius, transform.forward, out hit, playerDetection_Distance, whatIsPlayer, QueryTriggerInteraction.UseGlobal))
         {
-            Debug.Log("Hitting player");
+            hit.collider.GetComponent<Health>().TakeDamage(damage);
         }
+    }
+
+    private IEnumerator StartBehaviour()
+    {
+        isAttacking = true;
+
+        Attack();
+
+        yield return new WaitForSeconds(attackCooldown);
+
+        isAttacking = false;
+
+        yield return null;
     }
 
     //Movement and rotation Methods
@@ -55,9 +71,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         agent.destination = player_transform.position;
 
-        if (agent.velocity.magnitude <= 0)
+        if (agent.velocity.magnitude == 0 && !isAttacking)
         {
-            Attack();
+            StartCoroutine(StartBehaviour());
         }
     }
 
