@@ -5,10 +5,11 @@ public class MeleeAttack : MonoBehaviour
     [Header("MELEE ATTACK SETTINGS")]
     [SerializeField, Range(10f, 50f)] private float damage;
     [SerializeField] private float hitRate;
+    [SerializeField] private float hitRange = 0.5f;
 
     [SerializeField] private LayerMask whatIsMelee;
 
-    [SerializeField] private float hitRange = 0.5f;
+    private PlayerCamera playerCam;
 
     [Header("AIM ASSIT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float radius;
@@ -16,7 +17,12 @@ public class MeleeAttack : MonoBehaviour
 
     private void Start()
     {
-        
+        GetReferences();
+    }
+
+    private void GetReferences()
+    {
+        playerCam = Camera.main.GetComponent<PlayerCamera>();
     }
 
     private void Update()
@@ -33,6 +39,7 @@ public class MeleeAttack : MonoBehaviour
             if (Physics.Raycast(transform.position, transform.forward * hitRange, out hit, hitRange, whatIsMelee))
             {
                 hit.collider.GetComponent<IDamageable>().OnDamage(damage);
+                playerCam.CameraShake();
             }
         }
     }

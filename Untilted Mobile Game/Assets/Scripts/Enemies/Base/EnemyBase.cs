@@ -80,7 +80,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private void LookAtPlayer()
     {
         Vector3 lookDirection = player_transform.position - transform.position;
-        Quaternion lookRotation = Quaternion.LookRotation(lookDirection);
+        Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
+        Quaternion lookRotation = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
 
         transform.rotation = lookRotation;
     }
