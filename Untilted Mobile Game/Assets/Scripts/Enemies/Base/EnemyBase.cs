@@ -11,7 +11,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] protected float attackCooldown;
 
     [SerializeField] protected float playerDetection_Radius;
-    [SerializeField] protected float playerDetection_Distance;
 
     [SerializeField] protected LayerMask whatIsPlayer;
 
@@ -19,10 +18,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     [Header("ENEMY MOVEMENT SETTINGS")]
     [SerializeField] protected const float walkSpeed = 1.5f;
-    private NavMeshAgent agent;
+
+    [SerializeField] protected float stoppingDistance = 1.85f;
+
+    protected NavMeshAgent agent;
 
     //Player references
-    private Transform player_transform;
+    protected Transform player_transform;
 
     private void Start()
     {
@@ -30,7 +32,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         SetAgentSettings();
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         FollowPlayer();
         LookAtPlayer();
@@ -46,7 +48,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     protected virtual void Attack()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position, playerDetection_Radius, transform.forward, out hit, playerDetection_Distance, whatIsPlayer, QueryTriggerInteraction.UseGlobal))
+        if (Physics.SphereCast(transform.position, playerDetection_Radius, transform.forward, out hit, playerDetection_Radius, whatIsPlayer, QueryTriggerInteraction.UseGlobal))
         {
             hit.collider.GetComponent<Health>().TakeDamage(damage);
         }
@@ -98,7 +100,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private void SetAgentSettings()
     {
         agent.speed = walkSpeed;
-        agent.stoppingDistance = 1.85f;
+        agent.stoppingDistance = stoppingDistance;
     }
 
 }

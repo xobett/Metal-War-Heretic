@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
 {
     //Player settings
     private CharacterController charCtrlr;
-    private JoystickManager joystick;
 
     [Header("MOVEMENT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float movementSpeed;
@@ -32,7 +31,6 @@ public class PlayerMovement : MonoBehaviour
     private void GetReferences()
     {
         charCtrlr = GetComponent<CharacterController>();
-        joystick = FindFirstObjectByType<JoystickManager>();
         groundCheck = transform.GetChild(0);
     }
 
@@ -60,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void NormalMovement()
     {
-        Vector3 move = new Vector3(joystick.HorizontalInput(), 0, joystick.ForwardInput());
+        Vector3 move = new Vector3(JoystickManager.Instance.HorizontalInput(), 0, JoystickManager.Instance.ForwardInput());
 
         if (move.magnitude != 0)
         {
@@ -77,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void AimMovement()
     {
-        Vector3 aimMove = Vector3.right * joystick.HorizontalInput() + Vector3.forward * joystick.ForwardInput();
+        Vector3 aimMove = Vector3.right * JoystickManager.Instance.HorizontalInput() + Vector3.forward * JoystickManager.Instance.ForwardInput();
         charCtrlr.Move(aimMove * movementSpeed * Time.deltaTime);
     }
 

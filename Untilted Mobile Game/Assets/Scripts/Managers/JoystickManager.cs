@@ -18,6 +18,11 @@ public class JoystickManager : MonoBehaviour, IDragHandler, IPointerDownHandler,
     //Joystick drag settings
     private const float dragLimit = 6f;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
+
     private void Start()
     {
         GetClickableArea();

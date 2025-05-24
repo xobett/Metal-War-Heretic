@@ -12,11 +12,15 @@ public class SliceAttack : MonoBehaviour
 
     private PlayerCamera cam;
 
+    [Header("SLICE ATTACK ASSIST SETTINGS")]
+    [SerializeField] private float assistRadius;
+    [SerializeField] private LayerMask whatIsEnemy;
+
     [Header("SLICE COOLDOWN SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float cooldownTime;
 
     [SerializeField] private bool isCooling;
-    private bool isAttacking;
+    private bool isDashing;
 
     [Header("SLICE EFFECT SETTINGS")]
     [SerializeField] private Volume volume;
@@ -53,26 +57,53 @@ public class SliceAttack : MonoBehaviour
 
     void SliceMovement()
     {
-        if (isAttacking)
+        if (isDashing)
         {
-            Vector3 sliceMovement = transform.rotation * Vector3.forward;
-            charCtrlr.Move(sliceMovement * sliceSpeed * Time.deltaTime);
+            Vector3 dashMovement;
+
+            if (aimAssistActive)
+            {
+                dashMovement = Vector3.right * JoystickManager.Instance.HorizontalInput() + Vector3.forward * JoystickManager.Instance.ForwardInput();
+            }
+            else
+            {
+                dashMovement = transform.rotation * Vector3.forward;
+            }
+
+            charCtrlr.Move(dashMovement * sliceSpeed * Time.deltaTime);
         }
 
-        if (!isCooling && !isAttacking && IsSlicing())
+        if (!isCooling && !isDashing && IsSlicing())
         {
             StartCoroutine(Slice());
         }
     }
 
+
+    //Add a method that detects enemy on a dash and snaps to it!
+    private void SnapToEnemy()
+    {
+        //Add logic that will snap to enemy on dash
+
+        if (isDashing)
+        {
+            Collider[] enemyColliders = Physics.OverlapSphere(transform.position, assistRadius, whatIsEnemy, QueryTriggerInteraction.UseGlobal);
+
+            if (enemyColliders.Length != 0)
+            {
+
+            }
+        }
+    }
+
     private IEnumerator Slice()
     {
-        isAttacking = true;
+        isDashing = true;
         isCooling = true;
 
         yield return new WaitForSeconds(sliceDuration);
 
-        isAttacking = false;
+        isDashing = false;
 
         yield return new WaitForSeconds(cooldownTime);
 
@@ -100,8 +131,10 @@ public class SliceAttack : MonoBehaviour
         chromaticAberration.intensity.value = targetChromatic;
 
         yield return null;
-        
+
     }
+
+    private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
 
     private bool IsSlicing()
     {
@@ -110,7 +143,7 @@ public class SliceAttack : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && isAttacking)
+        if (other.CompareTag("Enemy") && isDashing)
         {
             cam.CameraShake();
             other.GetComponent<IDamageable>().OnDamage(sliceDamage);
