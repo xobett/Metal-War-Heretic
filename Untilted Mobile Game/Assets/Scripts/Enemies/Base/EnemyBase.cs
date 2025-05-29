@@ -10,7 +10,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] protected float damage;
     [SerializeField] protected float attackCooldown;
 
-    [SerializeField] protected float playerDetection_Radius;
+    private const float playerDetection_Range = 2f;
 
     [SerializeField] protected LayerMask whatIsPlayer;
 
@@ -48,7 +48,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     protected virtual void Attack()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position, playerDetection_Radius, transform.forward, out hit, playerDetection_Radius, whatIsPlayer, QueryTriggerInteraction.UseGlobal))
+        if (Physics.Raycast(transform.position, transform.forward * playerDetection_Range, out hit, playerDetection_Range, whatIsPlayer))
         {
             hit.collider.GetComponent<Health>().TakeDamage(damage);
         }
