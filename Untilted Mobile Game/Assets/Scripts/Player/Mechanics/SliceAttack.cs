@@ -13,7 +13,7 @@ public class SliceAttack : MonoBehaviour
     private PlayerCamera cam;
 
     [Header("SLICE ATTACK ASSIST SETTINGS")]
-    [SerializeField] private float assistRadius;
+    [SerializeField, Range(1f, 5f)] private float assistRadius;
     [SerializeField] private LayerMask whatIsEnemy;
 
     [Header("SLICE COOLDOWN SETTINGS")]
@@ -53,15 +53,16 @@ public class SliceAttack : MonoBehaviour
     void Update()
     {
         SliceMovement();
+        SnapToEnemy();
     }
 
     void SliceMovement()
     {
         if (isDashing)
         {
-            Vector3 dashMovement;
+            Vector3 dashMovement = Vector3.zero;
 
-            if (aimAssistActive)
+            if (aimAssistActive && (JoystickManager.Instance.HorizontalInput() != 0 || JoystickManager.Instance.ForwardInput() != 0))
             {
                 dashMovement = Vector3.right * JoystickManager.Instance.HorizontalInput() + Vector3.forward * JoystickManager.Instance.ForwardInput();
             }
@@ -71,6 +72,8 @@ public class SliceAttack : MonoBehaviour
             }
 
             charCtrlr.Move(dashMovement * sliceSpeed * Time.deltaTime);
+
+            //Do a corroutine, so that the dash con finish executing itself
         }
 
         if (!isCooling && !isDashing && IsSlicing())
@@ -91,7 +94,8 @@ public class SliceAttack : MonoBehaviour
 
             if (enemyColliders.Length != 0)
             {
-
+                GameObject lockedEnemy = enemyColliders[0].gameObject;
+                transform.position = Vector3.MoveTowards(transform.position, lockedEnemy.transform.position, Time.deltaTime * sliceSpeed * 2f);
             }
         }
     }
@@ -148,5 +152,11 @@ public class SliceAttack : MonoBehaviour
             cam.CameraShake();
             other.GetComponent<IDamageable>().OnDamage(sliceDamage);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, assistRadius);
     }
 }
