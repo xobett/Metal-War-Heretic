@@ -69,7 +69,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     //Movement and rotation Methods
 
-    protected void FollowPlayer()
+    protected virtual void FollowPlayer()
     {
         agent.destination = player_transform.position;
 
@@ -79,7 +79,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         }
     }
 
-    private void LookAtPlayer()
+    protected virtual void LookAtPlayer()
     {
         Vector3 lookDirection = player_transform.position - transform.position;
         Quaternion lookTarget = Quaternion.LookRotation(lookDirection);

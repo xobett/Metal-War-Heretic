@@ -10,9 +10,15 @@ public class BruteEnemy : EnemyBase
 
     [SerializeField] private float runningTime;
 
+    [SerializeField] private bool isRunning;
+
     protected override void Update()
     {
-        base.Update();
+        if (!isRunning)
+        {
+            base.Update(); 
+        }
+
         Behaviour();
     }
 
@@ -20,15 +26,20 @@ public class BruteEnemy : EnemyBase
     {
         float distance = Vector3.Distance(transform.position, player_transform.position);
 
-        Debug.Log(distance);
+        Vector3 direction = player_transform.position - transform.position;
+
+        if (distance > 4)
+        {
+            isRunning = true;
+            agent.destination = agent.transform.position + agent.transform.forward * 2f;
+        }
+        else
+        {
+            isRunning = false;
+        }
     }
 
-    private void RampageRun()
-    {
-          
-    }
-
-    private IEnumerator StartRun()
+    private IEnumerator RampageRun()
     {
         Vector3 direction = player_transform.position - transform.position;
 
