@@ -1,7 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MeleeAttack : MonoBehaviour
 {
+    [Header("ATTACK BUTTON")]
+    [SerializeField] private Button attackButton;
+
     [Header("MELEE ATTACK SETTINGS")]
     [SerializeField, Range(10f, 50f)] private float damage;
     [SerializeField] private float hitRate;
@@ -18,6 +22,7 @@ public class MeleeAttack : MonoBehaviour
     private void Start()
     {
         GetReferences();
+        AddButtonEvents();
     }
 
     private void GetReferences()
@@ -25,24 +30,35 @@ public class MeleeAttack : MonoBehaviour
         playerCam = Camera.main.GetComponent<PlayerCamera>();
     }
 
+    private void AddButtonEvents()
+    {
+        attackButton.onClick.AddListener(Punch);
+    }
+
     private void Update()
     {
-        Hit();
+        HitCheck();
         AimAssit();
     }
 
-    public void Hit()
+    public void HitCheck()
     {
         if(IsHitting())
         {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, transform.forward * hitRange, out hit, hitRange, whatIsMelee))
-            {
-                hit.collider.GetComponent<IDamageable>().OnDamage(damage);
-                playerCam.CameraShake();
-            }
+            Punch();
         }
     }
+
+    private void Punch()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.forward * hitRange, out hit, hitRange, whatIsMelee))
+        {
+            hit.collider.GetComponent<IDamageable>().OnDamage(damage);
+            playerCam.CameraShake();
+        }
+    }
+
     private void AimAssit()
     {
         //Check for enemies in range

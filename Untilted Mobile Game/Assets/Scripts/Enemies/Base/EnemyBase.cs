@@ -6,7 +6,9 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Health))]
 public abstract class EnemyBase : MonoBehaviour, IDamageable
 {
-    [Header("ENEMY ATTACK SETTINGS")]
+    [Header("--- ENEMY BASE SETTINGS ---\n")]
+
+    [Header("ATTACK SETTINGS\n")]
     [SerializeField] protected float damage;
     [SerializeField] protected float attackCooldown;
 
@@ -16,10 +18,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private bool isAttacking;
 
-    [Header("ENEMY MOVEMENT SETTINGS")]
-    [SerializeField] protected const float walkSpeed = 1.5f;
-
-    [SerializeField] protected float stoppingDistance = 1.85f;
+    [Header("MOVEMENT SETTINGS")]
+    [SerializeField] protected float walkSpeed = 1.5f;
+    [SerializeField] protected float stoppingDistance;
 
     protected NavMeshAgent agent;
 

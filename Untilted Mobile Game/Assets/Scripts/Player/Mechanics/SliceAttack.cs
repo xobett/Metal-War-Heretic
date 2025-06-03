@@ -1,10 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEditor.Embree;
 
 public class SliceAttack : MonoBehaviour
 {
+    [Header("SLICE BUTTON")]
+    [SerializeField] private Button sliceButton;
+
     [Header("SLICE ATTACK SETTINGS")]
     [SerializeField] private float sliceDamage;
     [SerializeField] private float sliceSpeed;
@@ -15,6 +20,8 @@ public class SliceAttack : MonoBehaviour
     [Header("SLICE ATTACK ASSIST SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float assistRadius;
     [SerializeField] private LayerMask whatIsEnemy;
+
+    private bool isPressingSlice;
 
     [Header("SLICE COOLDOWN SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float cooldownTime;
@@ -37,6 +44,12 @@ public class SliceAttack : MonoBehaviour
     void Start()
     {
         GetReferences();
+        AddButtonEvents();
+    }
+
+    private void AddButtonEvents()
+    {
+        sliceButton.onClick.AddListener(PressSlice);
     }
 
     private void GetReferences()
@@ -53,6 +66,7 @@ public class SliceAttack : MonoBehaviour
     void Update()
     {
         SliceMovement();
+        SliceCheck();
         SnapToEnemy();
     }
 
@@ -72,13 +86,16 @@ public class SliceAttack : MonoBehaviour
             }
 
             charCtrlr.Move(dashMovement * sliceSpeed * Time.deltaTime);
-
-            //Do a corroutine, so that the dash con finish executing itself
         }
 
-        if (!isCooling && !isDashing && IsSlicing())
+        SliceCheck();
+    }
+
+    private void SliceCheck()
+    {
+        if (!isCooling && !isDashing && (IsSlicing() || isPressingSlice))
         {
-            StartCoroutine(Slice());
+            StartCoroutine(StartSlice());
         }
     }
 
@@ -100,8 +117,10 @@ public class SliceAttack : MonoBehaviour
         }
     }
 
-    private IEnumerator Slice()
+    private IEnumerator StartSlice()
     {
+        isPressingSlice = false;
+
         isDashing = true;
         isCooling = true;
 
@@ -113,7 +132,15 @@ public class SliceAttack : MonoBehaviour
 
         isCooling = false;
 
-        StopCoroutine(Slice());
+        StopCoroutine(StartSlice());
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Enemy") && isDashing)
+        {
+            cam.CameraShake();
+            other.GetComponent<IDamageable>().OnDamage(sliceDamage);
+        }
     }
 
     private IEnumerator DashEffect(float lensValue, float chromaticValue)
@@ -140,18 +167,14 @@ public class SliceAttack : MonoBehaviour
 
     private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
 
+    private void PressSlice()
+    {
+        isPressingSlice = true;
+    }
+
     private bool IsSlicing()
     {
         return Input.GetKeyDown(KeyCode.Q);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy") && isDashing)
-        {
-            cam.CameraShake();
-            other.GetComponent<IDamageable>().OnDamage(sliceDamage);
-        }
     }
 
     private void OnDrawGizmos()

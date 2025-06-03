@@ -4,14 +4,13 @@ using UnityEngine.AI;
 
 public class BruteEnemy : EnemyBase
 {
+    [Header("--- BRUTE ENEMY ---\n")]
 
-    [SerializeField] private float nearStoppingDistance = 1.85f;
-    [SerializeField] private float farStoppingDistance = 8f;
-
-    private float distance;
-
+    [Header("MAIN ABILITY SETTINGS")]
     [SerializeField, Range(2f, 6f)] private int beforeRunTime;
     [SerializeField] private float runningTime;
+
+    private float playerDistance;
 
     private bool isRunning;
     private bool abilityActive;
@@ -28,11 +27,11 @@ public class BruteEnemy : EnemyBase
 
     private void Behaviour()
     {
-        distance = Vector3.Distance(transform.position, player_transform.position);
+        playerDistance = Vector3.Distance(transform.position, player_transform.position);
 
         Vector3 direction = player_transform.position - transform.position;
 
-        if (distance > 4)
+        if (playerDistance > 4)
         {
             isRunning = true;
             agent.destination = agent.transform.position + agent.transform.forward * 2f;
@@ -52,7 +51,7 @@ public class BruteEnemy : EnemyBase
     {
         if (player_transform != null)
         {
-            if (distance > 4)
+            if (playerDistance > 4)
             {
                 Gizmos.color = Color.green;
             }
