@@ -8,9 +8,13 @@ public class BruteEnemy : EnemyBase
     [SerializeField] private float nearStoppingDistance = 1.85f;
     [SerializeField] private float farStoppingDistance = 8f;
 
+    private float distance;
+
+    [SerializeField, Range(2f, 6f)] private int beforeRunTime;
     [SerializeField] private float runningTime;
 
-    [SerializeField] private bool isRunning;
+    private bool isRunning;
+    private bool abilityActive;
 
     protected override void Update()
     {
@@ -24,7 +28,7 @@ public class BruteEnemy : EnemyBase
 
     private void Behaviour()
     {
-        float distance = Vector3.Distance(transform.position, player_transform.position);
+        distance = Vector3.Distance(transform.position, player_transform.position);
 
         Vector3 direction = player_transform.position - transform.position;
 
@@ -41,11 +45,24 @@ public class BruteEnemy : EnemyBase
 
     private IEnumerator RampageRun()
     {
-        Vector3 direction = player_transform.position - transform.position;
-
-        agent.destination = direction;
-
-        yield return new WaitForSeconds(runningTime);
+        yield return new WaitForSeconds(beforeRunTime);
     }
 
+    private void OnDrawGizmos()
+    {
+        if (player_transform != null)
+        {
+            if (distance > 4)
+            {
+                Gizmos.color = Color.green;
+            }
+            else
+            {
+                Gizmos.color = Color.red;
+            }
+
+            Gizmos.DrawLine(transform.position, player_transform.position); 
+        }
+
+    }
 }

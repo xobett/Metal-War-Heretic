@@ -1804,10 +1804,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4942986501567525576, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-      propertyPath: stoppingDistance
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 5864222057376983774, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.436
@@ -1852,22 +1848,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brute enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 7993994855593321819, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8637028352418326444, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4942986501567525576, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7993994855593321819, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-      insertIndex: 5
-      addedObject: {fileID: 1668545568}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
 --- !u!1 &1229831415
 GameObject:
@@ -2219,13 +2207,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374460862}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f974ffb0c891f7846877d09a890825ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 7993994855593321819, guid: 92d88865c5d775d4a8c1531d6bb9c5a7, type: 3}
-  timeBetweenSpawns: 3
+  timeBetweenSpawns: 2
   spawnLocations:
   - {fileID: 910579281}
   - {fileID: 224768068}
@@ -2730,33 +2718,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1668545560 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7993994855593321819, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-  m_PrefabInstance: {fileID: 1212405148}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1668545568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1668545560}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 398311949e50f99448fc0a34fc07b71d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 30
-  attackCooldown: 10
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 512
-  stoppingDistance: 1.85
-  nearStoppingDistance: 1.85
-  farStoppingDistance: 8
-  runningTime: 0
-  isRunning: 0
 --- !u!1 &1905856607
 GameObject:
   m_ObjectHideFlags: 0
