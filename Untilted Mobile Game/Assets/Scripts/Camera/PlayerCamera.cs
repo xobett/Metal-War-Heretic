@@ -8,7 +8,6 @@ public class PlayerCamera : MonoBehaviour
 
     //Camera settings
     [SerializeField] private Vector3 offsetPosition;
-    [SerializeField] private Quaternion offsetRotation;
 
     [SerializeField, Range(0f, 1f)] private float followSpeed;
 
@@ -36,9 +35,7 @@ public class PlayerCamera : MonoBehaviour
 
     private void PlayerFollowing()
     {
-        Vector3 offset = offsetRotation * offsetPosition;
-
-        transform.position = Vector3.SmoothDamp(transform.position, target.position + offset, ref velocity, followSpeed * Time.deltaTime);
+        transform.position = Vector3.SmoothDamp(transform.position, target.position + offsetPosition, ref velocity, followSpeed * Time.deltaTime);
     }
 
     public void CameraShake()
