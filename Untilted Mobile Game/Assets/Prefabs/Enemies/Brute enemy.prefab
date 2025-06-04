@@ -415,7 +415,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 7993994855593321819}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -445,9 +445,8 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
+  walkSpeed: 1.5
   stoppingDistance: 1.85
-  nearStoppingDistance: 1.85
-  farStoppingDistance: 8
   beforeRunTime: 2
   runningTime: 0
 --- !u!114 &1752446631520181859
