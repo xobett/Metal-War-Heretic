@@ -11,11 +11,14 @@ public class BruteEnemy : EnemyBase
     [SerializeField, Range(2f, 6f)] private int runningTime;
     [SerializeField, Range(2f, 6f)] private int runCooldownTime;
 
+    [SerializeField, Range(10f, 15f)] private int rampageRunCooldown;
+
     [SerializeField] private int minimumDistanceToRun;
     private float playerDistance;
 
-    [SerializeField] private bool isRunning;
-    private bool runAbilityActive;
+    private bool isRunning;
+    [SerializeField] private bool runAbilityActive;
+    [SerializeField] private bool runCoolingDown;
 
     private Quaternion currentLookAtPlayer;
 
@@ -42,7 +45,7 @@ public class BruteEnemy : EnemyBase
     {
         if (!runAbilityActive)
         {
-            base.FollowPlayer(); 
+            base.FollowPlayer();
         }
     }
 
@@ -60,7 +63,7 @@ public class BruteEnemy : EnemyBase
 
         Vector3 direction = player_transform.position - transform.position;
 
-        if ((!runAbilityActive && !isRunning) && playerDistance > minimumDistanceToRun)
+        if (!runCoolingDown && (!runAbilityActive && !isRunning) && playerDistance > minimumDistanceToRun)
         {
             runAbilityActive = true;
             StartCoroutine(StartRampageRun());
@@ -69,6 +72,8 @@ public class BruteEnemy : EnemyBase
 
     private IEnumerator StartRampageRun()
     {
+        runCoolingDown = true;
+
         Debug.Log("Entered");
         //Stops following the player for a period of time
         agent.destination = transform.position; 
@@ -98,7 +103,12 @@ public class BruteEnemy : EnemyBase
         agent.destination = transform.position;
         yield return new WaitForSeconds(runCooldownTime);
 
+        //Ability is no longer active and should follow player
+        agent.speed = walkSpeed;
         runAbilityActive = false;
+
+        yield return new WaitForSeconds(rampageRunCooldown);
+        runCoolingDown = false;
     }
 
     private void RampageRun()

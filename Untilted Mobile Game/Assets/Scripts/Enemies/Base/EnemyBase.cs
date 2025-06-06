@@ -11,6 +11,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [Header("ATTACK SETTINGS\n")]
     [SerializeField] protected float damage;
     [SerializeField] protected float attackCooldown;
+    [SerializeField, Range(1f, 4f)] protected float beforeAttackTime;
 
     private const float playerDetection_Range = 2f;
 

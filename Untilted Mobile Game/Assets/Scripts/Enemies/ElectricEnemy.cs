@@ -1,16 +1,9 @@
 using UnityEngine;
 
-public class ElectricEnemy : MonoBehaviour
+public class ElectricEnemy : EnemyBase
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("--- ELECTRIC ENEMY ---")]
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private float evokerAttackDistance = 5f;
+    [SerializeField] private float electricAreaRadius = 5f;
 }
