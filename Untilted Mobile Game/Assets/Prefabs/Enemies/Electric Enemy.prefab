@@ -440,8 +440,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117a93bdf110595448a0278b829f69c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 0
+  damage: 0
+  attackCooldown: 0
+  beforeAttackTime: 1
+  walkSpeed: 1.5
+  stoppingDistance: 0
   evokerAttackDistance: 5
-  electricAreaRadius: 5
+  electricAreaLifetime: 1
+  cueElectricVfx: {fileID: 9109378647140970005, guid: 12ab461bc79503f429e1c2ec660c8796, type: 3}
+  electricAreaPf: {fileID: 2278451330885868786, guid: f575cf7367972ec4caaf35b2a0efd4f0, type: 3}
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0

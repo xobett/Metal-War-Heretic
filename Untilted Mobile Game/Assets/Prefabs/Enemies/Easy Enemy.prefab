@@ -440,11 +440,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caeacfc5410b0444ab8b6c79a8b83c6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
-  attackCooldown: 3
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
+  damage: 10
+  attackCooldown: 3
+  beforeAttackTime: 1
+  walkSpeed: 1.5
   stoppingDistance: 1.85
 --- !u!114 &1752446631520181859
 MonoBehaviour:

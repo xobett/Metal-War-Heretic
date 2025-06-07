@@ -28,23 +28,20 @@ public class PlayerMovement : MonoBehaviour
         GetReferences();
     }
 
-    private void GetReferences()
-    {
-        charCtrlr = GetComponent<CharacterController>();
-        groundCheck = transform.GetChild(0);
-    }
 
     // Update is called once per frame
     void Update()
     {
         if (!PauseManager.Instance.GamePaused)
         {
-            Movement();
+            MovementCheck();
             Gravity(); 
         }
     }
 
-    private void Movement()
+    #region MOVEMENT
+
+    private void MovementCheck()
     {
         if (aimAssistActive)
         {
@@ -73,11 +70,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    #region AIM MOVEMENT
+
     private void AimMovement()
     {
         Vector3 aimMove = Vector3.right * JoystickManager.Instance.HorizontalInput() + Vector3.forward * JoystickManager.Instance.ForwardInput();
         charCtrlr.Move(aimMove * movementSpeed * Time.deltaTime);
     }
+
+    private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
+
+    #endregion AIM MOVEMENT
+
+    #endregion
+
+    #region GRAVITY
 
     private void Gravity()
     {
@@ -91,10 +98,20 @@ public class PlayerMovement : MonoBehaviour
         charCtrlr.Move(gravity * Time.deltaTime);
     }
 
-    private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
-
     private bool IsGrounded()
     {
         return Physics.CheckSphere(groundCheck.position, radius, whatIsGround);
     }
+
+    #endregion GRAVITY
+
+    #region GET REFERENCES
+
+    private void GetReferences()
+    {
+        charCtrlr = GetComponent<CharacterController>();
+        groundCheck = transform.GetChild(0);
+    }
+
+    #endregion GET REFERENCES
 }

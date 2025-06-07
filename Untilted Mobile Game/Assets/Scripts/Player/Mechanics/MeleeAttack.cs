@@ -25,21 +25,13 @@ public class MeleeAttack : MonoBehaviour
         AddButtonEvents();
     }
 
-    private void GetReferences()
-    {
-        playerCam = Camera.main.GetComponent<PlayerCamera>();
-    }
-
-    private void AddButtonEvents()
-    {
-        attackButton.onClick.AddListener(Punch);
-    }
-
     private void Update()
     {
         HitCheck();
         AimAssit();
     }
+
+    #region MELEE
 
     public void HitCheck()
     {
@@ -59,6 +51,10 @@ public class MeleeAttack : MonoBehaviour
         }
     }
 
+    #endregion MELEE
+
+    #region ASSIST
+
     private void AimAssit()
     {
         //Check for enemies in range
@@ -71,7 +67,8 @@ public class MeleeAttack : MonoBehaviour
 
             GameObject enemy = enemyColliders[0].gameObject; 
 
-            Quaternion target = Quaternion.LookRotation(enemy.transform.position - transform.position);
+            Quaternion direction = Quaternion.LookRotation(enemy.transform.position - transform.position);
+            Quaternion target = Quaternion.Euler(0, direction.eulerAngles.y, 0);
             Quaternion lookRotation = Quaternion.Slerp(transform.rotation, target, 3.5f * Time.deltaTime);
             transform.rotation = lookRotation;
 
@@ -83,8 +80,29 @@ public class MeleeAttack : MonoBehaviour
         }
     }
 
+    #endregion ASSIST
+
+    #region GET REFERENCES
+
+    private void GetReferences()
+    {
+        playerCam = Camera.main.GetComponent<PlayerCamera>();
+    }
+
+    private void AddButtonEvents()
+    {
+        attackButton.onClick.AddListener(Punch);
+    }
+
+    #endregion GET REFERENCES
+
+    #region INPUT
     public bool IsActivatingAim() => Input.GetKeyDown(KeyCode.O);
     public bool IsHitting() => Input.GetKeyDown(KeyCode.E);
+
+    #endregion INPUT
+
+    #region VISUAL DEBUG GIZMOS
 
     private void OnDrawGizmos()
     {
@@ -94,5 +112,7 @@ public class MeleeAttack : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, radius);
     }
+
+    #endregion VISUAL DEBUG GIZMOS
 
 }

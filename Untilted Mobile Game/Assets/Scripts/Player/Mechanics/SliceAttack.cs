@@ -1,9 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
-using UnityEditor.Embree;
 
 public class SliceAttack : MonoBehaviour
 {
@@ -11,7 +8,6 @@ public class SliceAttack : MonoBehaviour
     [SerializeField] private Button sliceButton;
 
     [Header("SLICE ATTACK SETTINGS")]
-    [SerializeField] private float sliceDamage;
     [SerializeField] private float sliceSpeed;
     private const float sliceDuration = 0.2f;
 
@@ -27,16 +23,7 @@ public class SliceAttack : MonoBehaviour
     [SerializeField, Range(1f, 5f)] private float cooldownTime;
 
     [SerializeField] private bool isCooling;
-    private bool isDashing;
-
-    [Header("SLICE EFFECT SETTINGS")]
-    [SerializeField] private Volume volume;
-
-    [SerializeField] private float lensIntensity = -0.4f;
-    [SerializeField] private float chromaticIntensity = 0.4f;
-
-    private LensDistortion lensDistortion;
-    private ChromaticAberration chromaticAberration;
+    public bool isDashing { get; private set; }
 
     //Reference to the player's character controller
     private CharacterController charCtrlr;
@@ -47,27 +34,38 @@ public class SliceAttack : MonoBehaviour
         AddButtonEvents();
     }
 
-    private void AddButtonEvents()
-    {
-        sliceButton.onClick.AddListener(PressSlice);
-    }
-
-    private void GetReferences()
-    {
-        charCtrlr = GetComponent<CharacterController>();
-
-        cam = Camera.main.GetComponent<PlayerCamera>();
-
-        volume.profile.TryGet<LensDistortion>(out lensDistortion);
-        volume.profile.TryGet<ChromaticAberration>(out chromaticAberration);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        SliceMovement();
         SliceCheck();
-        SnapToEnemy();
+        SliceMovement();
+        SnapAssist();
+    }
+
+    #region SLICE ATTACK
+
+    private void SliceCheck()
+    {
+        if (!isCooling && !isDashing && (IsSlicing() || isPressingSlice))
+        {
+            StartCoroutine(StartSlice());
+        }
+    }
+
+    private IEnumerator StartSlice()
+    {
+        //If slice button was pressed, returns it to false
+        isPressingSlice = false;
+
+        isDashing = true;
+        isCooling = true;
+        yield return new WaitForSeconds(sliceDuration);
+
+        isDashing = false;
+        yield return new WaitForSeconds(cooldownTime);
+
+        isCooling = false;
+        StopCoroutine(StartSlice());
     }
 
     void SliceMovement()
@@ -87,24 +85,24 @@ public class SliceAttack : MonoBehaviour
 
             charCtrlr.Move(dashMovement * sliceSpeed * Time.deltaTime);
         }
-
-        SliceCheck();
     }
 
-    private void SliceCheck()
+    #endregion SLICE ATTACK
+
+    #region VISUAL DEBUG GIZMOS
+
+    private void OnDrawGizmos()
     {
-        if (!isCooling && !isDashing && (IsSlicing() || isPressingSlice))
-        {
-            StartCoroutine(StartSlice());
-        }
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, assistRadius);
     }
 
+    #endregion VISUAL DEBUG GIZMOS
 
-    //Add a method that detects enemy on a dash and snaps to it!
-    private void SnapToEnemy()
+    #region SNAP ASSIST
+
+    private void SnapAssist()
     {
-        //Add logic that will snap to enemy on dash
-
         if (isDashing)
         {
             Collider[] enemyColliders = Physics.OverlapSphere(transform.position, assistRadius, whatIsEnemy, QueryTriggerInteraction.UseGlobal);
@@ -112,60 +110,16 @@ public class SliceAttack : MonoBehaviour
             if (enemyColliders.Length != 0)
             {
                 GameObject lockedEnemy = enemyColliders[0].gameObject;
-                transform.position = Vector3.MoveTowards(transform.position, lockedEnemy.transform.position, Time.deltaTime * sliceSpeed * 2f);
+                transform.position = Vector3.MoveTowards(transform.position, lockedEnemy.transform.position, Time.deltaTime * sliceSpeed * 3f);
             }
         }
     }
 
-    private IEnumerator StartSlice()
-    {
-        isPressingSlice = false;
-
-        isDashing = true;
-        isCooling = true;
-
-        yield return new WaitForSeconds(sliceDuration);
-
-        isDashing = false;
-
-        yield return new WaitForSeconds(cooldownTime);
-
-        isCooling = false;
-
-        StopCoroutine(StartSlice());
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Enemy") && isDashing)
-        {
-            cam.CameraShake();
-            other.GetComponent<IDamageable>().OnDamage(sliceDamage);
-        }
-    }
-
-    private IEnumerator DashEffect(float lensValue, float chromaticValue)
-    {
-        float targetLens = lensDistortion.intensity.value + lensValue;
-        float targetChromatic = chromaticAberration.intensity.value + chromaticValue;
-
-        float time = 0;
-
-        while (time < 1)
-        {
-            lensDistortion.intensity.value = Mathf.Lerp(lensDistortion.intensity.value, lensValue, time);
-            chromaticAberration.intensity.value = Mathf.Lerp(chromaticAberration.intensity.value, chromaticValue, time);
-            time += Time.deltaTime * (sliceDuration / 2);
-            yield return null;
-        }
-
-        lensDistortion.intensity.value = targetLens;
-        chromaticAberration.intensity.value = targetChromatic;
-
-        yield return null;
-
-    }
-
     private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
+
+    #endregion SNAP ASSIST
+
+    #region INPUT
 
     private void PressSlice()
     {
@@ -177,9 +131,20 @@ public class SliceAttack : MonoBehaviour
         return Input.GetKeyDown(KeyCode.Q);
     }
 
-    private void OnDrawGizmos()
+    #endregion INPUT
+
+    #region GET REFERENCES
+
+    private void AddButtonEvents()
     {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, assistRadius);
+        sliceButton.onClick.AddListener(PressSlice);
     }
+
+    private void GetReferences()
+    {
+        charCtrlr = GetComponent<CharacterController>();
+        cam = Camera.main.GetComponent<PlayerCamera>();
+    }
+
+    #endregion GET REFERENCES
 }

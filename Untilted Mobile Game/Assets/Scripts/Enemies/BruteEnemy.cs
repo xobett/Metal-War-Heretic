@@ -35,7 +35,7 @@ public class BruteEnemy : EnemyBase
     {
         if (runAbilityActive)
         {
-            Vector3 lookDirection = player_transform.position - transform.position;
+            Vector3 lookDirection = player.transform.position - transform.position;
             Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
             currentLookAtPlayer = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0); 
         }
@@ -59,9 +59,9 @@ public class BruteEnemy : EnemyBase
 
     private void RampageRunCheck()
     {
-        playerDistance = Vector3.Distance(transform.position, player_transform.position);
+        playerDistance = Vector3.Distance(transform.position, player.transform.position);
 
-        Vector3 direction = player_transform.position - transform.position;
+        Vector3 direction = player.transform.position - transform.position;
 
         if (!runCoolingDown && (!runAbilityActive && !isRunning) && playerDistance > minimumDistanceToRun)
         {
@@ -121,7 +121,7 @@ public class BruteEnemy : EnemyBase
 
     private void OnDrawGizmos()
     {
-        if (player_transform != null)
+        if (player != null)
         {
             if (playerDistance > minimumDistanceToRun)
             {
@@ -131,7 +131,7 @@ public class BruteEnemy : EnemyBase
             {
                 Gizmos.color = Color.red;
             }
-            Gizmos.DrawLine(transform.position, player_transform.position); 
+            Gizmos.DrawLine(transform.position, player.transform.position); 
         }
     }
 }
