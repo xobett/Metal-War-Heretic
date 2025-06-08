@@ -1,27 +1,33 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class PlayerMovement : MonoBehaviour
 {
     //Player settings
     private CharacterController charCtrlr;
 
-    [Header("MOVEMENT SETTINGS")]
+    [Header("NORMAL MOVEMENT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float movementSpeed;
     [SerializeField, Range(0f, 1f)] private float rotationSpeed;
 
     private float velocity;
 
+    [Header("HIT MOVEMENT SETTINGS")]
+    [SerializeField] private float hitSpeed;
+    [SerializeField] private float hitForce;
+
+    private Vector3 hitDirection;
+
+    private bool isHit;
+
     [Header("GRAVITY SETTINGS")]
     [SerializeField] private LayerMask whatIsGround;
     [SerializeField] private float gravityForce = -9.81f;
-    
+
     private Vector2 gravity;
 
     private Transform groundCheck;
     private const float radius = 0.2f;
-
 
     void Start()
     {
@@ -35,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         if (!PauseManager.Instance.GamePaused)
         {
             MovementCheck();
-            Gravity(); 
+            Gravity();
         }
     }
 
@@ -43,15 +49,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovementCheck()
     {
-        if (aimAssistActive)
+        if (!isHit)
         {
-            AimMovement();
+            if (aimAssistActive)
+            {
+                AimMovement();
+            }
+            else
+            {
+                NormalMovement();
+            }
         }
         else
         {
-            NormalMovement();
+            HitMovement();
         }
     }
+
+    #region NORMAL MOVEMENT
 
     private void NormalMovement()
     {
@@ -70,14 +85,34 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    #region PUSHED AWAY MOVEMENT
+    #endregion NORMAL MOVEMENT
 
-    private void HitMovement(Vector3 pushedDirection, float pushedSpeed)
+    #region HIT MOVEMENT
+
+    public void SetHitMovement(Vector3 pushedDirection, float pushedForce, float pushedTime)
     {
-        charCtrlr.Move(pushedDirection * pushedSpeed * Time.deltaTime);
+        hitDirection = pushedDirection;
+        hitSpeed = pushedForce;
+        hitForce = pushedTime;
+
+        isHit = true;
+        StartCoroutine(StartHitMovementTimer());
     }
 
-    #endregion PUSHED AWAY MOVEMENT
+    public void HitMovement()
+    {
+        charCtrlr.Move(hitDirection * hitSpeed * Time.deltaTime);
+    }
+
+    private IEnumerator StartHitMovementTimer()
+    {
+        yield return new WaitForSeconds(hitForce);
+
+        isHit = false;
+        yield return null;
+    }
+
+    #endregion HIT MOVEMENT
 
     #region AIM MOVEMENT
 
@@ -114,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion GRAVITY
 
-    #region GET REFERENCES
+    #region START
 
     private void GetReferences()
     {
@@ -122,5 +157,5 @@ public class PlayerMovement : MonoBehaviour
         groundCheck = transform.GetChild(0);
     }
 
-    #endregion GET REFERENCES
+    #endregion START
 }

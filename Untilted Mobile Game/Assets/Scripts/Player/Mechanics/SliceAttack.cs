@@ -110,7 +110,7 @@ public class SliceAttack : MonoBehaviour
             if (enemyColliders.Length != 0)
             {
                 GameObject lockedEnemy = enemyColliders[0].gameObject;
-                transform.position = Vector3.MoveTowards(transform.position, lockedEnemy.transform.position, Time.deltaTime * sliceSpeed * 3f);
+                transform.position = Vector3.MoveTowards(transform.position, lockedEnemy.transform.position, Time.deltaTime * Mathf.Pow(sliceSpeed, 2));
             }
         }
     }

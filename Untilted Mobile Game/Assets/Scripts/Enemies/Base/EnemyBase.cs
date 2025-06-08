@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Health))]
@@ -12,7 +11,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [Header("PLAYER REFERENCES")]
     [SerializeField] protected LayerMask whatIsPlayer;
     protected GameObject player;
-    [SerializeField] private float detectionRadius;
+    [SerializeField] private float playerDetectionRadius;
+
+    [Header("CAMERA REFERENCES")]
+    protected PlayerCamera playerCam; 
 
     [Header("ATTACK SETTINGS")]
     [SerializeField] protected float damage;
@@ -21,7 +23,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private const float playerDetection_Range = 3f;
     protected bool isAttacking;
-    private bool ableToAttack;
 
     [Header("MOVEMENT SETTINGS")]
     [SerializeField] protected float walkSpeed = 1.5f;
@@ -79,7 +80,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         //Default behaviour for melee attack type enemies
         if (Physics.Raycast(transform.position, transform.forward * playerDetection_Range, playerDetection_Range, whatIsPlayer))
         {
+            playerCam.CameraShake();
             player.GetComponent<Health>().TakeDamage(damage);
+
+            isAttacking = false;
         }
     }
 
@@ -95,16 +99,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         }
     }
 
+    protected virtual void LookAtPlayer()
+    {
+        transform.rotation = currentFacePlayerRot;
+    }
+
     private void GetCurrentPlayerRot()
     {
         Vector3 lookDirection = player.transform.position - transform.position;
         Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
         currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
-    }
-
-    protected virtual void LookAtPlayer()
-    {
-        transform.rotation = currentFacePlayerRot;
     }
 
     #endregion MOVEMENT AND ROTATION
@@ -114,6 +118,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private void GetReferences()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerCam = Camera.main.GetComponent<PlayerCamera>();
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -129,7 +134,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private bool CheckPlayerIsNear()
     {
-        return Physics.CheckSphere(transform.position, detectionRadius, whatIsPlayer);
+        return Physics.CheckSphere(transform.position, playerDetectionRadius, whatIsPlayer);
     }
 
     #endregion PLAYER DETECTION 
@@ -139,7 +144,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.DrawWireSphere(transform.position, playerDetectionRadius);
     }
 
     #endregion DEBUG VISUAL GIZMOS

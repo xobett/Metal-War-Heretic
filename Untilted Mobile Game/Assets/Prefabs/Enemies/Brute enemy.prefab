@@ -347,10 +347,11 @@ GameObject:
   m_Component:
   - component: {fileID: 5864222057376983774}
   - component: {fileID: 5302080847193335908}
-  - component: {fileID: 8548248362288558944}
   - component: {fileID: 7812034608841739272}
   - component: {fileID: 8439695627006936142}
   - component: {fileID: 1752446631520181859}
+  - component: {fileID: 3585895775364187851}
+  - component: {fileID: 2189191770009877324}
   m_Layer: 7
   m_Name: Brute enemy
   m_TagString: Enemy
@@ -383,29 +384,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7993994855593321819}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!136 &8548248362288558944
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7993994855593321819}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.46
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.45, z: 0}
 --- !u!195 &7812034608841739272
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -440,15 +418,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398311949e50f99448fc0a34fc07b71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 30
-  attackCooldown: 10
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
+  detectionRadius: 0
+  damage: 30
+  timeBetweenAttacks: 1
   walkSpeed: 1.5
-  stoppingDistance: 1.85
+  stoppingDistance: 3
+  rampageRunDamage: 30
+  rampageRunSpeed: 10
+  minimumDistanceToRun: 5
   beforeRunTime: 2
-  runningTime: 0
+  runningTime: 2
+  afterRunTime: 2
+  rampageRunCooldown: 10
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,6 +446,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifebar: {fileID: 4070081213568939373}
+--- !u!65 &3585895775364187851
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7993994855593321819}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.9, y: 2.8, z: 1.21}
+  m_Center: {x: 0, y: 0.4, z: 0}
+--- !u!65 &2189191770009877324
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7993994855593321819}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.27, y: 2.8, z: 1.557899}
+  m_Center: {x: 0, y: 0.39999998, z: 0.17394957}
 --- !u!1 &8894705603017414051
 GameObject:
   m_ObjectHideFlags: 0
