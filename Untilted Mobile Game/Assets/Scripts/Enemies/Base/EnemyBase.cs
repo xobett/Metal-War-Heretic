@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Health))]
@@ -11,14 +12,15 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [Header("PLAYER REFERENCES")]
     [SerializeField] protected LayerMask whatIsPlayer;
     protected GameObject player;
+    [SerializeField] private float detectionRadius;
 
-    [Header("ATTACK SETTINGS\n")]
+    [Header("ATTACK SETTINGS")]
     [SerializeField] protected float damage;
-    [SerializeField] protected float attackCooldown;
-    [SerializeField, Range(1f, 4f)] protected float beforeAttackTime;
 
-    private const float playerDetection_Range = 2f;
-    private bool isAttacking;
+    [SerializeField, Range(1f, 6f)] protected int timeBetweenAttacks;
+
+    private const float playerDetection_Range = 3f;
+    protected bool isAttacking;
     private bool ableToAttack;
 
     [Header("MOVEMENT SETTINGS")]
@@ -30,28 +32,43 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private void Start()
     {
         GetReferences();
-        SetAgentSettings();
-        StartCoroutine(ToggleAttackStatus());
-    }
-
-    private IEnumerator ToggleAttackStatus()
-    {
-        //To avoid enemy dealing damage at its spawn time, adds a time before letting it attack.
-        yield return new WaitForSeconds(2);
-        ableToAttack = true;
+        SetEnemySettings();
     }
 
     protected virtual void Update()
     {
         FollowPlayer();
         LookAtPlayer();
+        BehaviourCheck();
     }
 
-    //Attack Methods
+    #region ON DAMAGE
 
     public void OnDamage(float damage)
     {
         GetComponent<Health>().TakeDamage(damage);
+    }
+
+    #endregion ON DAMAGE
+
+    #region ATTACK
+    private void BehaviourCheck()
+    {
+        if (agent.velocity.magnitude == 0 &&  CheckPlayerIsNear() && !isAttacking)
+        {
+            StartCoroutine(StartAttack());
+        }
+    }
+
+    private IEnumerator StartAttack()
+    {
+        Debug.Log("Stopped");
+        //Briefly stops and waits before executing its attack
+        isAttacking = true;
+        yield return new WaitForSeconds(timeBetweenAttacks);
+
+        Debug.Log("Start attack");
+        Attack();
     }
 
     protected virtual void Attack()
@@ -63,28 +80,15 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         }
     }
 
-    private IEnumerator StartBehaviour()
-    {
-        isAttacking = true;
-        yield return new WaitForSeconds(beforeAttackTime);
+    #endregion ATTACK
 
-        Attack();
-        yield return new WaitForSeconds(attackCooldown);
-        isAttacking = false;
-
-        yield return null;
-    }
-
-    //Movement and rotation Methods
+    #region MOVEMENT AND ROTATION
 
     protected virtual void FollowPlayer()
     {
-        agent.destination = player.transform.position;
-
-        if (agent.velocity.magnitude == 0 && !isAttacking)
+        if (!isAttacking)
         {
-            if (!ableToAttack) return;
-            StartCoroutine(StartBehaviour());
+            agent.destination = player.transform.position; 
         }
     }
 
@@ -97,8 +101,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         transform.rotation = lookRotation;
     }
 
+    #endregion MOVEMENT AND ROTATION
 
-    //Start Methods
+    #region START
 
     private void GetReferences()
     {
@@ -106,10 +111,30 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void SetAgentSettings()
+    private void SetEnemySettings()
     {
         agent.speed = walkSpeed;
         agent.stoppingDistance = stoppingDistance;
     }
 
+    #endregion START
+
+    #region PLAYER DETECTION
+
+    private bool CheckPlayerIsNear()
+    {
+        return Physics.CheckSphere(transform.position, detectionRadius, whatIsPlayer);
+    }
+
+    #endregion PLAYER DETECTION 
+
+    #region DEBUG VISUAL GIZMOS
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    }
+
+    #endregion DEBUG VISUAL GIZMOS
 }

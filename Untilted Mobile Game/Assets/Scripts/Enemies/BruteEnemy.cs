@@ -109,6 +109,8 @@ public class BruteEnemy : EnemyBase
 
         yield return new WaitForSeconds(rampageRunCooldown);
         runCoolingDown = false;
+
+        yield return null;
     }
 
     private void RampageRun()

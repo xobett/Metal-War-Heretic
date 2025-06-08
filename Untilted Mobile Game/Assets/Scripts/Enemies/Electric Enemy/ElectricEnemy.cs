@@ -3,45 +3,121 @@ using UnityEngine;
 
 public class ElectricEnemy : EnemyBase
 {
-    [Header("--- ELECTRIC ENEMY ---")]
+    [Header("--- ELECTRIC ENEMY ---\n")]
 
-    [SerializeField] private float evokerAttackDistance = 5f;
+    [Header("MAIN ABILITY - DISTANCE ATTACK\n")]
 
-    [Header("-- MAIN ABILITY -- ELECTRIC AREA")]
+    [Header("DISTANCE ATTACK PREFAB")]
+    [SerializeField] private GameObject distanceAttackPf;
 
-    [SerializeField, Range(1f, 10f)] private int electricAreaLifetime;
+    [Header("DISTANCE ATTACK SETTINGS")]
+    [SerializeField] private Transform spawnPoint;
+
+    [SerializeField] private float beforeDistanceAttackTime;
+    [SerializeField] private float afterDistanceAttackTime;
+
+    [SerializeField] private float distanceAttackSpeed;
+    [SerializeField] private float distanceAttackDamage;
+    [SerializeField] private float distanceAttackLifetime;
+
+    [Header("SECONDARY ABILITY - ELECTRIC ATTACK\n")]
+
+    [Header("ELECTRIC ATTACK PREFAB | CUE VFX")]
+    [SerializeField] private GameObject electricAreaPf;
+    [SerializeField] private GameObject cueElectricVfx;
+
+    [Header("ELECTRIC ATTACK SETTINGS")]
+    [SerializeField] private int electricAreaLifetime; //
+    [SerializeField] private int electricAreaDamage; //
+
+    [SerializeField, Range(1f, 10f)] private int electricAttackCooldownTime;
+    private bool electricAttackCoolingDown;
 
     private bool electricAttackActive;
 
-    [Header("ELECTRIC ATTACK CUE VFX")]
-    [SerializeField] private GameObject cueElectricVfx;
-    [SerializeField] private GameObject electricAreaPf;
+    #region BASE OVERRIDES
 
-    protected override void FollowPlayer()
+    #region BASE MOVEMENT AND ROTATION
+
+    protected override void LookAtPlayer()
     {
         if (!electricAttackActive)
         {
-            base.FollowPlayer(); 
+            base.LookAtPlayer(); 
         }
     }
 
+    #endregion BASE MOVEMENT AND ROTATION
+
+    #region BASE ATTACK
     protected override void Attack()
     {
-        StartCoroutine(ElectricAttack());
+        GetAttackAbility();
+    }
 
-        //Random behaviour, either attack on area attack or throw something
+    #endregion BASE ATTACK
+
+    #endregion BASE OVERRIDES
+
+    #region ATTACK ABILITIES
+
+    private void GetAttackAbility()
+    {
+        if (!electricAttackCoolingDown)
+        {
+            StartCoroutine(ElectricAttack());
+        }
+        else
+        {
+            StartCoroutine(DistanceAttack());
+        }
+    }
+
+    private IEnumerator DistanceAttack()
+    {
+        Debug.Log("Entered distance attack");
+        yield return new WaitForSeconds(beforeDistanceAttackTime);
+
+        Debug.Log("Threw ball");
+        distanceAttackPf.GetComponent<ElectricBall>().SetElectricBallSettings(transform.forward, distanceAttackDamage, distanceAttackSpeed, distanceAttackLifetime);
+        Instantiate(distanceAttackPf, spawnPoint.position, Quaternion.identity);
+        yield return new WaitForSeconds(afterDistanceAttackTime);
+
+        isAttacking = false;
+
+        yield return null;
     }
 
     private IEnumerator ElectricAttack()
     {
+        Debug.Log("Entered electric attack");
+        electricAttackActive = true;
+        electricAttackCoolingDown = true;
 
         Vector3 spawnPos = player.transform.position;
-        spawnPos.y = 1;
+        spawnPos.y = 1.2f;
 
         GameObject vfx = Instantiate(cueElectricVfx, spawnPos, cueElectricVfx.transform.rotation);
         Destroy(vfx, 3);
         yield return new WaitForSeconds(3);
 
-        GameObject electricArea = Instantiate(electricAreaPf, spawnPos, electricAreaPf.transform.rotation);
+        electricAreaPf.GetComponent<ElectricArea>().SetElectricAreaSettings(electricAreaDamage, electricAreaLifetime);
+        Instantiate(electricAreaPf, spawnPos, electricAreaPf.transform.rotation);
+        yield return new WaitForSeconds(5);
+
+        electricAttackActive = false;
+        isAttacking = false;
+        StartCoroutine(StartElectricCooldown());
+        yield return null;
     }
+
+    private IEnumerator StartElectricCooldown()
+    {
+        yield return new WaitForSeconds(electricAttackCooldownTime);
+        
+        electricAttackCoolingDown = false;
+        yield return null;
+    }
+
+    #endregion ATTACK ABILITIES
 }

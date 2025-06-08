@@ -265,6 +265,37 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4688678951339064626
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2194113442272978875}
+  m_Layer: 7
+  m_Name: Spawn point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2194113442272978875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4688678951339064626}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5864222057376983774}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4976127741082558778
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,15 +397,16 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7993994855593321819}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2194113442272978875}
   - {fileID: 5507956993411809279}
   - {fileID: 883241455918041028}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5302080847193335908
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -442,16 +474,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
-  damage: 0
-  attackCooldown: 0
-  beforeAttackTime: 1
+    m_Bits: 512
+  damage: 90
+  beforeAttackWaitTime: 1
+  nextAttackWaitTime: 1
   walkSpeed: 1.5
-  stoppingDistance: 0
-  evokerAttackDistance: 5
-  electricAreaLifetime: 1
-  cueElectricVfx: {fileID: 9109378647140970005, guid: 12ab461bc79503f429e1c2ec660c8796, type: 3}
+  stoppingDistance: 4.5
+  distanceAttackPf: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+  spawnPoint: {fileID: 2194113442272978875}
+  beforeDistanceAttackTime: 2
+  afterDistanceAttackTime: 2
+  distanceAttackSpeed: 2
+  distanceAttackDamage: 20
+  distanceAttackLifetime: 5
   electricAreaPf: {fileID: 2278451330885868786, guid: f575cf7367972ec4caaf35b2a0efd4f0, type: 3}
+  cueElectricVfx: {fileID: 9109378647140970005, guid: 12ab461bc79503f429e1c2ec660c8796, type: 3}
+  electricAreaLifetime: 1
+  electricAreaDamage: 0
+  electricAttackCooldownTime: 1
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -70,6 +70,15 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    #region PUSHED AWAY MOVEMENT
+
+    private void HitMovement(Vector3 pushedDirection, float pushedSpeed)
+    {
+        charCtrlr.Move(pushedDirection * pushedSpeed * Time.deltaTime);
+    }
+
+    #endregion PUSHED AWAY MOVEMENT
+
     #region AIM MOVEMENT
 
     private void AimMovement()

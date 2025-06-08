@@ -1542,32 +1542,48 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: damage
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: attackCooldown
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: cueElectricVfx
-      value: 
-      objectReference: {fileID: 9109378647140970005, guid: 12ab461bc79503f429e1c2ec660c8796, type: 3}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
       propertyPath: beforeAttackTime
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: stoppingDistance
-      value: 4.5
+      propertyPath: attackCooldownTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: whatIsPlayer.m_Bits
-      value: 512
+      propertyPath: electricAreaDamage
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: nextAttackWaitTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: timeBetweenAttacks
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: distanceAttackSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: beforeAttackWaitTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
       propertyPath: electricAreaLifetime
-      value: 1
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: afterDistanceAttackTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: beforeDistanceAttackTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: electricAttackCooldownTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2793062606952543177, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1826,8 +1842,16 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
+      propertyPath: nextAttackWaitTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: rampageRunCooldown
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
+      propertyPath: beforeAttackWaitTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: minimumDistanceToRun
@@ -3929,6 +3953,67 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92d88865c5d775d4a8c1531d6bb9c5a7, type: 3}
+--- !u!1001 &8395253489890768214
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_Name
+      value: Electric ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7957063274289841405, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3950,3 +4035,4 @@ SceneRoots:
   - {fileID: 1021459456}
   - {fileID: 5115179285181342095}
   - {fileID: 3989042090481141016}
+  - {fileID: 8395253489890768214}
