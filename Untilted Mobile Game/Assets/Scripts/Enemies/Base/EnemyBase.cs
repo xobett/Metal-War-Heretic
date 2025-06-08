@@ -27,6 +27,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] protected float walkSpeed = 1.5f;
     [SerializeField] protected float stoppingDistance;
 
+    protected Quaternion currentFacePlayerRot;
+
     protected NavMeshAgent agent;
 
     private void Start()
@@ -39,6 +41,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         FollowPlayer();
         LookAtPlayer();
+        GetCurrentPlayerRot();
         BehaviourCheck();
     }
 
@@ -92,13 +95,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         }
     }
 
-    protected virtual void LookAtPlayer()
+    private void GetCurrentPlayerRot()
     {
         Vector3 lookDirection = player.transform.position - transform.position;
         Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
-        Quaternion lookRotation = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
+        currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
+    }
 
-        transform.rotation = lookRotation;
+    protected virtual void LookAtPlayer()
+    {
+        transform.rotation = currentFacePlayerRot;
     }
 
     #endregion MOVEMENT AND ROTATION

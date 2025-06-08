@@ -1,4 +1,3 @@
-using Microsoft.Win32.SafeHandles;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -20,25 +19,12 @@ public class BruteEnemy : EnemyBase
     [SerializeField] private bool runAbilityActive;
     [SerializeField] private bool runCoolingDown;
 
-    private Quaternion currentLookAtPlayer;
-
     protected override void Update()
     {
         base.Update();
 
         RampageRun();
         RampageRunCheck();
-        GetCurrentLookAtPlayerRot();
-    }
-
-    private void GetCurrentLookAtPlayerRot()
-    {
-        if (runAbilityActive)
-        {
-            Vector3 lookDirection = player.transform.position - transform.position;
-            Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
-            currentLookAtPlayer = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0); 
-        }
     }
 
     protected override void FollowPlayer()
@@ -92,11 +78,11 @@ public class BruteEnemy : EnemyBase
         float time = 0f;
         while (time < 1)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, currentLookAtPlayer, time);
+            transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
             time += Time.deltaTime * 0.6f;
             yield return null;
         }
-        transform.rotation = currentLookAtPlayer;
+        transform.rotation = currentFacePlayerRot;
 
         //Stops running and looks at player again but remains steady for a period of time.
         isRunning = false;

@@ -73,6 +73,8 @@ public class ElectricEnemy : EnemyBase
         }
     }
 
+    #region MAIN ABILITY - DISTANCE ATTACK
+
     private IEnumerator DistanceAttack()
     {
         Debug.Log("Entered distance attack");
@@ -87,6 +89,10 @@ public class ElectricEnemy : EnemyBase
 
         yield return null;
     }
+
+    #endregion MAIN ABILITY - DISTANCE ATTACK
+
+    #region SECONDARY ABILITY - ELECTRIC ATTACK
 
     private IEnumerator ElectricAttack()
     {
@@ -105,8 +111,19 @@ public class ElectricEnemy : EnemyBase
         Instantiate(electricAreaPf, spawnPos, electricAreaPf.transform.rotation);
         yield return new WaitForSeconds(5);
 
+        //Looks smoothly at player before returning to its default state
+        float time = 0f;
+        while (time < 1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
+            time += Time.deltaTime * 0.6f;
+            yield return null;
+        }
+        transform.rotation = currentFacePlayerRot;
+
         electricAttackActive = false;
         isAttacking = false;
+
         StartCoroutine(StartElectricCooldown());
         yield return null;
     }
@@ -118,6 +135,8 @@ public class ElectricEnemy : EnemyBase
         electricAttackCoolingDown = false;
         yield return null;
     }
+
+    #endregion SECONDARY ABILITY - ELECTRIC ATTACK
 
     #endregion ATTACK ABILITIES
 }
