@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ElectricEnemy : EnemyBase
 {
-    [Header("--- ELECTRIC ENEMY ---\n")]
+    [Header("--- ELECTRIC ENEMY SETTINGS ---\n")]
 
     [Header("MAIN ABILITY - DISTANCE ATTACK\n")]
 

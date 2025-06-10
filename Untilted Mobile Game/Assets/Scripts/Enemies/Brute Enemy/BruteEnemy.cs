@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class BruteEnemy : EnemyBase
 {
-    [Header("--- BRUTE SETTINGS ---\n")]
+    [Header("--- BRUTE ENEMY SETTINGS ---\n")]
 
     [Header("RAMPAGE RUN ABILITY\n")]
 
