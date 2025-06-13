@@ -443,9 +443,9 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
+  playerDetectionRadius: 0
   damage: 10
-  attackCooldown: 3
-  beforeAttackTime: 1
+  timeBetweenAttacks: 1
   walkSpeed: 1.5
   stoppingDistance: 1.85
 --- !u!114 &1752446631520181859

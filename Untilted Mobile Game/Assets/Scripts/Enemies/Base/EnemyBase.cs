@@ -58,7 +58,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     #region ATTACK
     private void BehaviourCheck()
     {
-        if (agent.velocity.magnitude == 0 &&  CheckPlayerIsNear() && !isAttacking)
+        if (agent.velocity.magnitude == 0 && CheckPlayerIsNear() && !isAttacking)
         {
             StartCoroutine(StartAttack());
         }
@@ -86,6 +86,22 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
             isAttacking = false;
         }
     }
+
+    protected void PushPlayer(float damageUponHit)
+    {
+        playerCam.CameraShake();
+
+        player.GetComponent<Health>().TakeDamage(damageUponHit);
+
+        float randomSideValue = Random.Range(-2f, 2f);
+        float randomTimePushed = Random.Range(0.4f, 0.5f);
+        float randomPushedForce = Random.Range(7f, 8f);
+
+        Vector3 pushedDirection = transform.forward + transform.right * randomSideValue;
+
+        player.GetComponent<PlayerMovement>().SetHitMovement(pushedDirection, randomPushedForce, randomTimePushed);
+    }
+
 
     #endregion ATTACK
 

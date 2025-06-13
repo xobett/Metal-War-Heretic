@@ -475,9 +475,9 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
+  playerDetectionRadius: 0
   damage: 90
-  beforeAttackWaitTime: 1
-  nextAttackWaitTime: 1
+  timeBetweenAttacks: 1
   walkSpeed: 1.5
   stoppingDistance: 4.5
   distanceAttackPf: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}

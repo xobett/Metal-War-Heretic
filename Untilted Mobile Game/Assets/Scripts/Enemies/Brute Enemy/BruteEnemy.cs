@@ -124,21 +124,9 @@ public class BruteEnemy : EnemyBase
     {
         if (other.CompareTag("Player") && (isRunning && !playerHit))
         {
-            playerCam.CameraShake();
-
-            other.GetComponent<Health>().TakeDamage(rampageRunDamage);
-
-            float randomSideValue = Random.Range(-2f, 2f);
-            float randomTimePushed = Random.Range(0.4f, 0.5f);
-            float randomPushedForce = Random.Range(7f, 8f);
-
-            Vector3 pushedDirection = transform.forward + transform.right * randomSideValue;
-
-            other.GetComponent<PlayerMovement>().SetHitMovement(pushedDirection, randomPushedForce, randomTimePushed);
-
+            PushPlayer(rampageRunDamage);
             StopCoroutine(StartRampageRun());
             StartCoroutine(SlowDownPostHit());
-            Debug.Log("Player hit");
         }
     }
 
