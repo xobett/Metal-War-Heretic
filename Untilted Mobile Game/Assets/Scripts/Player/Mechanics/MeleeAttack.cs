@@ -35,7 +35,7 @@ public class MeleeAttack : MonoBehaviour
 
     public void HitCheck()
     {
-        if(IsHitting())
+        if (IsHitting())
         {
             Punch();
         }
@@ -44,10 +44,14 @@ public class MeleeAttack : MonoBehaviour
     private void Punch()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward * hitRange, out hit, hitRange, whatIsMelee))
+        if (Physics.Raycast(transform.position, transform.forward * hitRange, out hit, hitRange))
         {
-            hit.collider.GetComponent<IDamageable>().OnDamage(damage);
-            playerCam.CameraShake();
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                Debug.Log("Hitting enemy");
+                hit.collider.GetComponent<IDamageable>().OnDamage(damage);
+                playerCam.CameraShake();
+            }
         }
     }
 
@@ -65,7 +69,7 @@ public class MeleeAttack : MonoBehaviour
         {
             //Look at enemy directly
 
-            GameObject enemy = enemyColliders[0].gameObject; 
+            GameObject enemy = enemyColliders[0].gameObject;
 
             Quaternion direction = Quaternion.LookRotation(enemy.transform.position - transform.position);
             Quaternion target = Quaternion.Euler(0, direction.eulerAngles.y, 0);

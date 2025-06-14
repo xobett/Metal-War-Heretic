@@ -14,20 +14,20 @@ public class BruteEnemy : EnemyBase
     [SerializeField] private int rampageRunSpeed;
     [SerializeField] private int minimumDistanceToRun;
 
-    private bool playerHit;
+    private bool rmpPlayerHit;
 
     private float playerDistance;
 
     [Header("TIMING SETTINGS")]
-    [SerializeField, Range(2f, 6f)] private int beforeRunTime;
-    [SerializeField, Range(2f, 6f)] private int runningTime;
-    [SerializeField, Range(2f, 6f)] private int afterRunTime;
+    [SerializeField, Range(2f, 6f)] private int rmpBeforeRunTime;
+    [SerializeField, Range(2f, 6f)] private int rmpRunningTime;
+    [SerializeField, Range(2f, 6f)] private int rmpAfterRunTime;
 
-    [SerializeField, Range(10f, 15f)] private int rampageRunCooldown;
+    [SerializeField, Range(10f, 15f)] private int rmpCooldown;
 
-    private bool isRunning; // Used to state when its running, also used to stop rotating when doing so
-    private bool runAbilityActive; // Used to avoid entering the run ability method continuosly, until the ability is completed
-    private bool runCoolingDown; // Used to avoid the run ability method from executing when its cooling down
+    private bool rmpIsRunning; // Used to state when its running, also used to stop rotating when doing so
+    private bool rmpAbilityActive; // Used to avoid entering the run ability method continuosly, until the ability is completed
+    private bool rmpCoolingDown; // Used to avoid the run ability method from executing when its cooling down
 
     #region BASE OVERRIDES
 
@@ -36,14 +36,15 @@ public class BruteEnemy : EnemyBase
         base.Update();
 
         RampageRunMovement();
-        RampageRunCheck();
+        RampageRunTriggerCheck();
+        GetDistanceFromPlayer();
     }
 
     #region BASE MOVEMENT AND ROTATION
 
     protected override void LookAtPlayer()
     {
-        if (!isRunning)
+        if (!rmpIsRunning)
         {
             base.LookAtPlayer(); 
         }
@@ -54,22 +55,26 @@ public class BruteEnemy : EnemyBase
     #endregion BASE OVERRIDES
 
     #region RAMPAGE RUN
+
+    private void GetDistanceFromPlayer()
+    {
+        playerDistance = Vector3.Distance(transform.position, player.transform.position);
+    }
+
     private void RampageRunMovement()
     {
-        if (isRunning)
+        if (rmpIsRunning)
         {
             agent.destination = agent.transform.position + agent.transform.forward * 5f; 
         }
     }
 
-    private void RampageRunCheck()
+    private void RampageRunTriggerCheck()
     {
-        playerDistance = Vector3.Distance(transform.position, player.transform.position);
-
-        if (!runCoolingDown && !isAttacking)
+        if (!rmpCoolingDown && !isAttacking)
         {
             //Checks if rampage run ability is not active, and distance is within range to trigger the ability
-            if ((!runAbilityActive && !isRunning) && playerDistance > minimumDistanceToRun)
+            if ((!rmpAbilityActive && !rmpIsRunning) && playerDistance > minimumDistanceToRun)
             {
                 isAttacking = true;
                 StartCoroutine(StartRampageRun());
@@ -79,18 +84,18 @@ public class BruteEnemy : EnemyBase
 
     private IEnumerator StartRampageRun()
     {
-        runAbilityActive = true;
-        runCoolingDown = true;
+        rmpAbilityActive = true;
+        rmpCoolingDown = true;
 
         Debug.Log("Entered");
         //Stops following the player for a period of time
         agent.destination = transform.position; 
-        yield return new WaitForSeconds(beforeRunTime);
+        yield return new WaitForSeconds(rmpBeforeRunTime);
 
         //While looking at the players position, it moves towards it at a fast pace during a period of time.
-        isRunning = true;
+        rmpIsRunning = true;
         agent.speed = rampageRunSpeed;
-        yield return new WaitForSeconds(runningTime);
+        yield return new WaitForSeconds(rmpRunningTime);
 
         //Sets speed to 0 and waits until the enemy slows down.
         agent.speed = 0f;
@@ -107,13 +112,13 @@ public class BruteEnemy : EnemyBase
         transform.rotation = currentFacePlayerRot;
 
         //Stops running and looks at player again but remains steady for a period of time.
-        isRunning = false;
+        rmpIsRunning = false;
         agent.destination = transform.position;
-        yield return new WaitForSeconds(afterRunTime);
+        yield return new WaitForSeconds(rmpAfterRunTime);
 
         //Ability is no longer active and should follow player
         agent.speed = walkSpeed;
-        runAbilityActive = false;
+        rmpAbilityActive = false;
         isAttacking = false;
 
         StartCoroutine(StartRampageRunCooldown());
@@ -122,8 +127,11 @@ public class BruteEnemy : EnemyBase
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && (isRunning && !playerHit))
+        if (other.CompareTag("Player") && (rmpIsRunning && !rmpPlayerHit))
         {
+            //Prevents the player from getting pushed again if slices against the enemy
+            rmpPlayerHit = true;
+
             PushPlayer(rampageRunDamage);
             StopCoroutine(StartRampageRun());
             StartCoroutine(SlowDownPostHit());
@@ -131,10 +139,7 @@ public class BruteEnemy : EnemyBase
     }
 
     private IEnumerator SlowDownPostHit()
-    {
-        //Prevents the player from getting pushed again if slices against the enemy
-        playerHit = true;
-        
+    {        
         //Slows down and Stops the enemy upon hit
         agent.speed = 0;
         agent.destination = transform.position;
@@ -151,12 +156,12 @@ public class BruteEnemy : EnemyBase
         }
         transform.rotation = currentFacePlayerRot;
 
-        isRunning = false;
-        playerHit = false;
-        yield return new WaitForSeconds(afterRunTime);
+        rmpIsRunning = false;
+        rmpPlayerHit = false;
+        yield return new WaitForSeconds(rmpAfterRunTime);
 
         agent.speed = walkSpeed;
-        runAbilityActive = false;
+        rmpAbilityActive = false;
         isAttacking = false;
 
         StartCoroutine(StartRampageRunCooldown());
@@ -165,8 +170,8 @@ public class BruteEnemy : EnemyBase
 
     private IEnumerator StartRampageRunCooldown()
     {
-        yield return new WaitForSeconds(rampageRunCooldown);
-        runCoolingDown = false;
+        yield return new WaitForSeconds(rmpCooldown);
+        rmpCoolingDown = false;
 
         yield return null;
     }

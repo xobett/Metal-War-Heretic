@@ -82,9 +82,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         {
             playerCam.CameraShake();
             player.GetComponent<Health>().TakeDamage(damage);
-
-            isAttacking = false;
         }
+
+        isAttacking = false;
     }
 
     protected void PushPlayer(float damageUponHit)

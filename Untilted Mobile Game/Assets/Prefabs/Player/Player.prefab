@@ -62,6 +62,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8145404637150508987}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5792424065809822555
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8830971237507291933}
+  - component: {fileID: 1685347787909589310}
+  - component: {fileID: 2919228218061361190}
+  m_Layer: 9
+  m_Name: Slice Attack Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8830971237507291933
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5792424065809822555}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8145404637150508987}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1685347787909589310
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5792424065809822555}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2919228218061361190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5792424065809822555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0abc12fcdf6cc3f43b81c36f634e3393, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sliceDamage: 20
 --- !u!1 &7667774295053278460
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +142,6 @@ GameObject:
   - component: {fileID: 8145404637150508987}
   - component: {fileID: 6675594337820638394}
   - component: {fileID: 3751038221672409844}
-  - component: {fileID: 5218794333479328253}
   - component: {fileID: 358284110550781473}
   - component: {fileID: 4415241851385853430}
   - component: {fileID: 7385239553009452054}
@@ -81,6 +149,7 @@ GameObject:
   - component: {fileID: 6663795009258736236}
   - component: {fileID: 5366471351593445167}
   - component: {fileID: 8721563493256245934}
+  - component: {fileID: 6090061871705627530}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -104,6 +173,7 @@ Transform:
   - {fileID: 5166527159074546569}
   - {fileID: 7171846183333394904}
   - {fileID: 8903904904785248876}
+  - {fileID: 8830971237507291933}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6675594337820638394
@@ -139,29 +209,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: -0.1, z: 0}
---- !u!136 &5218794333479328253
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7667774295053278460}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.75
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &358284110550781473
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -203,6 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 2.5
   rotationSpeed: 0.01
+  hitSpeed: 0
+  hitForce: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -219,17 +268,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0224c8d18dd0154bb12f62de1f655cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sliceDamage: 50
+  sliceButton: {fileID: 0}
   sliceSpeed: 10
-  assistRadius: 2.4
+  assistRadius: 1.6
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   cooldownTime: 2
   isCooling: 0
-  volume: {fileID: 0}
-  lensIntensity: -0.4
-  chromaticIntensity: 0.4
 --- !u!114 &2862152783596723406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,13 +288,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b0d13b82ae312141a9883372ed4c3d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackButton: {fileID: 0}
   damage: 10
   hitRate: 0
   hitRange: 1.5
   whatIsMelee:
     serializedVersion: 2
     m_Bits: 128
-  radius: 3
+  radius: 2.2
   aimAssitActive: 0
 --- !u!114 &6663795009258736236
 MonoBehaviour:
@@ -291,6 +338,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifebar: {fileID: 0}
+--- !u!114 &6090061871705627530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7667774295053278460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b6b162c4e164342a5397013c2b3ba8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  comboCount: 0
+  comboText: {fileID: 0}
+  timer: 0
+  timeWithinCombo: 2
 --- !u!1001 &8942951678578533767
 PrefabInstance:
   m_ObjectHideFlags: 0

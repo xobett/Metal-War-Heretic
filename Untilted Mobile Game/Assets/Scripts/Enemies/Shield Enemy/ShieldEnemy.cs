@@ -31,9 +31,12 @@ public class ShieldEnemy : EnemyBase
 
     [SerializeField] private GameObject rgShields;
 
-    private bool rgIsCoolingDown;
-    private bool isGuarding;
-    private bool isPushing;
+    private bool rgCooldownActive;
+    private bool rgGuardActive;
+    private bool rgPushActive;
+    private bool rgisPushing;
+
+    private bool rgPlayerHit;
 
     #region BASE OVERRIDES
 
@@ -47,7 +50,16 @@ public class ShieldEnemy : EnemyBase
 
     protected override void Attack()
     {
-        GetAbility();
+        if (!rgCooldownActive)
+        {
+            Debug.Log("Executed royal guard");
+            StartCoroutine(StartRoyalGuard());
+        }
+        else
+        {
+            Debug.Log("Executed normal attack");
+            base.Attack();
+        }
     }
 
     #endregion BASE ATTACK
@@ -56,9 +68,9 @@ public class ShieldEnemy : EnemyBase
 
     protected override void LookAtPlayer()
     {
-        if (!isGuarding)
+        if (!rgGuardActive)
         {
-            base.LookAtPlayer(); 
+            base.LookAtPlayer();
         }
     }
 
@@ -70,23 +82,20 @@ public class ShieldEnemy : EnemyBase
 
     private void LookSlowAtPlayer()
     {
-        if (!isPushing && isGuarding)
+        if (!rgPushActive && rgGuardActive)
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, 0.28f * Time.deltaTime); 
+            transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, 0.28f * Time.deltaTime);
         }
     }
 
-    private void GetAbility()
+    private IEnumerator StartRoyalGuard()
     {
-        StartCoroutine(CrStartPhaseOneRG());
-    }
-
-    private IEnumerator CrStartPhaseOneRG()
-    {
-        rgIsCoolingDown = true;
+        //Starts cooldown and time before executing the attack
+        rgCooldownActive = true;
         yield return new WaitForSeconds(rgBeforeSmackTime);
 
-        //Damages player if is near
+        //Stopms ground and activates shields
+        //While guarding, enables a condition to slowly rotate towards the player
         if (Physics.CheckSphere(transform.position, rgSmackRadius, whatIsPlayer))
         {
             playerCam.CameraShake();
@@ -94,17 +103,20 @@ public class ShieldEnemy : EnemyBase
         }
 
         rgShields.SetActive(true);
-        isGuarding = true;
+        rgGuardActive = true;
         yield return new WaitForSeconds(rgGuardingTime);
 
-        isPushing = true;
+        //Stops rotating slowly and waits a time before executing its push
+        rgPushActive = true;
         agent.updateRotation = false;
         yield return new WaitForSeconds(rgBeforePushTime);
 
+        //Calculates start and end push positions,
         Vector3 startingPos = transform.position;
         Vector3 anticipationPos = transform.position - transform.forward * 5f;
         Vector3 pushPos = transform.position + transform.forward * 5f;
 
+        //Reduces acceleration to avoid acceleration in its push and moves back to push.
         agent.acceleration = 2000;
         agent.speed = 2;
         agent.destination = anticipationPos;
@@ -114,33 +126,88 @@ public class ShieldEnemy : EnemyBase
         //Waits half a second before pushing forward movement
         yield return new WaitForSeconds(1f);
 
+        //Pushes forward and waits until it has arrives to its end push position
+        rgisPushing = true;
+
         agent.speed = 30f;
         agent.destination = pushPos;
         yield return new WaitForSeconds(0.2f);
         yield return new WaitUntil(() => agent.velocity.magnitude == 0);
 
+        rgisPushing = false;
+
+        //Rotates smoothly towards player
+        float time = 0f;
+        while (time < 1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
+            time += Time.deltaTime * 0.6f;
+            yield return null;
+        }
+        transform.rotation = currentFacePlayerRot;
+
+        //Returns to its original look rotation state and waits before finalizing attack
+        rgGuardActive = false;
+        rgPushActive = false;
         yield return new WaitForSeconds(rgAfterPushTime);
 
+        agent.speed = walkSpeed;
+        agent.acceleration = 12f; //Resets to its default value
         isAttacking = false;
-        yield return new WaitForSeconds(rgCooldownTime);
 
-        rgIsCoolingDown = false;
+        StartCoroutine(RoyalGuardCooldown());
         yield return null;
     }
 
-    /// <summary>
-    /// ADD PUSH ONLY EFFECTIVE WHEN PUSHING
-    /// ADD SMOTH ROTATION AFTER HITTING
-    /// CHECK COLLIDERS AVOIDING DAMAGE
-    /// </summary>
-    /// <param name="other"></param>
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && (rgisPushing && !rgPlayerHit))
         {
+            rgPlayerHit = false;
+
             PushPlayer(rgDamage);
+            StopCoroutine(StartRoyalGuard());
+            StartCoroutine(StopPostHit());
         }
+    }
+
+    private IEnumerator StopPostHit()
+    {
+        rgisPushing = false;
+
+        agent.speed = 0;
+        agent.destination = transform.position;
+        yield return new WaitUntil(() => agent.velocity.magnitude == 0);
+
+        //Rotates smoothly towards player
+        float time = 0f;
+        while (time < 1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
+            time += Time.deltaTime * 0.6f;
+            yield return null;
+        }
+        transform.rotation = currentFacePlayerRot;
+
+        //Returns to its original look rotation state and waits before finalizing attack
+        rgGuardActive = false;
+        rgPushActive = false;
+        yield return new WaitForSeconds(rgAfterPushTime);
+
+        agent.speed = walkSpeed;
+        agent.acceleration = 12f; //Resets to its default value
+        isAttacking = false;
+
+        StartCoroutine(RoyalGuardCooldown());
+        yield return null;
+    }
+
+    private IEnumerator RoyalGuardCooldown()
+    {
+        yield return new WaitForSeconds(rgCooldownTime);
+
+        rgCooldownActive = false;
+        yield return null;
     }
 
     #endregion ATTACK ABILITY
