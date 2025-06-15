@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Health))]
@@ -16,7 +15,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private float playerDetectionRadius;
 
     [Header("CAMERA REFERENCES")]
-    protected PlayerCamera playerCam; 
+    protected PlayerCamera playerCam;
 
     [Header("ATTACK SETTINGS")]
     [SerializeField] protected float damage;
@@ -34,26 +33,46 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     [Header("NAVIGATION SETTINGS")]
     [SerializeField] private LayerMask whatIsCollision;
-    [SerializeField] private float areaRadius = 10f;
     private Vector3 nextPos;
 
+    [SerializeField] private bool isMoving;
 
-    private void Start()
+    [SerializeField] private float navigationTimer;
+    [SerializeField] private float maxNavigationTime = 12f; 
+
+    private void Awake()
     {
         GetReferences();
         SetEnemySettings();
+    }
+
+    private void Start()
+    {
         StartCoroutine(AssignWaitPosition());
     }
 
     protected virtual void Update()
     {
-        LookAtPlayer();
-        GetCurrentPlayerRot();
+        //NAVIGATION
+        RunNavigationTimer();
+        HandleStuckNavigation();
+        EnemyWithinAreaCheck();
 
-        //Attack mode
+
+        //LookAtPlayer();
+        //GetCurrentPlayerRot();
+
+        //ATTACK
         //BehaviourCheck();
         //FollowPlayer();
     }
+
+    #region BEHAVIOUR CHECK
+
+
+
+    #endregion BEHAVIOUR CHECK
+
 
     #region ON DAMAGE
 
@@ -120,7 +139,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         if (!isAttacking)
         {
-            agent.destination = player.transform.position; 
+            agent.destination = player.transform.position;
         }
     }
 
@@ -138,52 +157,64 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     #endregion MOVEMENT AND ROTATION
 
-    #region POSITION GETTER
-
-    [ContextMenu("Test Check")]
-    void TestCheck()
+    #region AI NAVIGATION
+    private void RunNavigationTimer()
     {
-        StartCoroutine(AssignWaitPosition());
+        navigationTimer -= Time.deltaTime;
     }
 
     private IEnumerator AssignWaitPosition()
     {
-        Vector3 calculatedPos = GetRandomPosition();
+        navigationTimer = maxNavigationTime;
+        isMoving = true;
+
+        Vector3 calculatedPos = EnemyManager.instance.AssignMovingPosition();
 
         int attemptsDone = 0;
-        while (Physics.CheckSphere(calculatedPos, 3, whatIsCollision))
+        while (Physics.CheckSphere(calculatedPos, agent.radius, whatIsCollision))
         {
-            if (attemptsDone >= 3)
+            if (attemptsDone >= 2)
             {
-                areaRadius += 0.5f;
-                Debug.Log("Area was incremented");
+                EnemyManager.instance.IncreaseAreaRadius();
             }
 
-            calculatedPos = GetRandomPosition();
+            calculatedPos = EnemyManager.instance.AssignMovingPosition();
             attemptsDone++;
             Debug.Log("New position was generated");
             yield return null;
         }
 
         nextPos = calculatedPos;
-
         agent.destination = nextPos;
+        //Waits until remaining distance is called and until enemy arrives to its destination
+        yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
 
-        yield return new WaitForSeconds(10);
-
-        StartCoroutine(AssignWaitPosition());
+        //Stops the enemy upon arrival
+        agent.speed = 0;
+        isMoving = false;
         yield return null;
     }
 
-    private Vector3 GetRandomPosition()
+    private void HandleStuckNavigation()
     {
-        Vector3 pos = Random.insideUnitSphere * areaRadius;
-        pos.y = 0;
-        pos = player.transform.position + pos;
-        return pos;
+        if (navigationTimer < 0 && isMoving)
+        {
+            StopCoroutine(AssignWaitPosition());
+            agent.speed += 1.5f;
+            StartCoroutine(AssignWaitPosition());
+        }
     }
 
-    #endregion POSITION GETTER
+    private void EnemyWithinAreaCheck()
+    {
+        if (!isMoving && Vector3.Distance(transform.position, player.transform.position) > EnemyManager.instance.AreaRadius)
+        {
+            agent.speed = walkSpeed * 2;
+            StartCoroutine(AssignWaitPosition());
+        }
+    }
+
+    #endregion AI NAVIGATION
 
     #region START
 
@@ -196,8 +227,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private void SetEnemySettings()
     {
-        agent.speed = walkSpeed;
-        agent.stoppingDistance = stoppingDistance;
+        agent.speed = walkSpeed * 2;
+        agent.stoppingDistance = 1;
+        agent.autoBraking = false;
     }
 
     #endregion START
@@ -217,12 +249,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, playerDetectionRadius);
-
-        if (player != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(player.transform.position, areaRadius); 
-        }
     }
 
     #endregion DEBUG VISUAL GIZMOS

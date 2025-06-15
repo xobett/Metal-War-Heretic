@@ -447,8 +447,8 @@ NavMeshAgent:
   m_GameObject: {fileID: 7993994855593321819}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
+  m_Radius: 3
+  m_Speed: 4.16
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -480,6 +480,11 @@ MonoBehaviour:
   timeBetweenAttacks: 2
   walkSpeed: 1.5
   stoppingDistance: 7
+  whatIsCollision:
+    serializedVersion: 2
+    m_Bits: 640
+  isMoving: 0
+  timer: 0
   distanceAttackPf: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
   spawnPoint: {fileID: 2194113442272978875}
   beforeDistanceAttackTime: 1

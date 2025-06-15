@@ -6,18 +6,12 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager instance;
 
-    [Header("PLAYER DETECTION SETTINGS")]
-    [SerializeField] private float waitPointAreaRadius;
+    [Header("NAVIGATION AREA SETTINGS")]
+    [SerializeField] private float areaRadius;
     [SerializeField] private Transform playerPos;
-    [SerializeField] private LayerMask whatIsPlayer;
-
-    [SerializeField] private GameObject testObject;
-    [SerializeField] private float testObjectRadius;
 
     [Header("ATTACKING ENEMIES")]
     [SerializeField] private List<EnemyBase> attackingEnemies = new List<EnemyBase>();
-
-    private Vector3 randomPos = Vector3.zero;
 
     private void Awake()
     {
@@ -37,6 +31,32 @@ public class EnemyManager : MonoBehaviour
     public void RemoveAttackingEnemy(EnemyBase enemy)
     {
         attackingEnemies.Remove(enemy);
+    }
+
+    public Vector3 AssignMovingPosition()
+    {
+        Vector3 pos = Random.insideUnitSphere * areaRadius;
+        pos.y = 0;
+        pos = playerPos.position + pos;
+        return pos;
+    }
+
+    public float AreaRadius => areaRadius;
+
+    public void IncreaseAreaRadius()
+    {
+        areaRadius += 0.5f;
+        Debug.Log("Area was increased");
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        
+        if (playerPos != null)
+        {
+            Gizmos.DrawWireSphere(playerPos.position, areaRadius);
+        }
     }
 
 }

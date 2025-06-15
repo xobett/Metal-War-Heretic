@@ -1542,14 +1542,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: areaRadius
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: whatIsCollision.m_Bits
-      value: 640
-      objectReference: {fileID: 0}
     - target: {fileID: 2793062606952543177, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1597,10 +1589,6 @@ PrefabInstance:
     - target: {fileID: 7993994855593321819, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
       propertyPath: m_Name
       value: Electric Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 7993994855593321819, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8637028352418326444, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1774,6 +1762,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7812034608841739272, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
+      propertyPath: m_Radius
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7993994855593321819, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: m_Name
       value: Brute enemy
@@ -1781,6 +1773,10 @@ PrefabInstance:
     - target: {fileID: 7993994855593321819, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
+      propertyPath: whatIsCollision.m_Bits
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 8637028352418326444, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3038,14 +3034,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: areaRadius
-      value: 10.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: whatIsCollision.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
     - target: {fileID: 2793062606952543177, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3094,10 +3082,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield Enemy
       objectReference: {fileID: 0}
-    - target: {fileID: 7993994855593321819, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8637028352418326444, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3136,13 +3120,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd73bb1b973b8854abc3cefdd5b4483e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitPointAreaRadius: 10
+  areaRadius: 7.5
   playerPos: {fileID: 118215320}
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 512
-  testObject: {fileID: 0}
-  testObjectRadius: 5.1
   attackingEnemies: []
 --- !u!4 &1866423848
 Transform:
@@ -3664,6 +3643,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7812034608841739272, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: m_Speed
+      value: 4.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7812034608841739272, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+      propertyPath: m_Radius
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7993994855593321819, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
       propertyPath: m_Name
       value: Electric Enemy (1)
@@ -3973,8 +3960,12 @@ PrefabInstance:
       value: 10.64
       objectReference: {fileID: 0}
     - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
+      propertyPath: stoppingDistance
+      value: 3.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: whatIsCollision.m_Bits
-      value: 512
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 2793062606952543177, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4019,6 +4010,14 @@ PrefabInstance:
     - target: {fileID: 5864222057376983774, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7812034608841739272, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
+      propertyPath: m_Speed
+      value: 4.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7812034608841739272, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
+      propertyPath: m_Radius
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7993994855593321819, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_Name
