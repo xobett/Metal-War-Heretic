@@ -3,19 +3,6 @@ using UnityEngine;
 
 public class ShieldEnemy : EnemyBase
 {
-    //SHIELD ENEMY
-
-    //WAIT 3 SECONDS BEFORE ATTACK
-    //SMACKS SHIELDS ONTO THE FORWARD GROUND DEALING DAMAGE
-    //STAYS COVERED WHILE ROTATING SLOW TO THE PLAYER
-    //AFTER A PERIOD OF TIME
-    //MOVE BACK FOR QUARTER OF A SECOND
-    //LEAN FORWARD AT A FAST SPEED PUSHING THE PLAYER
-    //RETURN TO ITS ORIGINAL POSITION
-    //WAIT 2 SECONDS BEFORE DISENGAGING GUARD BEHAVIOUR
-    //BEGIN COOLDOWN
-    //FOLLOW PLAYER AGAIN
-
     [Header("--- SHIELD ENEMY SETTINGS --- \n")]
 
     [Header("ROYAL GUARD TIME SETTINGS")]
@@ -120,8 +107,7 @@ public class ShieldEnemy : EnemyBase
         agent.acceleration = 2000;
         agent.speed = 2;
         agent.destination = anticipationPos;
-        yield return new WaitForSeconds(0.2f);
-        yield return new WaitUntil(() => agent.velocity.magnitude == 0);
+        yield return new WaitUntil(() => agent.remainingDistance <= stoppingDistance);
 
         //Waits half a second before pushing forward movement
         yield return new WaitForSeconds(1f);
@@ -131,8 +117,7 @@ public class ShieldEnemy : EnemyBase
 
         agent.speed = 30f;
         agent.destination = pushPos;
-        yield return new WaitForSeconds(0.2f);
-        yield return new WaitUntil(() => agent.velocity.magnitude == 0);
+        yield return new WaitUntil(() => agent.remainingDistance <= stoppingDistance);
 
         rgisPushing = false;
         rgShields.SetActive(false);
@@ -179,7 +164,6 @@ public class ShieldEnemy : EnemyBase
 
         agent.speed = 0;
         agent.destination = transform.position;
-        yield return new WaitUntil(() => agent.velocity.magnitude == 0);
 
         //Rotates smoothly towards player
         float time = 0f;

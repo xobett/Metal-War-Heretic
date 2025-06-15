@@ -1,8 +1,11 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public static EnemyManager instance;
+
     [Header("PLAYER DETECTION SETTINGS")]
     [SerializeField] private float waitPointAreaRadius;
     [SerializeField] private Transform playerPos;
@@ -11,69 +14,29 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private GameObject testObject;
     [SerializeField] private float testObjectRadius;
 
-    void Start()
+    [Header("ATTACKING ENEMIES")]
+    [SerializeField] private List<EnemyBase> attackingEnemies = new List<EnemyBase>();
+
+    private Vector3 randomPos = Vector3.zero;
+
+    private void Awake()
     {
-        GenerateRandomPosition();
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int ActiveAttackingEnemies()
     {
-
+        return attackingEnemies.Count;
     }
 
-    [ContextMenu("Gemerate Position")]
-    private void GenerateRandomPosition()
+    public void AddAttackingEnemy(EnemyBase enemy)
     {
-        StartCoroutine(GetPos());
+        attackingEnemies.Add(enemy);
     }
 
-    IEnumerator GetPos()
+    public void RemoveAttackingEnemy(EnemyBase enemy)
     {
-        testObject = new();
-        testObject.name = "Test";
-
-        Vector3 pos = GetRandomPos();
-
-        int attemptsDone = 0;
-        while (Physics.CheckSphere(pos, testObjectRadius, whatIsPlayer))
-        {
-            if (attemptsDone >= 3)
-            {
-                waitPointAreaRadius += 0.5f;
-                Debug.Log("Area was incremented");
-            }
-
-            pos = GetRandomPos();
-            attemptsDone++;
-            Debug.Log("New position was generated");
-            yield return null;
-        }
-
-        testObject.transform.position = pos;
-        yield return null;
-
+        attackingEnemies.Remove(enemy);
     }
 
-    private Vector3 GetRandomPos()
-    {
-        Vector3 pos = Random.insideUnitSphere * waitPointAreaRadius;
-        pos.y = 0;
-        pos = playerPos.position + pos;
-        return pos;
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (playerPos == null) return;
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(playerPos.position, waitPointAreaRadius);
-
-        if (testObject != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(testObject.transform.position, testObjectRadius);
-        }
-
-    }
 }

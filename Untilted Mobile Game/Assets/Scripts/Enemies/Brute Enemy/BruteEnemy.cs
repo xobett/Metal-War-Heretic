@@ -144,8 +144,6 @@ public class BruteEnemy : EnemyBase
         agent.speed = 0;
         agent.destination = transform.position;
 
-        yield return new WaitUntil(() => agent.velocity.magnitude == 0);
-
         //In case that the player gets pushed away from the enemy's view, rotates it again to the player.
         float time = 0f;
         while (time < 1)

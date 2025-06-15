@@ -1,12 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyBase : MonoBehaviour, IDamageable
 {
     [Header("--- ENEMY BASE SETTINGS ---\n")]
+    protected NavMeshAgent agent;
 
     [Header("PLAYER REFERENCES")]
     [SerializeField] protected LayerMask whatIsPlayer;
@@ -30,12 +32,17 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected Quaternion currentFacePlayerRot;
 
-    protected NavMeshAgent agent;
+    [Header("NAVIGATION SETTINGS")]
+    [SerializeField] private LayerMask whatIsCollision;
+    [SerializeField] private float areaRadius = 10f;
+    private Vector3 nextPos;
+
 
     private void Start()
     {
         GetReferences();
         SetEnemySettings();
+        StartCoroutine(AssignWaitPosition());
     }
 
     protected virtual void Update()
@@ -44,8 +51,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         GetCurrentPlayerRot();
 
         //Attack mode
-        BehaviourCheck();
-        FollowPlayer();
+        //BehaviourCheck();
+        //FollowPlayer();
     }
 
     #region ON DAMAGE
@@ -58,9 +65,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     #endregion ON DAMAGE
 
     #region ATTACK
-    private void BehaviourCheck()
+    private void AttackTriggerCheck()
     {
-        if (agent.velocity.magnitude == 0 && CheckPlayerIsNear() && !isAttacking)
+        if (agent.remainingDistance <= stoppingDistance && CheckPlayerIsNear() && !isAttacking)
         {
             StartCoroutine(StartAttack());
         }
@@ -131,6 +138,53 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     #endregion MOVEMENT AND ROTATION
 
+    #region POSITION GETTER
+
+    [ContextMenu("Test Check")]
+    void TestCheck()
+    {
+        StartCoroutine(AssignWaitPosition());
+    }
+
+    private IEnumerator AssignWaitPosition()
+    {
+        Vector3 calculatedPos = GetRandomPosition();
+
+        int attemptsDone = 0;
+        while (Physics.CheckSphere(calculatedPos, 3, whatIsCollision))
+        {
+            if (attemptsDone >= 3)
+            {
+                areaRadius += 0.5f;
+                Debug.Log("Area was incremented");
+            }
+
+            calculatedPos = GetRandomPosition();
+            attemptsDone++;
+            Debug.Log("New position was generated");
+            yield return null;
+        }
+
+        nextPos = calculatedPos;
+
+        agent.destination = nextPos;
+
+        yield return new WaitForSeconds(10);
+
+        StartCoroutine(AssignWaitPosition());
+        yield return null;
+    }
+
+    private Vector3 GetRandomPosition()
+    {
+        Vector3 pos = Random.insideUnitSphere * areaRadius;
+        pos.y = 0;
+        pos = player.transform.position + pos;
+        return pos;
+    }
+
+    #endregion POSITION GETTER
+
     #region START
 
     private void GetReferences()
@@ -163,6 +217,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, playerDetectionRadius);
+
+        if (player != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(player.transform.position, areaRadius); 
+        }
     }
 
     #endregion DEBUG VISUAL GIZMOS
