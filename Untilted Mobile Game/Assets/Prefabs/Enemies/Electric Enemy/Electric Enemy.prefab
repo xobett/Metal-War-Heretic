@@ -475,23 +475,23 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
-  playerDetectionRadius: 0
+  playerDetectionRadius: 6
   damage: 90
-  timeBetweenAttacks: 1
+  timeBetweenAttacks: 2
   walkSpeed: 1.5
-  stoppingDistance: 4.5
+  stoppingDistance: 7
   distanceAttackPf: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
   spawnPoint: {fileID: 2194113442272978875}
-  beforeDistanceAttackTime: 2
-  afterDistanceAttackTime: 2
-  distanceAttackSpeed: 2
+  beforeDistanceAttackTime: 1
+  afterDistanceAttackTime: 3
+  distanceAttackSpeed: 7
   distanceAttackDamage: 20
   distanceAttackLifetime: 5
   electricAreaPf: {fileID: 2278451330885868786, guid: f575cf7367972ec4caaf35b2a0efd4f0, type: 3}
   cueElectricVfx: {fileID: 9109378647140970005, guid: 12ab461bc79503f429e1c2ec660c8796, type: 3}
-  electricAreaLifetime: 1
-  electricAreaDamage: 0
-  electricAttackCooldownTime: 1
+  electricAreaLifetime: 5
+  electricAreaDamage: 20
+  electricAttackCooldownTime: 5
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -208,7 +208,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5870362146632538623
 Transform:
   m_ObjectHideFlags: 0
@@ -533,15 +533,15 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   playerDetectionRadius: 2.6
-  damage: 0
+  damage: 5
   timeBetweenAttacks: 1
   walkSpeed: 1.5
   stoppingDistance: 2.5
   rgBeforeSmackTime: 1
-  rgGuardingTime: 1
+  rgGuardingTime: 6
   rgBeforePushTime: 1
   rgAfterPushTime: 1
-  rgCooldownTime: 5
+  rgCooldownTime: 10
   rgDamage: 20
   rgSmackRadius: 3
   rgShields: {fileID: 2803988556667263386}

@@ -135,6 +135,7 @@ public class ShieldEnemy : EnemyBase
         yield return new WaitUntil(() => agent.velocity.magnitude == 0);
 
         rgisPushing = false;
+        rgShields.SetActive(false);
 
         //Rotates smoothly towards player
         float time = 0f;
@@ -174,6 +175,7 @@ public class ShieldEnemy : EnemyBase
     private IEnumerator StopPostHit()
     {
         rgisPushing = false;
+        rgShields.SetActive(false);
 
         agent.speed = 0;
         agent.destination = transform.position;

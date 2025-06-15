@@ -421,19 +421,19 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
-  playerDetectionRadius: 0
+  playerDetectionRadius: 2.8
   damage: 30
-  timeBetweenAttacks: 1
-  walkSpeed: 1.5
+  timeBetweenAttacks: 3
+  walkSpeed: 2.35
   stoppingDistance: 3
   rampageRunDamage: 30
   rampageRunHitForce: 0.2
   rampageRunSpeed: 10
   minimumDistanceToRun: 5
-  beforeRunTime: 2
-  runningTime: 2
-  afterRunTime: 2
-  rampageRunCooldown: 10
+  rmpBeforeRunTime: 2
+  rmpRunningTime: 2
+  rmpAfterRunTime: 2
+  rmpCooldown: 10
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0

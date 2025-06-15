@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [Header("ENEMY SPAWNER SETTINGS")]
-    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private GameObject[] enemyPrefabs;
     [SerializeField, Range(0f, 3f)] private int timeBetweenSpawns;
     [SerializeField] private Transform[] spawnLocations;
 
@@ -12,16 +12,28 @@ public class EnemySpawner : MonoBehaviour
     {
         StartCoroutine(SpawnEnemy());       
     }
+
+    private int GetTotalEnemiesInScene()
+    {
+        GameObject[] enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
+
+        return enemiesInScene.Length;
+    }
     
     private IEnumerator SpawnEnemy()
     {
-        Transform spawnPoint = GetRandomSpawnPoint();
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        if (GetTotalEnemiesInScene() <= 5)
+        {
+            Transform spawnPoint = GetRandomSpawnPoint();
+            Instantiate(enemyPrefabs[RandomEnemyIndex()], spawnPoint.position, spawnPoint.rotation); 
+        }
 
         yield return new WaitForSeconds(timeBetweenSpawns);
 
         StartCoroutine(SpawnEnemy());
     }
+
+    private int RandomEnemyIndex() => Random.Range(0, enemyPrefabs.Length - 1);
 
     private Transform GetRandomSpawnPoint()
     {

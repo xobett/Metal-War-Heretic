@@ -5,23 +5,15 @@ using UnityEngine;
 
 public class ComboCounter : MonoBehaviour
 {
-    //WHENEVER A HIT IS LANDED AND IS BETWEEN THE CURRENT TIME OF COMBO EXECUTION, IT WILL ADD
-    //UPDATE VISUALLY TO THE PLAYER THE COMBO COUNTER
-
+    [Header("ACTUAL COMBO COUNT")]
     [SerializeField] private int comboCount;
+    [SerializeField] private TextMeshProUGUI hudComboText;
 
-    [SerializeField] private TextMeshProUGUI comboText;
-
-    private bool timerEnabled;
-
-    [SerializeField] private float timer;
+    [Header("COMBO TIMER SETTINGS")]
     [SerializeField] private float timeWithinCombo;
-    private const float originalTimeWindow = 2f;
 
-    private void Start()
-    {
-        timerEnabled = false;
-    }
+    private float timer;
+    private const float originalTimeWindow = 2f;
 
     private void Update()
     {
@@ -34,7 +26,7 @@ public class ComboCounter : MonoBehaviour
 
     private void DisplayComboCounter()
     {
-        comboText.text = $"{comboCount}X";
+        hudComboText.text = $"{comboCount}X";
     }
 
     private void ComboCheck()

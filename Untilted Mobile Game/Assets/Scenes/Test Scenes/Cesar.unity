@@ -211,6 +211,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joystick_Handler: {fileID: 155910338}
   joystick_Bckgrnd: {fileID: 673469320}
+--- !u!4 &118215320 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8145404637150508987, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
+  m_PrefabInstance: {fileID: 301435828882661727}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &144872975
 GameObject:
   m_ObjectHideFlags: 0
@@ -1537,62 +1542,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: detectionRadius
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: beforeAttackTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: stoppingDistance
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: attackCooldownTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: electricAreaDamage
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: nextAttackWaitTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: timeBetweenAttacks
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: distanceAttackSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: beforeAttackWaitTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: electricAreaLifetime
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: playerDetectionRadius
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: afterDistanceAttackTime
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: beforeDistanceAttackTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1059633073654701421, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-      propertyPath: electricAttackCooldownTime
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2793062606952543177, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -1824,26 +1773,6 @@ PrefabInstance:
     - target: {fileID: 7993994855593321819, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-      propertyPath: walkSpeed
-      value: 2.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-      propertyPath: detectionRadius
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-      propertyPath: rampageRunHitForce
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-      propertyPath: timeBetweenAttacks
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8439695627006936142, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
-      propertyPath: playerDetectionRadius
-      value: 2.8
       objectReference: {fileID: 0}
     - target: {fileID: 8637028352418326444, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2139,6 +2068,7 @@ GameObject:
   - component: {fileID: 1276826045}
   - component: {fileID: 1276826044}
   - component: {fileID: 1276826048}
+  - component: {fileID: 1276826049}
   m_Layer: 8
   m_Name: Store
   m_TagString: Untagged
@@ -2248,6 +2178,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemCost: 0
+--- !u!114 &1276826049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1276826043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b4e84172d08c1d4fb0cfa7075c541d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1302371725
 GameObject:
   m_ObjectHideFlags: 0
@@ -2301,7 +2243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1374460863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2309,13 +2251,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1374460862}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f974ffb0c891f7846877d09a890825ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7993994855593321819, guid: 92d88865c5d775d4a8c1531d6bb9c5a7, type: 3}
-  timeBetweenSpawns: 2
+  enemyPrefabs:
+  - {fileID: 7993994855593321819, guid: 6344cb44531f43646b287a3f6ee56750, type: 3}
+  - {fileID: 7993994855593321819, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
+  - {fileID: 7993994855593321819, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
+  timeBetweenSpawns: 3
   spawnLocations:
   - {fileID: 910579281}
   - {fileID: 224768068}
@@ -3085,73 +3030,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: damage
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: rgDamage
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: guardingTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: rgSmackRadius
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: rgAfterHitTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: rgCooldownTime
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: rgGuardingTime
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: rgAfterPushTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: rgBeforePushTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: stoppingDistance
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: rgBeforeSmackTime
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: timeBetweenAttacks
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1175558708040406791, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: whatIsPlayer.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
-    - target: {fileID: 1752446631520181859, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2793062606952543177, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2803988556667263386, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5864222057376983774, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3193,27 +3074,74 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7812034608841739272, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7993994855593321819, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_Name
       value: Shield Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 7993994855593321819, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8637028352418326444, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d10e41d5f04e6f41b652037d03456ac, type: 3}
+--- !u!1 &1866423846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1866423848}
+  - component: {fileID: 1866423847}
+  m_Layer: 0
+  m_Name: Enemy Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1866423847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866423846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd73bb1b973b8854abc3cefdd5b4483e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waitPointAreaRadius: 10
+  playerPos: {fileID: 118215320}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 512
+  testObject: {fileID: 0}
+  testObjectRadius: 5.1
+--- !u!4 &1866423848
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866423846}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6874317, y: 2.0598435, z: 0.04130283}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1905856607
 GameObject:
   m_ObjectHideFlags: 0
@@ -3885,10 +3813,18 @@ PrefabInstance:
       propertyPath: comboText
       value: 
       objectReference: {fileID: 1573642801}
+    - target: {fileID: 6090061871705627530, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
+      propertyPath: hudComboText
+      value: 
+      objectReference: {fileID: 1573642801}
     - target: {fileID: 7385239553009452054, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
       propertyPath: sliceButton
       value: 
       objectReference: {fileID: 751390664}
+    - target: {fileID: 7385239553009452054, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
+      propertyPath: cooldownTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7667774295053278460, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -4229,3 +4165,4 @@ SceneRoots:
   - {fileID: 3989042090481141016}
   - {fileID: 8395253489890768214}
   - {fileID: 1776483573}
+  - {fileID: 1866423848}

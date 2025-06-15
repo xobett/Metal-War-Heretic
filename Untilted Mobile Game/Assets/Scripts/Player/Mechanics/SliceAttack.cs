@@ -20,7 +20,7 @@ public class SliceAttack : MonoBehaviour
     private bool isPressingSlice;
 
     [Header("SLICE COOLDOWN SETTINGS")]
-    [SerializeField, Range(1f, 5f)] private float cooldownTime;
+    [SerializeField, Range(0.5f, 2f)] private float cooldownTime;
 
     [SerializeField] private bool isCooling;
     public bool isDashing { get; private set; }

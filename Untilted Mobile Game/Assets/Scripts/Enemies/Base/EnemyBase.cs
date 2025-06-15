@@ -40,10 +40,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected virtual void Update()
     {
-        FollowPlayer();
         LookAtPlayer();
         GetCurrentPlayerRot();
+
+        //Attack mode
         BehaviourCheck();
+        FollowPlayer();
     }
 
     #region ON DAMAGE
