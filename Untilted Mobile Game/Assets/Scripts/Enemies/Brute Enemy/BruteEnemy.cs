@@ -71,12 +71,12 @@ public class BruteEnemy : EnemyBase
 
     private void RampageRunTriggerCheck()
     {
-        if (!rmpCoolingDown && !isAttacking)
+        if (!rmpCoolingDown && !isExecutingAttack)
         {
             //Checks if rampage run ability is not active, and distance is within range to trigger the ability
             if ((!rmpAbilityActive && !rmpIsRunning) && playerDistance > minimumDistanceToRun)
             {
-                isAttacking = true;
+                isExecutingAttack = true;
                 StartCoroutine(StartRampageRun());
             }
         }
@@ -119,7 +119,7 @@ public class BruteEnemy : EnemyBase
         //Ability is no longer active and should follow player
         agent.speed = walkSpeed;
         rmpAbilityActive = false;
-        isAttacking = false;
+        isExecutingAttack = false;
 
         StartCoroutine(StartRampageRunCooldown());
         yield return null;
@@ -160,7 +160,7 @@ public class BruteEnemy : EnemyBase
 
         agent.speed = walkSpeed;
         rmpAbilityActive = false;
-        isAttacking = false;
+        isExecutingAttack = false;
 
         StartCoroutine(StartRampageRunCooldown());
         yield return null;

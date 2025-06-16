@@ -23,7 +23,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField, Range(1f, 6f)] protected int timeBetweenAttacks;
 
     private const float playerDetection_Range = 3f;
-    protected bool isAttacking;
+    protected bool isExecutingAttack;
 
     [Header("MOVEMENT SETTINGS")]
     [SerializeField] protected float walkSpeed = 1.5f;
@@ -38,7 +38,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private bool isMoving;
 
     [SerializeField] private float navigationTimer;
-    [SerializeField] private float maxNavigationTime = 12f; 
+    [SerializeField] private float maxNavigationTime = 12f;
+
+    [SerializeField] private bool isAttacking;
 
     private void Awake()
     {
@@ -53,23 +55,40 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected virtual void Update()
     {
+
+        GetBehaviour();
+
         //NAVIGATION
-        RunNavigationTimer();
-        HandleStuckNavigation();
-        EnemyWithinAreaCheck();
 
-
-        //LookAtPlayer();
-        //GetCurrentPlayerRot();
+        LookAtPlayer();
+        GetCurrentPlayerRot();
 
         //ATTACK
-        //BehaviourCheck();
-        //FollowPlayer();
+
+        if (isAttacking)
+        {
+            AttackTriggerCheck();
+            FollowPlayer();
+        }
+        else
+        {
+            RunNavigationTimer();
+            HandleStuckNavigation();
+            HandleEnemyNearPlayer();
+        }
     }
 
     #region BEHAVIOUR CHECK
 
-
+    private void GetBehaviour()
+    {
+        if (!isMoving && EnemyManager.instance.ActiveAttackingEnemiesCount < 3 && !isAttacking)
+        {
+            EnemyManager.instance.AddAttackingEnemy(this);
+            SetAttackBehaviourSettings();
+            isAttacking = true;
+        }
+    }
 
     #endregion BEHAVIOUR CHECK
 
@@ -84,9 +103,22 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     #endregion ON DAMAGE
 
     #region ATTACK
+
+    private void SetAttackBehaviourSettings()
+    {
+        agent.speed = walkSpeed;
+        agent.stoppingDistance = stoppingDistance;
+    }
+
+    private void SetNonAttackBehaviourSettings()
+    {
+        agent.speed = walkSpeed * 2;
+        agent.stoppingDistance = 0;
+    }
+
     private void AttackTriggerCheck()
     {
-        if (agent.remainingDistance <= stoppingDistance && CheckPlayerIsNear() && !isAttacking)
+        if (agent.remainingDistance <= stoppingDistance && CheckPlayerIsNear() && !isExecutingAttack)
         {
             StartCoroutine(StartAttack());
         }
@@ -94,9 +126,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private IEnumerator StartAttack()
     {
-        Debug.Log("Stopped");
         //Briefly stops and waits before executing its attack
-        isAttacking = true;
+        isExecutingAttack = true;
+
+        Debug.Log("Stopped");
         yield return new WaitForSeconds(timeBetweenAttacks);
 
         Debug.Log("Start attack");
@@ -112,7 +145,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
             player.GetComponent<Health>().TakeDamage(damage);
         }
 
-        isAttacking = false;
+        isExecutingAttack = false;
     }
 
     protected void PushPlayer(float damageUponHit)
@@ -137,7 +170,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected virtual void FollowPlayer()
     {
-        if (!isAttacking)
+        if (!isExecutingAttack)
         {
             agent.destination = player.transform.position;
         }
@@ -205,7 +238,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         }
     }
 
-    private void EnemyWithinAreaCheck()
+    private void HandleEnemyNearPlayer()
+    {
+        //if (!isMoving && Physics.CheckSphere(transform.position, agent.radius, whatIsPlayer))
+        //{
+        //    agent.speed = walkSpeed * 2;
+        //    StartCoroutine(AssignWaitPosition());
+        //}
+    }
+
+    private void HandleEnemyExitingArea()
     {
         if (!isMoving && Vector3.Distance(transform.position, player.transform.position) > EnemyManager.instance.AreaRadius)
         {

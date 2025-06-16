@@ -139,7 +139,7 @@ public class ShieldEnemy : EnemyBase
 
         agent.speed = walkSpeed;
         agent.acceleration = 12f; //Resets to its default value
-        isAttacking = false;
+        isExecutingAttack = false;
 
         StartCoroutine(RoyalGuardCooldown());
         yield return null;
@@ -182,7 +182,7 @@ public class ShieldEnemy : EnemyBase
 
         agent.speed = walkSpeed;
         agent.acceleration = 12f; //Resets to its default value
-        isAttacking = false;
+        isExecutingAttack = false;
 
         StartCoroutine(RoyalGuardCooldown());
         yield return null;

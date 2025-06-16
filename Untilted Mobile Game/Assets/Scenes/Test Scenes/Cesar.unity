@@ -3120,7 +3120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd73bb1b973b8854abc3cefdd5b4483e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  areaRadius: 7.5
+  areaRadius: 10
   playerPos: {fileID: 118215320}
   attackingEnemies: []
 --- !u!4 &1866423848

@@ -18,10 +18,7 @@ public class EnemyManager : MonoBehaviour
         instance = this;
     }
 
-    public int ActiveAttackingEnemies()
-    {
-        return attackingEnemies.Count;
-    }
+    public int ActiveAttackingEnemiesCount => attackingEnemies.Count;
 
     public void AddAttackingEnemy(EnemyBase enemy)
     {

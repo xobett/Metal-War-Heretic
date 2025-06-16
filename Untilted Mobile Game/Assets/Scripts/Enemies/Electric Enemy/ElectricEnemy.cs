@@ -85,7 +85,7 @@ public class ElectricEnemy : EnemyBase
         Instantiate(distanceAttackPf, spawnPoint.position, Quaternion.identity);
         yield return new WaitForSeconds(afterDistanceAttackTime);
 
-        isAttacking = false;
+        isExecutingAttack = false;
 
         yield return null;
     }
@@ -122,7 +122,7 @@ public class ElectricEnemy : EnemyBase
         transform.rotation = currentFacePlayerRot;
 
         electricAttackActive = false;
-        isAttacking = false;
+        isExecutingAttack = false;
 
         StartCoroutine(StartElectricCooldown());
         yield return null;
