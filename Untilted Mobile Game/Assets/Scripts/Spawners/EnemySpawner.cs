@@ -8,9 +8,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, Range(0f, 3f)] private int timeBetweenSpawns;
     [SerializeField] private Transform[] spawnLocations;
 
-    void Start()
+    public void StartSpawn()
     {
-        StartCoroutine(SpawnEnemy());       
+        StartCoroutine(SpawnEnemy());
     }
 
     private int GetTotalEnemiesInScene()
@@ -19,13 +19,17 @@ public class EnemySpawner : MonoBehaviour
 
         return enemiesInScene.Length;
     }
-    
+
     private IEnumerator SpawnEnemy()
     {
         if (GetTotalEnemiesInScene() <= 5)
         {
             Transform spawnPoint = GetRandomSpawnPoint();
-            Instantiate(enemyPrefabs[RandomEnemyIndex()], spawnPoint.position, spawnPoint.rotation); 
+            Instantiate(enemyPrefabs[RandomEnemyIndex()], spawnPoint.position, spawnPoint.rotation);
+        }
+        else if (GetTotalEnemiesInScene() > 5)
+        {
+            StopCoroutine(SpawnEnemy());
         }
 
         yield return new WaitForSeconds(timeBetweenSpawns);

@@ -19,6 +19,8 @@ public class SliceAttackCollider : MonoBehaviour
             playerCam.CameraShake();
             other.GetComponent<IDamageable>().OnDamage(sliceDamage);
         }
+
+        GetComponentInParent<SliceAttack>().OnSliceEnemy();
     }
     private bool isDashing => GetComponentInParent<SliceAttack>().isDashing;
 }

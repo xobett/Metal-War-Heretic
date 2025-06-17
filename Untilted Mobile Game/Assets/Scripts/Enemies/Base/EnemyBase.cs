@@ -178,7 +178,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected virtual void FollowPlayer()
     {
-        if (!isExecutingAttack)
+        if (!isExecutingAttack && !isMoving)
         {
             agent.destination = player.transform.position;
         }
@@ -229,6 +229,15 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         agent.destination = nextPos;
         //Waits until remaining distance is called and until enemy arrives to its destination
         yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
+
+        float time = 0f;
+        while (time < 1)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
+            time += Time.deltaTime * 0.6f;
+            yield return null;
+        }
+        transform.rotation = currentFacePlayerRot;
 
         //Stops the enemy upon arrival
         agent.speed = 0;

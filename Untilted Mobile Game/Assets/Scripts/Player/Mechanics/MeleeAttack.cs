@@ -66,7 +66,7 @@ public class MeleeAttack : MonoBehaviour
 
         Collider[] enemyColliders = Physics.OverlapSphere(transform.position, radius, whatIsMelee, QueryTriggerInteraction.UseGlobal);
 
-        if (enemyColliders.Length != 0)
+        if (enemyColliders.Length != 0 && !IsDashing)
         {
             //Look at enemy directly
 
@@ -106,6 +106,8 @@ public class MeleeAttack : MonoBehaviour
     public bool IsHitting() => Input.GetKeyDown(KeyCode.E);
 
     #endregion INPUT
+
+    private bool IsDashing => gameObject.GetComponent<SliceAttack>().isDashing;
 
     #region VISUAL DEBUG GIZMOS
 

@@ -51,6 +51,11 @@ public class SliceAttack : MonoBehaviour
 
     #region SLICE ATTACK
 
+    public void OnSliceEnemy()
+    {
+        isDashing = false;
+    }
+
     private void SliceCheck()
     {
         if (!isCooling && !isDashing && (IsSlicing() || isPressingSlice))
