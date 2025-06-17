@@ -74,7 +74,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         {
             RunNavigationTimer();
             HandleStuckNavigation();
-            HandleEnemyNearPlayer();
+            HandleEnemyExitingArea();
         }
     }
 

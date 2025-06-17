@@ -23,7 +23,7 @@ public class ShieldEnemy : EnemyBase
     private bool rgPushActive;
     private bool rgisPushing;
 
-    private bool rgPlayerHit;
+    private bool rgPlayerHit = false;
 
     #region BASE OVERRIDES
 
@@ -89,7 +89,7 @@ public class ShieldEnemy : EnemyBase
             player.GetComponent<Health>().TakeDamage(rgDamage);
         }
 
-        rgShields.SetActive(true);
+        //rgShields.SetActive(true);
         rgGuardActive = true;
         yield return new WaitForSeconds(rgGuardingTime);
 
@@ -101,26 +101,26 @@ public class ShieldEnemy : EnemyBase
         //Calculates start and end push positions,
         Vector3 startingPos = transform.position;
         Vector3 anticipationPos = transform.position - transform.forward * 5f;
-        Vector3 pushPos = transform.position + transform.forward * 5f;
+        Vector3 pushPos = transform.position + transform.forward * 15f;
 
         //Reduces acceleration to avoid acceleration in its push and moves back to push.
         agent.acceleration = 2000;
         agent.speed = 2;
         agent.destination = anticipationPos;
-        yield return new WaitUntil(() => agent.remainingDistance <= stoppingDistance);
+        yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance <= stoppingDistance);
 
         //Waits half a second before pushing forward movement
         yield return new WaitForSeconds(1f);
 
         //Pushes forward and waits until it has arrives to its end push position
         rgisPushing = true;
+        //rgShields.SetActive(false);
 
         agent.speed = 30f;
         agent.destination = pushPos;
-        yield return new WaitUntil(() => agent.remainingDistance <= stoppingDistance);
+        yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance <= stoppingDistance);
 
         rgisPushing = false;
-        rgShields.SetActive(false);
 
         //Rotates smoothly towards player
         float time = 0f;
@@ -149,6 +149,7 @@ public class ShieldEnemy : EnemyBase
     {
         if (other.CompareTag("Player") && (rgisPushing && !rgPlayerHit))
         {
+            Debug.Log("Hit player");
             rgPlayerHit = false;
 
             PushPlayer(rgDamage);

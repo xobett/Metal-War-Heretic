@@ -541,7 +541,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 640
   isMoving: 0
-  timer: 0
+  navigationTimer: 0
+  maxNavigationTime: 12
+  isAttacking: 0
   rgBeforeSmackTime: 1
   rgGuardingTime: 6
   rgBeforePushTime: 1
