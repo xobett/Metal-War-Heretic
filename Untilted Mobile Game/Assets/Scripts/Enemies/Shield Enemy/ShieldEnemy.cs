@@ -89,7 +89,7 @@ public class ShieldEnemy : EnemyBase
             player.GetComponent<Health>().TakeDamage(rgDamage);
         }
 
-        //rgShields.SetActive(true);
+        rgShields.SetActive(true);
         rgGuardActive = true;
         yield return new WaitForSeconds(rgGuardingTime);
 
@@ -114,7 +114,7 @@ public class ShieldEnemy : EnemyBase
 
         //Pushes forward and waits until it has arrives to its end push position
         rgisPushing = true;
-        //rgShields.SetActive(false);
+        rgShields.SetActive(false);
 
         agent.speed = 30f;
         agent.destination = pushPos;

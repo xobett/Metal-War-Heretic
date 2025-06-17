@@ -71,7 +71,7 @@ public class BruteEnemy : EnemyBase
 
     private void RampageRunTriggerCheck()
     {
-        if (!rmpCoolingDown && !isExecutingAttack)
+        if (isAttacking && !rmpCoolingDown && !isExecutingAttack)
         {
             //Checks if rampage run ability is not active, and distance is within range to trigger the ability
             if ((!rmpAbilityActive && !rmpIsRunning) && playerDistance > minimumDistanceToRun)

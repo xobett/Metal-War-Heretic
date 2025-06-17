@@ -14,7 +14,7 @@ public class SliceAttackCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && isDashing)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && isDashing)
         {
             playerCam.CameraShake();
             other.GetComponent<IDamageable>().OnDamage(sliceDamage);

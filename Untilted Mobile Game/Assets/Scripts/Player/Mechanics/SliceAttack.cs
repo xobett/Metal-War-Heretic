@@ -4,12 +4,19 @@ using UnityEngine.UI;
 
 public class SliceAttack : MonoBehaviour
 {
+
+    /// <summary>
+    /// Attack logic and damage is done in the SliceAttackCollider
+    /// </summary>
+
+    private Animator playerAnimator;
+
     [Header("SLICE BUTTON")]
     [SerializeField] private Button sliceButton;
 
     [Header("SLICE ATTACK SETTINGS")]
     [SerializeField] private float sliceSpeed;
-    private const float sliceDuration = 0.2f;
+    [SerializeField] private float sliceDuration = 0.2f;
 
     private PlayerCamera cam;
 
@@ -49,6 +56,7 @@ public class SliceAttack : MonoBehaviour
         if (!isCooling && !isDashing && (IsSlicing() || isPressingSlice))
         {
             StartCoroutine(StartSlice());
+            playerAnimator.SetTrigger("Dash");
         }
     }
 
@@ -144,6 +152,7 @@ public class SliceAttack : MonoBehaviour
     {
         charCtrlr = GetComponent<CharacterController>();
         cam = Camera.main.GetComponent<PlayerCamera>();
+        playerAnimator = GetComponent<PlayerMovement>().playerAnimator;
     }
 
     #endregion GET REFERENCES

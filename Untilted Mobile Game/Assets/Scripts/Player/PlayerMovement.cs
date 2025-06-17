@@ -6,6 +6,9 @@ public class PlayerMovement : MonoBehaviour
     //Player settings
     private CharacterController charCtrlr;
 
+    [Header("ANIMATOR SETTINGS")]
+    [SerializeField] public Animator playerAnimator;
+
     [Header("NORMAL MOVEMENT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float movementSpeed;
     [SerializeField, Range(0f, 1f)] private float rotationSpeed;
@@ -43,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
             MovementCheck();
             Gravity();
         }
+
     }
 
     #region MOVEMENT
@@ -74,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (move.magnitude != 0)
         {
+            playerAnimator.SetBool("isWalking", true);
+
             float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref velocity, rotationSpeed);
 
@@ -82,6 +88,10 @@ public class PlayerMovement : MonoBehaviour
             Vector3 moveDirection = transform.rotation * Vector3.forward;
 
             charCtrlr.Move(moveDirection * movementSpeed * Time.deltaTime);
+        }
+        else
+        {
+            playerAnimator.SetBool("isWalking", false);
         }
     }
 
@@ -132,7 +142,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void Gravity()
     {
-        gravity.y -= gravityForce * Time.deltaTime;
+        if (!isDashing)
+        {
+            gravity.y -= gravityForce * Time.deltaTime; 
+        }
 
         if (IsGrounded() && gravity.y < 0)
         {
@@ -148,6 +161,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #endregion GRAVITY
+
+    #region CHECKS
+
+    private bool isDashing => GetComponent<SliceAttack>().isDashing;
+
+    #endregion CHECKS
 
     #region START
 

@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -48,9 +49,9 @@ public class MeleeAttack : MonoBehaviour
         {
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
-                Debug.Log("Hitting enemy");
                 hit.collider.GetComponent<IDamageable>().OnDamage(damage);
                 playerCam.CameraShake();
+                GetComponent<ComboCounter>().IncreaseComboCount();
             }
         }
     }

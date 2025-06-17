@@ -139,4 +139,12 @@ public class ElectricEnemy : EnemyBase
     #endregion SECONDARY ABILITY - ELECTRIC ATTACK
 
     #endregion ATTACK ABILITIES
+
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.IncreaseScore(50);
+        }
+    }
 }

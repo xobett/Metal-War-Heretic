@@ -1,0 +1,34 @@
+using TMPro;
+using UnityEngine;
+
+public class HUDStatsDisplay : MonoBehaviour
+{
+    [Header("HUD TEXT SETTINGS")]
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI comboCountText;
+
+    private ComboCounter comboCounter;
+
+
+    void Start()
+    {
+        comboCounter = GameObject.FindGameObjectWithTag("Player").GetComponent<ComboCounter>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        DisplayActualScore();
+        DisplayActualComboCount();
+    }
+
+    private void DisplayActualScore()
+    {
+        scoreText.text = $"Score : {GameManager.Instance.Score.ToString()}";
+    }
+
+    private void DisplayActualComboCount()
+    {
+        comboCountText.text = $"{comboCounter.ActualComboCount.ToString()}X";
+    }
+}

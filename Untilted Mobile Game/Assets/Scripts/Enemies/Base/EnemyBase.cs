@@ -40,7 +40,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private float navigationTimer;
     [SerializeField] private float maxNavigationTime = 12f;
 
-    [SerializeField] private bool isAttacking;
+    [SerializeField] protected bool isAttacking;
 
     private void Awake()
     {
@@ -93,14 +93,22 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     #endregion BEHAVIOUR CHECK
 
 
-    #region ON DAMAGE
+    #region ON DAMAGE AND DESTROY
 
     public void OnDamage(float damage)
     {
         GetComponent<Health>().TakeDamage(damage);
     }
 
-    #endregion ON DAMAGE
+    private void OnDestroy()
+    {
+        if (isAttacking && EnemyManager.instance != null)
+        {
+            EnemyManager.instance.RemoveAttackingEnemy(this);
+        }
+    }
+
+    #endregion ON DAMAGE AND DESTROY
 
     #region ATTACK
 
