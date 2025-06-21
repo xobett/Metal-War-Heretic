@@ -1,9 +1,10 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MeleeAttack : MonoBehaviour
 {
+    private Animator playerAnimator;
+
     [Header("ATTACK BUTTON")]
     [SerializeField] private Button attackButton;
 
@@ -16,9 +17,20 @@ public class MeleeAttack : MonoBehaviour
 
     private PlayerCamera playerCam;
 
+    private float meleeTimer;
+    [SerializeField, Range(0f, 1f)] private float meleeCooldownTime;
+    private bool ableToMelee;
+
     [Header("AIM ASSIT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float radius;
     public bool aimAssitActive;
+
+    [Header("COMBO ATTACK SETTINGS")]
+    private float combatTimer;
+    [SerializeField, Range(0f, 1f)] private float combatTime;
+    public bool InCombat { get; private set; }
+
+    private bool engagedCombat;
 
     private void Start()
     {
@@ -30,14 +42,71 @@ public class MeleeAttack : MonoBehaviour
     {
         HitCheck();
         AimAssit();
+
+        RunTimers();
+        CombatCheck();
+        MeleeCheck();
     }
+
+    #region MELEE AND COMBAT TIMERS / CHECKS
+
+    private void CombatCheck()
+    {
+        if (combatTimer > 0)
+        {
+            InCombat = true;
+        }
+        else
+        {
+            InCombat = false;
+        }
+
+        playerAnimator.SetBool("inCombat", InCombat);
+    }
+
+    private void MeleeCheck()
+    {
+        if (meleeTimer < 0)
+        {
+            ableToMelee = true;
+        }
+        else
+        {
+            ableToMelee = false;
+        }
+    }
+
+    private void RunTimers()
+    {
+        combatTimer -= Time.deltaTime;
+        meleeTimer -= Time.deltaTime;
+    }
+
+    #endregion MELEE AND COMBAT TIMERS / CHECKS
 
     #region MELEE
 
     public void HitCheck()
     {
-        if (IsHitting())
+        if (ableToMelee && IsHitting())
         {
+            //Adds a time window to add combo punches
+            combatTimer = combatTime;
+
+            //Due to unity placing trigger parameters on queue and not executing them right away, it plays the animation instantly if its not engaging in combat.
+            if (!InCombat)
+            {
+                playerAnimator.Play("Golpe derecha 2 1", 0, 0.15f);
+                meleeTimer = meleeCooldownTime;
+            }
+            //If the player is engaged in combat, then it executes a normal trigger behaviour.
+            else
+            {
+                meleeTimer = 0.2f;
+                playerAnimator.SetTrigger("Hit");
+            }
+
+            Debug.Log("Hitting");
             Punch();
         }
     }
@@ -92,6 +161,7 @@ public class MeleeAttack : MonoBehaviour
     private void GetReferences()
     {
         playerCam = Camera.main.GetComponent<PlayerCamera>();
+        playerAnimator = GetComponent<PlayerMovement>().playerAnimator;
     }
 
     private void AddButtonEvents()

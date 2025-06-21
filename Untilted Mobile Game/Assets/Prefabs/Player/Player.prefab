@@ -248,8 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ef5cda0fe96f647812cf5e06b3dcbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 6569292388430234341}
-  movementSpeed: 2.5
+  playerAnimator: {fileID: 6569292388430234341}
+  movementSpeed: 4.4
   rotationSpeed: 0.01
   hitSpeed: 0
   hitForce: 0
@@ -271,6 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliceButton: {fileID: 0}
   sliceSpeed: 10
+  sliceDuration: 0.55
   assistRadius: 1.6
   whatIsEnemy:
     serializedVersion: 2
@@ -351,8 +352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5b6b162c4e164342a5397013c2b3ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboCount: 0
-  hudComboText: {fileID: 0}
   timeWithinCombo: 2
 --- !u!1001 &5851285182449949160
 PrefabInstance:

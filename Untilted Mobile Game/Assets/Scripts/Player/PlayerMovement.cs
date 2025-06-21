@@ -61,7 +61,10 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                NormalMovement();
+                if (!inCombat)
+                {
+                    NormalMovement(); 
+                }
             }
         }
         else
@@ -165,6 +168,8 @@ public class PlayerMovement : MonoBehaviour
     #region CHECKS
 
     private bool isDashing => GetComponent<SliceAttack>().isDashing;
+
+    private bool inCombat => GetComponent<MeleeAttack>().InCombat;
 
     #endregion CHECKS
 
