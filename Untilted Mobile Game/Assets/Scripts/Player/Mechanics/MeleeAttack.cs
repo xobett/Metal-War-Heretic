@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,27 +12,35 @@ public class MeleeAttack : MonoBehaviour
 
     [Header("MELEE ATTACK SETTINGS")]
     [SerializeField, Range(10f, 50f)] private float damage;
-    [SerializeField] private float hitRate;
     [SerializeField] private float hitRange = 0.5f;
-
     [SerializeField] private LayerMask whatIsMelee;
+
+    private int hitsMade;
 
     private PlayerCamera playerCam;
 
-    private float meleeTimer;
-    [SerializeField, Range(0f, 1f)] private float meleeCooldownTime;
-    private bool ableToMelee;
+    [Header("MELEE COOLDOWN SETTINGS")]
+    [SerializeField] private float afterComboCooldownTime = 1.5f;
+    private const float inComboCooldownTime = 0.1f;
+
+    //Timer used to limit player from spamming attack
+    private float meleeCooldownTimer;
+    private float meleeCooldownDuration;
+
+    [Header("COMBAT STATE SETTINGS")]
+    //Timer used to handle combat state of player
+    //Controls animations and player movement independently from melee cooldown time
+    [SerializeField] private float inComboCombatDuration = 1f;
+    [SerializeField] private float afterComboCombatDuration; 
+
+    private float combatTimer;
+    private float combatDuration;
+
+    [HideInInspector] public bool InCombat {  get; private set; }
 
     [Header("AIM ASSIT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float radius;
-    public bool aimAssitActive;
-
-    [Header("COMBO ATTACK SETTINGS")]
-    private float combatTimer;
-    [SerializeField, Range(0f, 1f)] private float combatTime;
-    public bool InCombat { get; private set; }
-
-    private bool engagedCombat;
+    [HideInInspector] public bool aimAssitActive;
 
     private void Start()
     {
@@ -44,13 +54,22 @@ public class MeleeAttack : MonoBehaviour
         AimAssit();
 
         RunTimers();
-        CombatCheck();
-        MeleeCheck();
+        CheckCombatState();
     }
 
-    #region MELEE AND COMBAT TIMERS / CHECKS
+    #region TIMERS
 
-    private void CombatCheck()
+    private void RunTimers()
+    {
+        meleeCooldownTimer -= Time.deltaTime;
+        combatTimer -= Time.deltaTime;
+    }
+
+    #endregion TIMERS
+
+    #region COMBAT STATE
+
+    private void CheckCombatState()
     {
         if (combatTimer > 0)
         {
@@ -59,54 +78,57 @@ public class MeleeAttack : MonoBehaviour
         else
         {
             InCombat = false;
+
+            //Resets hits count to avoid animator bugs and melee coldown incorrect cooldown timing
+            hitsMade = 0;
         }
 
         playerAnimator.SetBool("inCombat", InCombat);
     }
 
-    private void MeleeCheck()
+    private void HandleCombatAnimations()
     {
-        if (meleeTimer < 0)
+        if (hitsMade == 0)
         {
-            ableToMelee = true;
+            playerAnimator.Play("Golpe derecha 2 1", 0, 0.15f);
         }
         else
         {
-            ableToMelee = false;
+            playerAnimator.SetTrigger("Hit");
         }
     }
-
-    private void RunTimers()
+    private void SetCombatAndCooldownDurations()
     {
-        combatTimer -= Time.deltaTime;
-        meleeTimer -= Time.deltaTime;
+        hitsMade++;
+
+        if (hitsMade <= 3)
+        {
+            meleeCooldownDuration = inComboCooldownTime;
+            combatDuration = inComboCombatDuration;
+        }
+        else
+        {
+            meleeCooldownDuration = afterComboCooldownTime;
+            combatDuration = afterComboCombatDuration;
+
+            //Resets hits count upon last combo hit.
+            hitsMade = 0;
+        }
+
+        meleeCooldownTimer = meleeCooldownDuration;
+        combatTimer = combatDuration;
     }
 
-    #endregion MELEE AND COMBAT TIMERS / CHECKS
+    #endregion COMBAT STATE
 
     #region MELEE
 
     public void HitCheck()
     {
-        if (ableToMelee && IsHitting())
+        if (meleeCooldownTimer <= 0 && IsHitting())
         {
-            //Adds a time window to add combo punches
-            combatTimer = combatTime;
-
-            //Due to unity placing trigger parameters on queue and not executing them right away, it plays the animation instantly if its not engaging in combat.
-            if (!InCombat)
-            {
-                playerAnimator.Play("Golpe derecha 2 1", 0, 0.15f);
-                meleeTimer = meleeCooldownTime;
-            }
-            //If the player is engaged in combat, then it executes a normal trigger behaviour.
-            else
-            {
-                meleeTimer = 0.2f;
-                playerAnimator.SetTrigger("Hit");
-            }
-
-            Debug.Log("Hitting");
+            HandleCombatAnimations();
+            SetCombatAndCooldownDurations();
             Punch();
         }
     }
@@ -172,7 +194,6 @@ public class MeleeAttack : MonoBehaviour
     #endregion GET REFERENCES
 
     #region INPUT
-    public bool IsActivatingAim() => Input.GetKeyDown(KeyCode.O);
     public bool IsHitting() => Input.GetKeyDown(KeyCode.E);
 
     #endregion INPUT

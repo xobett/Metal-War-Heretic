@@ -643,7 +643,11 @@ PrefabInstance:
       objectReference: {fileID: 578800923}
     - target: {fileID: 2862152783596723406, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
       propertyPath: meleeCooldownTime
-      value: 0.8
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2862152783596723406, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
+      propertyPath: afterComboCombatDuration
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4415241851385853430, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
       propertyPath: playerAnimator

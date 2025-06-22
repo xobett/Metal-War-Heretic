@@ -16,8 +16,8 @@ public class PlayerMovement : MonoBehaviour
     private float velocity;
 
     [Header("HIT MOVEMENT SETTINGS")]
-    [SerializeField] private float hitSpeed;
-    [SerializeField] private float hitForce;
+    private float hitSpeed;
+    private float hitForce;
 
     private Vector3 hitDirection;
 
@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
     #region CHECKS
 
     private bool isDashing => GetComponent<SliceAttack>().isDashing;
-
+    
     private bool inCombat => GetComponent<MeleeAttack>().InCombat;
 
     #endregion CHECKS
