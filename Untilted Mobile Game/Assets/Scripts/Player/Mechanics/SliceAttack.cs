@@ -30,7 +30,7 @@ public class SliceAttack : MonoBehaviour
     [SerializeField, Range(0.5f, 2f)] private float cooldownTime;
 
     [SerializeField] private bool isCooling;
-    public bool isDashing { get; private set; }
+    public bool IsDashing { get; private set; }
 
     //Reference to the player's character controller
     private CharacterController charCtrlr;
@@ -53,12 +53,12 @@ public class SliceAttack : MonoBehaviour
 
     public void OnSliceEnemy()
     {
-        isDashing = false;
+        IsDashing = false;
     }
 
     private void SliceCheck()
     {
-        if (!isCooling && !isDashing && (IsSlicing() || isPressingSlice))
+        if (!isCooling && !IsDashing && (IsSlicing() || isPressingSlice))
         {
             StartCoroutine(StartSlice());
             playerAnimator.SetTrigger("Dash");
@@ -70,11 +70,11 @@ public class SliceAttack : MonoBehaviour
         //If slice button was pressed, returns it to false
         isPressingSlice = false;
 
-        isDashing = true;
+        IsDashing = true;
         isCooling = true;
         yield return new WaitForSeconds(sliceDuration);
 
-        isDashing = false;
+        IsDashing = false;
         yield return new WaitForSeconds(cooldownTime);
 
         isCooling = false;
@@ -83,7 +83,7 @@ public class SliceAttack : MonoBehaviour
 
     void SliceMovement()
     {
-        if (isDashing)
+        if (!inCombat && IsDashing)
         {
             Vector3 dashMovement = Vector3.zero;
 
@@ -116,7 +116,7 @@ public class SliceAttack : MonoBehaviour
 
     private void SnapAssist()
     {
-        if (isDashing)
+        if (IsDashing)
         {
             Collider[] enemyColliders = Physics.OverlapSphere(transform.position, assistRadius, whatIsEnemy, QueryTriggerInteraction.UseGlobal);
 
@@ -131,6 +131,12 @@ public class SliceAttack : MonoBehaviour
     private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
 
     #endregion SNAP ASSIST
+
+    #region CHECKS
+
+    private bool inCombat => GetComponent<MeleeAttack>().InCombat;
+
+    #endregion CHECKS
 
     #region INPUT
 

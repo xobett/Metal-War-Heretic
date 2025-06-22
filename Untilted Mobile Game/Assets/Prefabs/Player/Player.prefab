@@ -131,6 +131,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliceDamage: 20
+--- !u!1 &7038548049841583039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8475399977742036435}
+  - component: {fileID: 6069357242262033821}
+  m_Layer: 0
+  m_Name: Player R Hand Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8475399977742036435
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7038548049841583039}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7371679986826575223}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &6069357242262033821
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7038548049841583039}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 0.7
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7667774295053278460
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,8 +306,6 @@ MonoBehaviour:
   playerAnimator: {fileID: 6569292388430234341}
   movementSpeed: 4.4
   rotationSpeed: 0.01
-  hitSpeed: 0
-  hitForce: 0
   whatIsGround:
     serializedVersion: 2
     m_Bits: 64
@@ -292,11 +345,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackButton: {fileID: 0}
   damage: 10
-  hitRate: 0
-  hitRange: 1.5
+  hitRange: 3
   whatIsMelee:
     serializedVersion: 2
     m_Bits: 128
+  afterComboCooldownTime: 1.5
+  inComboCombatDuration: 1
+  afterComboCombatDuration: 0.6
   radius: 2.2
   aimAssitActive: 0
 --- !u!114 &6663795009258736236
@@ -353,6 +408,61 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeWithinCombo: 2
+--- !u!1 &8147508004314475928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5808635572920098249}
+  - component: {fileID: 8596620060100057260}
+  m_Layer: 0
+  m_Name: Player L Hand Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5808635572920098249
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147508004314475928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4380378151135343483}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &8596620060100057260
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8147508004314475928}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 0.7
+  m_Direction: 0
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5851285182449949160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -407,12 +517,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -1298784472260253037, guid: 4f54b51a566e80840b2f6f604fe9847c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5808635572920098249}
+    - targetCorrespondingSourceObject: {fileID: -5224589829697117025, guid: 4f54b51a566e80840b2f6f604fe9847c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8475399977742036435}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4f54b51a566e80840b2f6f604fe9847c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6569292388430234341}
   m_SourcePrefab: {fileID: 100100000, guid: 4f54b51a566e80840b2f6f604fe9847c, type: 3}
+--- !u!4 &4380378151135343483 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1298784472260253037, guid: 4f54b51a566e80840b2f6f604fe9847c, type: 3}
+  m_PrefabInstance: {fileID: 5851285182449949160}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6249106919258258947 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4f54b51a566e80840b2f6f604fe9847c, type: 3}
@@ -445,3 +566,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &7371679986826575223 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -5224589829697117025, guid: 4f54b51a566e80840b2f6f604fe9847c, type: 3}
+  m_PrefabInstance: {fileID: 5851285182449949160}
+  m_PrefabAsset: {fileID: 0}

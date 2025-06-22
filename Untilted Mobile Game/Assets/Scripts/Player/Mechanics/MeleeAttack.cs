@@ -1,5 +1,3 @@
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,12 +29,12 @@ public class MeleeAttack : MonoBehaviour
     //Timer used to handle combat state of player
     //Controls animations and player movement independently from melee cooldown time
     [SerializeField] private float inComboCombatDuration = 1f;
-    [SerializeField] private float afterComboCombatDuration; 
+    [SerializeField] private float afterComboCombatDuration;
 
     private float combatTimer;
     private float combatDuration;
 
-    [HideInInspector] public bool InCombat {  get; private set; }
+    [HideInInspector] public bool InCombat { get; private set; }
 
     [Header("AIM ASSIT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float radius;
@@ -86,17 +84,6 @@ public class MeleeAttack : MonoBehaviour
         playerAnimator.SetBool("inCombat", InCombat);
     }
 
-    private void HandleCombatAnimations()
-    {
-        if (hitsMade == 0)
-        {
-            playerAnimator.Play("Golpe derecha 2 1", 0, 0.15f);
-        }
-        else
-        {
-            playerAnimator.SetTrigger("Hit");
-        }
-    }
     private void SetCombatAndCooldownDurations()
     {
         hitsMade++;
@@ -125,11 +112,13 @@ public class MeleeAttack : MonoBehaviour
 
     public void HitCheck()
     {
+        if (playerIsPushed) return;
+
         if (meleeCooldownTimer <= 0 && IsHitting())
         {
-            HandleCombatAnimations();
+            SetCombatAnimations();
             SetCombatAndCooldownDurations();
-            Punch();
+            //Punch();
         }
     }
 
@@ -147,25 +136,48 @@ public class MeleeAttack : MonoBehaviour
         }
     }
 
+    public void HitEnemy(Collider enemyCollider)
+    {
+        enemyCollider.GetComponent<IDamageable>().OnDamage(damage);
+        playerCam.CameraShake();
+        GetComponent<ComboCounter>().IncreaseComboCount();
+    }
+
     #endregion MELEE
+
+    #region COMBAT ANIMATIONS
+    private void SetCombatAnimations()
+    {
+        if (hitsMade == 0)
+        {
+            playerAnimator.Play($"Combo {GetRandomComboAnimation()} - 1", 0, 0.15f);
+        }
+        else
+        {
+            playerAnimator.SetTrigger("Hit");
+        }
+    }
+
+    private int GetRandomComboAnimation()
+    {
+        return Random.Range(1, 4);
+    }
+
+    #endregion COMBAT ANIMATIONS
 
     #region ASSIST
 
     private void AimAssit()
     {
-        //Check for enemies in range
-
         Collider[] enemyColliders = Physics.OverlapSphere(transform.position, radius, whatIsMelee, QueryTriggerInteraction.UseGlobal);
 
-        if (enemyColliders.Length != 0 && !IsDashing)
+        if (enemyColliders.Length != 0 && InCombat && (!isDashing && !playerIsPushed))
         {
-            //Look at enemy directly
-
             GameObject enemy = enemyColliders[0].gameObject;
 
             Quaternion direction = Quaternion.LookRotation(enemy.transform.position - transform.position);
             Quaternion target = Quaternion.Euler(0, direction.eulerAngles.y, 0);
-            Quaternion lookRotation = Quaternion.Slerp(transform.rotation, target, 3.5f * Time.deltaTime);
+            Quaternion lookRotation = Quaternion.Slerp(transform.rotation, target, 10.5f * Time.deltaTime);
             transform.rotation = lookRotation;
 
             aimAssitActive = true;
@@ -198,7 +210,13 @@ public class MeleeAttack : MonoBehaviour
 
     #endregion INPUT
 
-    private bool IsDashing => gameObject.GetComponent<SliceAttack>().isDashing;
+    #region CHECKS
+
+    private bool isDashing => GetComponent<SliceAttack>().IsDashing;
+
+    private bool playerIsPushed => GetComponent<PlayerMovement>().IsHit;
+
+    #endregion CHECKS
 
     #region VISUAL DEBUG GIZMOS
 

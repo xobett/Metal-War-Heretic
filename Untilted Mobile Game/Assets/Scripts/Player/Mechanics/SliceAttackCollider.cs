@@ -22,5 +22,5 @@ public class SliceAttackCollider : MonoBehaviour
 
         GetComponentInParent<SliceAttack>().OnSliceEnemy();
     }
-    private bool isDashing => GetComponentInParent<SliceAttack>().isDashing;
+    private bool isDashing => GetComponentInParent<SliceAttack>().IsDashing;
 }

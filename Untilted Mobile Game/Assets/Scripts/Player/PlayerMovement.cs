@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 hitDirection;
 
-    private bool isHit;
+    [HideInInspector] public bool IsHit {  get; private set; }
 
     [Header("GRAVITY SETTINGS")]
     [SerializeField] private LayerMask whatIsGround;
@@ -36,7 +36,6 @@ public class PlayerMovement : MonoBehaviour
     {
         GetReferences();
     }
-
 
     // Update is called once per frame
     void Update()
@@ -53,18 +52,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovementCheck()
     {
-        if (!isHit)
+        if (!IsHit)
         {
-            if (aimAssistActive)
+            if (!inCombat)
             {
-                AimMovement();
-            }
-            else
-            {
-                if (!inCombat)
+                if (aimAssistActive)
                 {
-                    NormalMovement(); 
+                    AimMovement();
                 }
+                else
+                {
+                    NormalMovement();
+                } 
             }
         }
         else
@@ -108,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
         hitSpeed = pushedForce;
         hitForce = pushedTime;
 
-        isHit = true;
+        IsHit = true;
         StartCoroutine(StartHitMovementTimer());
     }
 
@@ -121,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(hitForce);
 
-        isHit = false;
+        IsHit = false;
         yield return null;
     }
 
@@ -147,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isDashing)
         {
-            gravity.y -= gravityForce * Time.deltaTime; 
+            gravity.y -= gravityForce * Time.deltaTime;
         }
 
         if (IsGrounded() && gravity.y < 0)
@@ -167,8 +166,8 @@ public class PlayerMovement : MonoBehaviour
 
     #region CHECKS
 
-    private bool isDashing => GetComponent<SliceAttack>().isDashing;
-    
+    private bool isDashing => GetComponent<SliceAttack>().IsDashing;
+
     private bool inCombat => GetComponent<MeleeAttack>().InCombat;
 
     #endregion CHECKS
