@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     [Header("MAIN MENU PANELS")]
     [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject storePanel;
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject exitPanel;
 
@@ -15,6 +16,7 @@ public class MainMenu : MonoBehaviour
     [Header("MAIN MENU BUTTONS")]
     [SerializeField] private Button playButton;
     [SerializeField] private Button optionsButton;
+    [SerializeField] private Button storeButton;
     [SerializeField] private Button creditsButton;
     [SerializeField] private Button exitButton;
 
@@ -22,7 +24,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button exitGameButton;
     [SerializeField] private Button[] backButtons;
 
-    [SerializeField] private List<GameObject> panels = new List<GameObject>();
+    private List<GameObject> panels = new List<GameObject>();
 
     void Start()
     {
@@ -46,6 +48,7 @@ public class MainMenu : MonoBehaviour
         playButton.onClick.AddListener(LoadGame);
 
         optionsButton.onClick.AddListener(ShowOptions);
+        storeButton.onClick.AddListener(ShowStore);
         creditsButton.onClick.AddListener(ShowCredits);
         exitButton.onClick.AddListener(ShowExit);
 
@@ -57,6 +60,7 @@ public class MainMenu : MonoBehaviour
         }
 
         panels.Add(optionsPanel);
+        panels.Add(storePanel);
         panels.Add(creditsPanel);
         panels.Add(exitPanel);
     }
@@ -67,6 +71,12 @@ public class MainMenu : MonoBehaviour
     {
         darkPanel.SetActive(true);
         optionsPanel.SetActive(true);
+    }
+
+    private void ShowStore()
+    {
+        darkPanel.SetActive(true);
+        storePanel.SetActive(true);
     }
 
     private void ShowCredits()
