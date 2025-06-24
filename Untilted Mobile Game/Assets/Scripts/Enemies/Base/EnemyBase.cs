@@ -55,7 +55,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected virtual void Update()
     {
-
         GetBehaviour();
 
         //NAVIGATION

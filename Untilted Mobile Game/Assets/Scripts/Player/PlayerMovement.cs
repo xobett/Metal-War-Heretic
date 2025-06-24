@@ -45,7 +45,6 @@ public class PlayerMovement : MonoBehaviour
             MovementCheck();
             Gravity();
         }
-
     }
 
     #region MOVEMENT

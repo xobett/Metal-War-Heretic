@@ -87,9 +87,19 @@ public class SliceAttack : MonoBehaviour
         {
             Vector3 dashMovement = Vector3.zero;
 
-            if ((aimAssistActive && (JoystickManager.Instance.HorizontalInput() != 0 || JoystickManager.Instance.ForwardInput() != 0)) || inCombat)
+            //if ((aimAssistActive && (JoystickManager.Instance.HorizontalInput() != 0 || JoystickManager.Instance.ForwardInput() != 0)) || inCombat)
+            //{
+
+            //}
+
+            if (inCombat)
             {
                 dashMovement = Vector3.right * JoystickManager.Instance.HorizontalInput() + Vector3.forward * JoystickManager.Instance.ForwardInput();
+
+                Vector3 move = new Vector3(JoystickManager.Instance.HorizontalInput(), 0, JoystickManager.Instance.ForwardInput());
+                float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
+
+                transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
             }
             else
             {
