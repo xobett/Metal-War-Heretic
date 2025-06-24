@@ -83,11 +83,11 @@ public class SliceAttack : MonoBehaviour
 
     void SliceMovement()
     {
-        if (!inCombat && IsDashing)
+        if (IsDashing)
         {
             Vector3 dashMovement = Vector3.zero;
 
-            if (aimAssistActive && (JoystickManager.Instance.HorizontalInput() != 0 || JoystickManager.Instance.ForwardInput() != 0))
+            if ((aimAssistActive && (JoystickManager.Instance.HorizontalInput() != 0 || JoystickManager.Instance.ForwardInput() != 0)) || inCombat)
             {
                 dashMovement = Vector3.right * JoystickManager.Instance.HorizontalInput() + Vector3.forward * JoystickManager.Instance.ForwardInput();
             }

@@ -84,6 +84,12 @@ public class MeleeAttack : MonoBehaviour
         playerAnimator.SetBool("inCombat", InCombat);
     }
 
+    private void CancelCombatState()
+    {
+        //Reset combo count
+        //Enable movement again
+    }
+
     private void SetCombatAndCooldownDurations()
     {
         hitsMade++;
