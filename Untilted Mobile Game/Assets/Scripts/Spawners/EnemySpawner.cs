@@ -8,9 +8,10 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, Range(0f, 3f)] private int timeBetweenSpawns;
     [SerializeField] private Transform[] spawnLocations;
 
+    private Coroutine spawnActiveCoroutine;
     public void StartSpawn()
     {
-        StartCoroutine(SpawnEnemy());
+        spawnActiveCoroutine = StartCoroutine(SpawnEnemy());
     }
 
     private int GetTotalEnemiesInScene()
@@ -29,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else if (GetTotalEnemiesInScene() > 5)
         {
-            StopCoroutine(SpawnEnemy());
+            StopCoroutine(spawnActiveCoroutine);
         }
 
         yield return new WaitForSeconds(timeBetweenSpawns);

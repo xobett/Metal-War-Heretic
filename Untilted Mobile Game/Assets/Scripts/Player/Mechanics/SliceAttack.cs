@@ -61,6 +61,8 @@ public class SliceAttack : MonoBehaviour
         if (!isCooling && !IsDashing && (IsSlicing() || isPressingSlice))
         {
             StartCoroutine(StartSlice());
+
+            //Change from trigger to play for better transition
             playerAnimator.SetTrigger("Dash");
         }
     }
@@ -70,6 +72,8 @@ public class SliceAttack : MonoBehaviour
         //If slice button was pressed, returns it to false
         isPressingSlice = false;
 
+        if (inCombat) GetComponent<MeleeAttack>().CancelCombatState();
+
         IsDashing = true;
         isCooling = true;
         yield return new WaitForSeconds(sliceDuration);
@@ -78,7 +82,7 @@ public class SliceAttack : MonoBehaviour
         yield return new WaitForSeconds(cooldownTime);
 
         isCooling = false;
-        StopCoroutine(StartSlice());
+        yield return null;
     }
 
     void SliceMovement()
@@ -86,11 +90,6 @@ public class SliceAttack : MonoBehaviour
         if (IsDashing)
         {
             Vector3 dashMovement = Vector3.zero;
-
-            //if ((aimAssistActive && (JoystickManager.Instance.HorizontalInput() != 0 || JoystickManager.Instance.ForwardInput() != 0)) || inCombat)
-            //{
-
-            //}
 
             if (inCombat)
             {
@@ -150,7 +149,7 @@ public class SliceAttack : MonoBehaviour
 
     #region INPUT
 
-    private void PressSlice()
+    private void PressSliceButton()
     {
         isPressingSlice = true;
     }
@@ -166,7 +165,7 @@ public class SliceAttack : MonoBehaviour
 
     private void AddButtonEvents()
     {
-        sliceButton.onClick.AddListener(PressSlice);
+        sliceButton.onClick.AddListener(PressSliceButton);
     }
 
     private void GetReferences()

@@ -25,6 +25,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private const float playerDetection_Range = 3f;
     protected bool isExecutingAttack;
 
+    [SerializeField] protected bool isAttacking;
+
     [Header("MOVEMENT SETTINGS")]
     [SerializeField] protected float walkSpeed = 1.5f;
     [SerializeField] protected float stoppingDistance;
@@ -40,7 +42,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private float navigationTimer;
     [SerializeField] private float maxNavigationTime = 12f;
 
-    [SerializeField] protected bool isAttacking;
+    private Coroutine navigationActiveCoroutine;
+
 
     private void Awake()
     {
@@ -50,16 +53,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        StartCoroutine(AssignWaitPosition());
+        navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
     }
 
     protected virtual void Update()
     {
-        GetBehaviour();
+        //GetBehaviour();
 
         //NAVIGATION
 
-        LookAtPlayer();
+        //LookAtPlayer();
         GetCurrentPlayerRot();
 
         //ATTACK
@@ -71,9 +74,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         }
         else
         {
-            RunNavigationTimer();
-            HandleStuckNavigation();
-            HandleEnemyExitingArea();
+            //RunNavigationTimer();
+            //HandleStuckNavigation();
+            //HandleEnemyExitingArea();
         }
     }
 
@@ -97,6 +100,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     public void OnDamage(float damage)
     {
         GetComponent<Health>().TakeDamage(damage);
+
+        if (isMoving)
+        {
+            StopCoroutine(navigationActiveCoroutine);
+            Debug.Log("hit while moved");
+            //agent.destination = transform.position;
+        }
     }
 
     private void OnDestroy()
@@ -241,6 +251,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         //Stops the enemy upon arrival
         agent.speed = 0;
         isMoving = false;
+        Debug.Log("Set to false");
         yield return null;
     }
 
@@ -248,19 +259,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         if (navigationTimer < 0 && isMoving)
         {
-            StopCoroutine(AssignWaitPosition());
+            StopCoroutine(navigationActiveCoroutine);
             agent.speed += 1.5f;
-            StartCoroutine(AssignWaitPosition());
+            navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
         }
-    }
-
-    private void HandleEnemyNearPlayer()
-    {
-        //if (!isMoving && Physics.CheckSphere(transform.position, agent.radius, whatIsPlayer))
-        //{
-        //    agent.speed = walkSpeed * 2;
-        //    StartCoroutine(AssignWaitPosition());
-        //}
     }
 
     private void HandleEnemyExitingArea()

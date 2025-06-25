@@ -29,6 +29,8 @@ public class BruteEnemy : EnemyBase
     private bool rmpAbilityActive; // Used to avoid entering the run ability method continuosly, until the ability is completed
     private bool rmpCoolingDown; // Used to avoid the run ability method from executing when its cooling down
 
+    private Coroutine rmpActiveCoroutine;
+
     #region BASE OVERRIDES
 
     protected override void Update()
@@ -77,7 +79,7 @@ public class BruteEnemy : EnemyBase
             if ((!rmpAbilityActive && !rmpIsRunning) && playerDistance > minimumDistanceToRun)
             {
                 isExecutingAttack = true;
-                StartCoroutine(StartRampageRun());
+                rmpActiveCoroutine = StartCoroutine(StartRampageRun());
             }
         }
     }
@@ -133,8 +135,8 @@ public class BruteEnemy : EnemyBase
             rmpPlayerHit = true;
 
             PushPlayer(rampageRunDamage);
-            StopCoroutine(StartRampageRun());
-            StartCoroutine(SlowDownPostHit());
+            StopCoroutine(rmpActiveCoroutine);
+            rmpActiveCoroutine = StartCoroutine(SlowDownPostHit());
         }
     }
 

@@ -25,6 +25,8 @@ public class ShieldEnemy : EnemyBase
 
     private bool rgPlayerHit = false;
 
+    private Coroutine rgActiveCoroutine;
+
     #region BASE OVERRIDES
 
     protected override void Update()
@@ -40,7 +42,7 @@ public class ShieldEnemy : EnemyBase
         if (!rgCooldownActive)
         {
             Debug.Log("Executed royal guard");
-            StartCoroutine(StartRoyalGuard());
+            rgActiveCoroutine = StartCoroutine(StartRoyalGuard());
         }
         else
         {
@@ -153,8 +155,8 @@ public class ShieldEnemy : EnemyBase
             rgPlayerHit = false;
 
             PushPlayer(rgDamage);
-            StopCoroutine(StartRoyalGuard());
-            StartCoroutine(StopPostHit());
+            StopCoroutine(rgActiveCoroutine);
+            rgActiveCoroutine = StartCoroutine(StopPostHit());
         }
     }
 

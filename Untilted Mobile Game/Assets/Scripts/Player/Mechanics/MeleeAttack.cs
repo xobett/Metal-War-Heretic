@@ -13,6 +13,8 @@ public class MeleeAttack : MonoBehaviour
     [SerializeField] private float hitRange = 0.5f;
     [SerializeField] private LayerMask whatIsMelee;
 
+    private bool isPressingHit;
+
     private int hitsMade;
 
     private PlayerCamera playerCam;
@@ -24,6 +26,8 @@ public class MeleeAttack : MonoBehaviour
     //Timer used to limit player from spamming attack
     private float meleeCooldownTimer;
     private float meleeCooldownDuration;
+
+    private const float meleeCooldownPostSlice = 0.7f;
 
     [Header("COMBAT STATE SETTINGS")]
     //Timer used to handle combat state of player
@@ -84,8 +88,12 @@ public class MeleeAttack : MonoBehaviour
         playerAnimator.SetBool("inCombat", InCombat);
     }
 
-    private void CancelCombatState()
+    public void CancelCombatState()
     {
+        combatTimer = 0;
+        hitsMade = 0;
+        meleeCooldownTimer = meleeCooldownPostSlice;
+
         //Reset combo count
         //Enable movement again
     }
@@ -120,25 +128,12 @@ public class MeleeAttack : MonoBehaviour
     {
         if (playerIsPushed) return;
 
-        if (meleeCooldownTimer <= 0 && IsHitting())
+        if (meleeCooldownTimer <= 0 && (IsHitting() || isPressingHit))
         {
             SetCombatAnimations();
             SetCombatAndCooldownDurations();
-            //Punch();
-        }
-    }
 
-    private void Punch()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward * hitRange, out hit, hitRange))
-        {
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-            {
-                hit.collider.GetComponent<IDamageable>().OnDamage(damage);
-                playerCam.CameraShake();
-                GetComponent<ComboCounter>().IncreaseComboCount();
-            }
+            isPressingHit = false;
         }
     }
 
@@ -206,12 +201,18 @@ public class MeleeAttack : MonoBehaviour
 
     private void AddButtonEvents()
     {
-        attackButton.onClick.AddListener(Punch);
+        attackButton.onClick.AddListener(PressHitButton);
     }
 
     #endregion GET REFERENCES
 
     #region INPUT
+
+    private void PressHitButton()
+    {
+        isPressingHit = true;
+    }
+
     public bool IsHitting() => Input.GetKeyDown(KeyCode.E);
 
     #endregion INPUT
