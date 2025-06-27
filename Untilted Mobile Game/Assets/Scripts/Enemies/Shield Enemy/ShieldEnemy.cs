@@ -87,9 +87,9 @@ public class ShieldEnemy : EnemyBase
         //While guarding, enables a condition to slowly rotate towards the player
         if (Physics.CheckSphere(transform.position, rgSmackRadius, whatIsPlayer))
         {
-            playerCam.CameraShake();
             player.GetComponent<Health>().TakeDamage(rgDamage);
         }
+        playerCam.CameraShake();
 
         rgShields.SetActive(true);
         rgGuardActive = true;
@@ -163,7 +163,6 @@ public class ShieldEnemy : EnemyBase
     private IEnumerator StopPostHit()
     {
         rgisPushing = false;
-        rgShields.SetActive(false);
 
         agent.speed = 0;
         agent.destination = transform.position;

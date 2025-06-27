@@ -44,7 +44,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private Coroutine navigationActiveCoroutine;
 
-
     private void Awake()
     {
         GetReferences();
@@ -53,27 +52,24 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private void Start()
     {
-        navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
+        //navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
+        isAttacking = true;
     }
 
     protected virtual void Update()
     {
-        //GetBehaviour();
-
-        //NAVIGATION
-
-        //LookAtPlayer();
+        LookAtPlayer();
         GetCurrentPlayerRot();
-
-        //ATTACK
 
         if (isAttacking)
         {
+            //ATTACK BEHAVIOUR
             AttackTriggerCheck();
             FollowPlayer();
         }
         else
         {
+            //NAVIGATION BEHAVIOUR
             //RunNavigationTimer();
             //HandleStuckNavigation();
             //HandleEnemyExitingArea();
@@ -103,9 +99,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
         if (isMoving)
         {
-            StopCoroutine(navigationActiveCoroutine);
-            Debug.Log("hit while moved");
-            //agent.destination = transform.position;
+
         }
     }
 
@@ -165,6 +159,12 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         isExecutingAttack = false;
     }
 
+    public void HitPlayer(Collider playerCollider)
+    {
+        playerCam.CameraShake();
+        player.GetComponent<Health>().TakeDamage(damage);
+    }
+
     protected void PushPlayer(float damageUponHit)
     {
         playerCam.CameraShake();
@@ -195,7 +195,10 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected virtual void LookAtPlayer()
     {
-        transform.rotation = currentFacePlayerRot;
+        if (!isMoving)
+        {
+            transform.rotation = currentFacePlayerRot; 
+        }
     }
 
     private void GetCurrentPlayerRot()
@@ -252,6 +255,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         agent.speed = 0;
         isMoving = false;
         Debug.Log("Set to false");
+
+        GetBehaviour();
+
         yield return null;
     }
 
@@ -287,7 +293,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private void SetEnemySettings()
     {
-        agent.speed = walkSpeed * 2;
+        agent.speed = walkSpeed;
         agent.stoppingDistance = 1;
         agent.autoBraking = false;
     }

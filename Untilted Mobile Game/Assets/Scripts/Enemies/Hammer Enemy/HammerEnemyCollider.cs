@@ -6,7 +6,8 @@ public class HammerEnemyCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player is hitting");
+            Debug.Log("Hitting player");
+            GetComponentInParent<EnemyBase>().HitPlayer(other);  
         }
     }
 }

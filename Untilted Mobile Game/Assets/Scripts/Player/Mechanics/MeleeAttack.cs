@@ -93,9 +93,6 @@ public class MeleeAttack : MonoBehaviour
         combatTimer = 0;
         hitsMade = 0;
         meleeCooldownTimer = meleeCooldownPostSlice;
-
-        //Reset combo count
-        //Enable movement again
     }
 
     private void SetCombatAndCooldownDurations()

@@ -8,9 +8,29 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, Range(0f, 3f)] private int timeBetweenSpawns;
     [SerializeField] private Transform[] spawnLocations;
 
+    [SerializeField] private int spawnCount;
+
     private Coroutine spawnActiveCoroutine;
     public void StartSpawn()
     {
+        spawnActiveCoroutine = StartCoroutine(SpawnEnemy());
+    }
+
+    private IEnumerator SpawnEnemy()
+    {
+        if (spawnCount <= 5)
+        {
+            Transform spawnPoint = GetRandomSpawnPoint();
+            Instantiate(enemyPrefabs[RandomEnemyIndex()], spawnPoint.position, spawnPoint.rotation);
+            spawnCount++;
+        }
+        else 
+        {
+            StopCoroutine(spawnActiveCoroutine);
+        }
+
+        yield return new WaitForSeconds(timeBetweenSpawns);
+
         spawnActiveCoroutine = StartCoroutine(SpawnEnemy());
     }
 
@@ -19,23 +39,6 @@ public class EnemySpawner : MonoBehaviour
         GameObject[] enemiesInScene = GameObject.FindGameObjectsWithTag("Enemy");
 
         return enemiesInScene.Length;
-    }
-
-    private IEnumerator SpawnEnemy()
-    {
-        if (GetTotalEnemiesInScene() <= 5)
-        {
-            Transform spawnPoint = GetRandomSpawnPoint();
-            Instantiate(enemyPrefabs[RandomEnemyIndex()], spawnPoint.position, spawnPoint.rotation);
-        }
-        else if (GetTotalEnemiesInScene() > 5)
-        {
-            StopCoroutine(spawnActiveCoroutine);
-        }
-
-        yield return new WaitForSeconds(timeBetweenSpawns);
-
-        StartCoroutine(SpawnEnemy());
     }
 
     private int RandomEnemyIndex() => Random.Range(0, enemyPrefabs.Length - 1);

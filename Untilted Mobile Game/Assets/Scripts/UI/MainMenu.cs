@@ -29,6 +29,8 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         AssignButtonEvents();
+
+
     }
 
     #region PLAY - EXIT METHODS

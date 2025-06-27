@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Rendering.Analytics;
 using UnityEngine;
 
 public class ElectricArea : MonoBehaviour
