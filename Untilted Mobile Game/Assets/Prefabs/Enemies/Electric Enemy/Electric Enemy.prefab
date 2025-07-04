@@ -403,8 +403,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2194113442272978875}
-  - {fileID: 5507956993411809279}
   - {fileID: 883241455918041028}
+  - {fileID: 6304477179712720545}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5302080847193335908
@@ -478,6 +478,7 @@ MonoBehaviour:
   playerDetectionRadius: 6
   damage: 90
   timeBetweenAttacks: 2
+  isAttacking: 0
   walkSpeed: 1.5
   stoppingDistance: 7
   whatIsCollision:
@@ -486,7 +487,6 @@ MonoBehaviour:
   isMoving: 0
   navigationTimer: 0
   maxNavigationTime: 12
-  isAttacking: 0
   distanceAttackPf: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
   spawnPoint: {fileID: 2194113442272978875}
   beforeDistanceAttackTime: 1
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1001 &5474838717527824404
+--- !u!1001 &5833491835680991562
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -685,57 +685,87 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5864222057376983774}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalPosition.y
       value: -1.1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
+    - target: {fileID: 919132149155446097, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
       propertyPath: m_Name
-      value: Enemigo electrico a medida
+      value: Robot electrico animaciones
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
---- !u!4 &5507956993411809279 stripped
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1628026574623285126}
+  m_SourcePrefab: {fileID: 100100000, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
+--- !u!4 &6304477179712720545 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9927d238a67f0324c9d400f9c6b9d6f2, type: 3}
-  m_PrefabInstance: {fileID: 5474838717527824404}
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
+  m_PrefabInstance: {fileID: 5833491835680991562}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &6644445778115105819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 10f764c99ba280d45a7380c9c797ba72, type: 3}
+  m_PrefabInstance: {fileID: 5833491835680991562}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1628026574623285126
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6644445778115105819}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: da868f3a3184c834e958cc4efa85eb62, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
