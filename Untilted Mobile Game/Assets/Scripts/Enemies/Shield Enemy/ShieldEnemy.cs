@@ -16,8 +16,6 @@ public class ShieldEnemy : EnemyBase
     [SerializeField] private float rgDamage;
     [SerializeField] private float rgSmackRadius;
 
-    [SerializeField] private GameObject rgShields;
-
     private bool rgCooldownActive;
     private bool rgGuardActive;
     private bool rgPushActive;
@@ -91,7 +89,6 @@ public class ShieldEnemy : EnemyBase
         }
         playerCam.CameraShake();
 
-        rgShields.SetActive(true);
         rgGuardActive = true;
         yield return new WaitForSeconds(rgGuardingTime);
 
@@ -116,7 +113,6 @@ public class ShieldEnemy : EnemyBase
 
         //Pushes forward and waits until it has arrives to its end push position
         rgisPushing = true;
-        rgShields.SetActive(false);
 
         agent.speed = 30f;
         agent.destination = pushPos;

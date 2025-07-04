@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HammerEnemyCollider : MonoBehaviour
+public class EnemyHitCollider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {

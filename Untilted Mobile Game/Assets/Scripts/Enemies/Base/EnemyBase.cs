@@ -53,7 +53,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private void Start()
     {
         //navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
-        isAttacking = true;
+        //isAttacking = true;
     }
 
     protected virtual void Update()
@@ -206,6 +206,16 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         Vector3 lookDirection = player.transform.position - transform.position;
         Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
         currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
+
+        if (transform.rotation != currentFacePlayerRot)
+        {
+            Debug.Log("Its not the same");
+        }
+
+        //Save last value
+        //Add new value
+        //If it was greater than last value, its rotating to the right
+        //If it was less than the last value, its rotating to the left
     }
 
     #endregion MOVEMENT AND ROTATION
