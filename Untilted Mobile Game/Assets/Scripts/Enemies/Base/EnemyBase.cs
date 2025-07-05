@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -33,6 +34,8 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     protected Quaternion currentFacePlayerRot;
 
+    private float lastYRotation;
+
     [Header("NAVIGATION SETTINGS")]
     [SerializeField] private LayerMask whatIsCollision;
     private Vector3 nextPos;
@@ -54,6 +57,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         //navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
         //isAttacking = true;
+        lastYRotation = transform.rotation.eulerAngles.y;
     }
 
     protected virtual void Update()
@@ -197,7 +201,23 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         if (!isMoving)
         {
-            transform.rotation = currentFacePlayerRot; 
+            transform.rotation = currentFacePlayerRot;
+
+            float currentYRotation = transform.eulerAngles.y;
+            float deltaAngle = Mathf.DeltaAngle(lastYRotation, currentYRotation);
+            if (Mathf.Abs(deltaAngle) > 0.1f)
+            {
+                if (deltaAngle > 0)
+                {
+                    Debug.Log("Its rotating to the right");
+                }
+                else if (deltaAngle < 0)
+                {
+                    Debug.Log("Its rotating to the left");
+                }
+            }
+
+            lastYRotation = transform.eulerAngles.y;
         }
     }
 
@@ -206,16 +226,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         Vector3 lookDirection = player.transform.position - transform.position;
         Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
         currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
-
-        if (transform.rotation != currentFacePlayerRot)
-        {
-            Debug.Log("Its not the same");
-        }
-
-        //Save last value
-        //Add new value
-        //If it was greater than last value, its rotating to the right
-        //If it was less than the last value, its rotating to the left
     }
 
     #endregion MOVEMENT AND ROTATION
