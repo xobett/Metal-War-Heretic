@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,6 +8,9 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 {
     [Header("--- ENEMY BASE SETTINGS ---\n")]
     protected NavMeshAgent agent;
+
+    [Header("ENEMY ANIMATOR SETTINGS")]
+    [SerializeField] protected Animator animator;
 
     [Header("PLAYER REFERENCES")]
     [SerializeField] protected LayerMask whatIsPlayer;
@@ -53,15 +55,18 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         SetEnemySettings();
     }
 
-    private void Start()
+    protected void Start()
     {
         //navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
-        //isAttacking = true;
+        isAttacking = true;
         lastYRotation = transform.rotation.eulerAngles.y;
     }
 
     protected virtual void Update()
     {
+        SetWalkAnimation();
+        SetRotationAnimation();
+
         LookAtPlayer();
         GetCurrentPlayerRot();
 
@@ -163,15 +168,15 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         isExecutingAttack = false;
     }
 
-    public void HitPlayer(Collider playerCollider)
+    public virtual void HitPlayer(Collider playerCollider)
     {
         playerCam.CameraShake();
         player.GetComponent<Health>().TakeDamage(damage);
     }
 
-    protected void PushPlayer(float damageUponHit)
+    public void PushPlayer(float damageUponHit)
     {
-        playerCam.CameraShake();
+        //playerCam.CameraShake();
 
         player.GetComponent<Health>().TakeDamage(damageUponHit);
 
@@ -202,22 +207,6 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
         if (!isMoving)
         {
             transform.rotation = currentFacePlayerRot;
-
-            float currentYRotation = transform.eulerAngles.y;
-            float deltaAngle = Mathf.DeltaAngle(lastYRotation, currentYRotation);
-            if (Mathf.Abs(deltaAngle) > 0.1f)
-            {
-                if (deltaAngle > 0)
-                {
-                    Debug.Log("Its rotating to the right");
-                }
-                else if (deltaAngle < 0)
-                {
-                    Debug.Log("Its rotating to the left");
-                }
-            }
-
-            lastYRotation = transform.eulerAngles.y;
         }
     }
 
@@ -302,6 +291,47 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     #endregion AI NAVIGATION
 
+    #region ANIMATOR
+
+    protected virtual void SetWalkAnimation()
+    {
+        if (agent.velocity.magnitude != 0)
+        {
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
+        }
+    }
+
+
+    protected void SetRotationAnimation()
+    {
+        int roundedValue = 0;
+
+        if (agent.velocity.magnitude != 0)
+        {
+            animator.SetInteger("yRotation", 0);
+        }
+        else
+        {
+            float currentYRotation = transform.eulerAngles.y;
+            float deltaAngle = Mathf.DeltaAngle(lastYRotation, currentYRotation);
+
+            if (Mathf.Abs(deltaAngle) > 0.1f)
+            {
+                roundedValue = deltaAngle > 0 ? 1 : deltaAngle < 0 ? -1 : 0;
+            }
+
+            lastYRotation = transform.eulerAngles.y;
+
+            animator.SetInteger("yRotation", roundedValue);
+        }
+    }
+
+    #endregion ANIMATOR
+
     #region START
 
     private void GetReferences()
@@ -314,7 +344,7 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
     private void SetEnemySettings()
     {
         agent.speed = walkSpeed;
-        agent.stoppingDistance = 1;
+        agent.stoppingDistance = stoppingDistance;
         agent.autoBraking = false;
     }
 

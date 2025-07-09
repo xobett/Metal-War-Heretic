@@ -484,6 +484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398311949e50f99448fc0a34fc07b71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2431361461976759979}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512

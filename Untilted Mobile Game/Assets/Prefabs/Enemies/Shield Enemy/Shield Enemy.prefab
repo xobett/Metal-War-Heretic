@@ -907,7 +907,6 @@ GameObject:
   - component: {fileID: 1752446631520181859}
   - component: {fileID: 1175558708040406791}
   - component: {fileID: 3735758471813194079}
-  - component: {fileID: 9081834078469533100}
   m_Layer: 7
   m_Name: Shield Enemy
   m_TagString: Enemy
@@ -988,6 +987,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc08246131368d04daef84a58c951522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2455943146011525546}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
@@ -1005,11 +1005,11 @@ MonoBehaviour:
   maxNavigationTime: 12
   rgBeforeSmackTime: 1
   rgGuardingTime: 3
-  rgBeforePushTime: 1
   rgAfterPushTime: 1
   rgCooldownTime: 10
   rgDamage: 20
   rgSmackRadius: 3
+  rgIsPushing: 0
 --- !u!65 &3735758471813194079
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1029,29 +1029,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2, y: 2.5, z: 1.25}
+  m_Size: {x: 2, y: 2.5, z: 1}
   m_Center: {x: 0, y: 0.25, z: 0.1}
---- !u!65 &9081834078469533100
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7993994855593321819}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2, y: 2.5, z: 0.72}
-  m_Center: {x: 0, y: 0.25, z: 0.45}
 --- !u!1 &8894705603017414051
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,6 +1265,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2a99a9ce0cd6c9449b300264e3d321ae, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2455943146011525546}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2a99a9ce0cd6c9449b300264e3d321ae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5128687798731347308}
   m_SourcePrefab: {fileID: 100100000, guid: 2a99a9ce0cd6c9449b300264e3d321ae, type: 3}
 --- !u!1 &5991977916849802340 stripped
 GameObject:
@@ -1314,6 +1296,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5128687798731347308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991977916849802340}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79887988ad1ca6c45ad54c0779a9d464, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitColliders:
+  - {fileID: 560008674519117305}
+  - {fileID: 3234478128477429545}
 --- !u!4 &6371494544032208606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2a99a9ce0cd6c9449b300264e3d321ae, type: 3}
