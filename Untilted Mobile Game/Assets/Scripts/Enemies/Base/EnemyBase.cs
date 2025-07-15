@@ -49,13 +49,13 @@ public abstract class EnemyBase : MonoBehaviour, IDamageable
 
     private Coroutine navigationActiveCoroutine;
 
-    private void Awake()
+    protected void Awake()
     {
         GetReferences();
         SetEnemySettings();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
         //navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
         isAttacking = true;

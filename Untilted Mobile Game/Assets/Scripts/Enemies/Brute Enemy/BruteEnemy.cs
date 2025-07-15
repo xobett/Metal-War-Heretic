@@ -33,6 +33,13 @@ public class BruteEnemy : EnemyBase
 
     #region BASE OVERRIDES
 
+    protected override void Start()
+    {
+        rmpCoolingDown = true;
+        StartCoroutine(StartRampageRunCooldown());
+        base.Start();
+    }
+
     protected override void Update()
     {
         base.Update();
@@ -78,7 +85,7 @@ public class BruteEnemy : EnemyBase
 
     private void RampageRunTriggerCheck()
     {
-        if (isAttacking && !isExecutingAttack && !rmpCoolingDown)
+        if (!rmpCoolingDown && isAttacking && !isExecutingAttack)
         {
             //Checks if rampage run ability is not active, and distance is within range to trigger the ability
             if (!rmpAbilityActive && playerDistance > minimumDistanceToRun) //////////////////
@@ -94,6 +101,9 @@ public class BruteEnemy : EnemyBase
     {
         animator.SetTrigger("Punch");
         yield return new WaitForSeconds(4.959f); //Fixed animation length
+
+        rmpCoolingDown = true;
+        StartCoroutine(StartRampageRunCooldown());
 
         isExecutingAttack = false;
     }
