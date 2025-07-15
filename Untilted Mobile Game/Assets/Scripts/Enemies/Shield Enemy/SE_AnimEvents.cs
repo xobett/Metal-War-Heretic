@@ -1,8 +1,16 @@
 using UnityEngine;
+using EnemyAI.ShieldEnemy;
 
 public class SE_AnimEvents : MonoBehaviour
 {
+    private ShieldEnemy shieldEnemy;
     [SerializeField] Collider[] hitColliders;
+
+    private void Start()
+    {
+        shieldEnemy = GetComponentInParent<ShieldEnemy>();
+    }
+
     public void EnablePushAttack()
     {
         foreach (Collider collider in hitColliders)
@@ -10,7 +18,7 @@ public class SE_AnimEvents : MonoBehaviour
             collider.isTrigger = true;
         }
 
-        GetComponentInParent<ShieldEnemy>().rgIsPushing = true;
+        shieldEnemy.rgIsPushing = true;
     }
 
     public void DisablePushAttack()
@@ -21,6 +29,6 @@ public class SE_AnimEvents : MonoBehaviour
             collider.isTrigger = false;
         }
 
-        GetComponentInParent<ShieldEnemy>().rgIsPushing = false;
+        shieldEnemy.rgIsPushing = false;
     }
 }

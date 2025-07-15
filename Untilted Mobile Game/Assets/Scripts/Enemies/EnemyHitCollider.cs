@@ -1,4 +1,5 @@
 using UnityEngine;
+using EnemyAI;
 
 public class EnemyHitCollider : MonoBehaviour
 {

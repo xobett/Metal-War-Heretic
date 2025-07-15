@@ -1,74 +1,58 @@
 using System.Collections;
 using UnityEngine;
 
-public class HammerEnemy : EnemyBase
+namespace EnemyAI.HammerEnemy
 {
-    [Header("HAMMER ENEMY SETTINGS")]
-    [SerializeField] private Animator anim_HammerEnemy;
-
-    private bool isPunching;
-
-    #region ENEMY BASE OVERRIDES
-
-    protected override void Update()
+    public class HammerEnemy : EnemyBase
     {
-        base.Update();
+        [Header("HAMMER ENEMY SETTINGS")]
+        [SerializeField] private Animator anim_HammerEnemy;
 
-        SetWalkAnimation();
-    }
+        private bool isPunching;
 
-    protected override void Attack()
-    {
-        StartCoroutine(ThrowHammerPunch());
-    }
+        #region ENEMY BASE OVERRIDES
 
-    protected override void LookAtPlayer()
-    {
-        if (!isPunching)
+        protected override void Update()
         {
-            base.LookAtPlayer(); 
+            base.Update();
         }
-    }
 
-    #endregion ENEMY BASE OVERRIDES
-
-    #region ATTACK ABILITY
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        protected override void Attack()
         {
-            Debug.Log("Hit player");
+            StartCoroutine(ThrowHammerPunch());
         }
-    }
 
-    private IEnumerator ThrowHammerPunch()
-    {
-        anim_HammerEnemy.SetTrigger("Attack");
-        isPunching = true;
-
-        yield return new WaitForSeconds(4);
-
-        isPunching = false;
-        isExecutingAttack = false;
-        yield return null;
-    }
-
-    #endregion ATTACK ABILITY
-
-    #region ANIMATIONS
-
-    private void SetWalkAnimation()
-    {
-        if (agent.velocity.magnitude != 0)
+        protected override void LookAtPlayer()
         {
-            anim_HammerEnemy.SetBool("isWalking", true);
+            if (!isPunching)
+            {
+                base.LookAtPlayer();
+            }
         }
-        else
+
+        #endregion ENEMY BASE OVERRIDES
+
+        #region ATTACK ABILITY
+        private void OnTriggerEnter(Collider other)
         {
-            anim_HammerEnemy.SetBool("isWalking", false);
+            if (other.CompareTag("Player"))
+            {
+                Debug.Log("Hit player");
+            }
         }
+
+        private IEnumerator ThrowHammerPunch()
+        {
+            anim_HammerEnemy.SetTrigger("Attack");
+            isPunching = true;
+
+            yield return new WaitForSeconds(4);
+
+            isPunching = false;
+            isExecutingAttack = false;
+            yield return null;
+        }
+
+        #endregion ATTACK ABILITY
     }
-
-    #endregion ANIMATIONS
-
 }

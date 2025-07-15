@@ -2,370 +2,414 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Health))]
-public abstract class EnemyBase : MonoBehaviour, IDamageable
+namespace EnemyAI
 {
-    [Header("--- ENEMY BASE SETTINGS ---\n")]
-    protected NavMeshAgent agent;
-
-    [Header("ENEMY ANIMATOR SETTINGS")]
-    [SerializeField] protected Animator animator;
-
-    [Header("PLAYER REFERENCES")]
-    [SerializeField] protected LayerMask whatIsPlayer;
-    protected GameObject player;
-    [SerializeField] private float playerDetectionRadius;
-
-    [Header("CAMERA REFERENCES")]
-    protected PlayerCamera playerCam;
-
-    [Header("ATTACK SETTINGS")]
-    [SerializeField] protected float damage;
-
-    [SerializeField, Range(1f, 6f)] protected int timeBetweenAttacks;
-
-    private const float playerDetection_Range = 3f;
-    protected bool isExecutingAttack;
-
-    [SerializeField] protected bool isAttacking;
-
-    [Header("MOVEMENT SETTINGS")]
-    [SerializeField] protected float walkSpeed = 1.5f;
-    [SerializeField] protected float stoppingDistance;
-
-    protected Quaternion currentFacePlayerRot;
-
-    private float lastYRotation;
-
-    [Header("NAVIGATION SETTINGS")]
-    [SerializeField] private LayerMask whatIsCollision;
-    private Vector3 nextPos;
-
-    [SerializeField] private bool isMoving;
-
-    [SerializeField] private float navigationTimer;
-    [SerializeField] private float maxNavigationTime = 12f;
-
-    private Coroutine navigationActiveCoroutine;
-
-    protected void Awake()
+    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(Health))]
+    public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
-        GetReferences();
-        SetEnemySettings();
-    }
+        #region AI NAVIGATION
 
-    protected virtual void Start()
-    {
-        //navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
-        isAttacking = true;
-        lastYRotation = transform.rotation.eulerAngles.y;
-    }
+        [Header("--- ENEMY BASE SETTINGS ---\n")]
+        protected NavMeshAgent agent;
 
-    protected virtual void Update()
-    {
-        SetWalkAnimation();
-        SetRotationAnimation();
+        [Header("AI NAVIGATION SETTINGS")]
+        [SerializeField] protected float walkSpeed = 1.5f;
+        [SerializeField] protected float stoppingDistance;
 
-        LookAtPlayer();
-        GetCurrentPlayerRot();
+        [SerializeField] private LayerMask whatAreObstacles;
+        private Vector3 nextPos;
 
-        if (isAttacking)
+        private bool isMoving;
+
+        private float navigationTimer;
+        private float maxNavigationTime = 12f;
+
+        private Coroutine navigationActiveCoroutine;
+
+        #endregion AI NAVIGATION
+
+        #region ANIMATOR
+
+        [Header("ENEMY ANIMATOR SETTINGS")]
+        [SerializeField] protected Animator animator;
+
+        #endregion ANIMATOR
+
+        #region PLAYER AND CAMERA REFERENCES
+
+        [Header("PLAYER REFERENCES")]
+        [SerializeField] protected LayerMask whatIsPlayer;
+        [SerializeField] private float playerDetectionRadius;
+        protected GameObject player;
+
+        protected PlayerCamera playerCam;
+
+        #endregion PLAYER AND CAMERA REFERENCES
+
+        #region ATTACK
+
+        [Header("ATTACK SETTINGS")]
+        [SerializeField] protected float damage;
+        [SerializeField] protected int timeBeforeAttack;
+
+        protected bool isExecutingAttack;
+        protected bool isAttacking;
+
+        private const float playerDetection_Range = 3f;
+
+        #endregion ATTACK
+
+        #region ROTATION
+
+        protected Quaternion currentFacePlayerRot;
+
+        private float lastYRotation;
+
+        protected bool ableToFace;
+
+        #endregion ROTATION
+
+        protected void Awake()
         {
-            //ATTACK BEHAVIOUR
-            AttackTriggerCheck();
-            FollowPlayer();
+            GetReferences();
+            SetEnemySettings();
         }
-        else
-        {
-            //NAVIGATION BEHAVIOUR
-            //RunNavigationTimer();
-            //HandleStuckNavigation();
-            //HandleEnemyExitingArea();
-        }
-    }
 
-    #region BEHAVIOUR CHECK
-
-    private void GetBehaviour()
-    {
-        if (!isMoving && EnemyManager.instance.ActiveAttackingEnemiesCount < 3 && !isAttacking)
+        protected virtual void Start()
         {
-            EnemyManager.instance.AddAttackingEnemy(this);
-            SetAttackBehaviourSettings();
             isAttacking = true;
+            lastYRotation = transform.rotation.eulerAngles.y;
         }
-    }
 
-    #endregion BEHAVIOUR CHECK
-
-
-    #region ON DAMAGE AND DESTROY
-
-    public void OnDamage(float damage)
-    {
-        GetComponent<Health>().TakeDamage(damage);
-
-        if (isMoving)
+        protected virtual void Update()
         {
-
+            Animator_SetAnimations();
+            Rotation_SetLookRotation();
+            Attack_SetTriggerCheck();
+            AINavigation_SetNavigation();
         }
-    }
 
-    private void OnDestroy()
-    {
-        if (isAttacking && EnemyManager.instance != null)
+        #region BEHAVIOUR CHECK
+
+        private void GetBehaviour()
         {
-            EnemyManager.instance.RemoveAttackingEnemy(this);
+            if (!isMoving && EnemyManager.instance.ActiveAttackingEnemiesCount < 3 && !isAttacking)
+            {
+                EnemyManager.instance.AddAttackingEnemy(this);
+                SetAttackBehaviourSettings();
+                isAttacking = true;
+            }
         }
-    }
 
-    #endregion ON DAMAGE AND DESTROY
+        #endregion BEHAVIOUR CHECK
 
-    #region ATTACK
+        #region ON DAMAGE AND DESTROY
 
-    private void SetAttackBehaviourSettings()
-    {
-        agent.speed = walkSpeed;
-        agent.stoppingDistance = stoppingDistance;
-    }
-
-    private void SetNonAttackBehaviourSettings()
-    {
-        agent.speed = walkSpeed * 2;
-        agent.stoppingDistance = 0;
-    }
-
-    private void AttackTriggerCheck()
-    {
-        if (agent.remainingDistance <= stoppingDistance && CheckPlayerIsNear() && !isExecutingAttack)
+        public void OnDamage(float damage)
         {
-            StartCoroutine(StartAttack());
+            GetComponent<Health>().TakeDamage(damage);
         }
-    }
 
-    private IEnumerator StartAttack()
-    {
-        //Briefly stops and waits before executing its attack
-        isExecutingAttack = true;
+        private void OnDestroy()
+        {
+            if (isAttacking && EnemyManager.instance != null)
+            {
+                EnemyManager.instance.RemoveAttackingEnemy(this);
+            }
+        }
 
-        Debug.Log("Stopped");
-        yield return new WaitForSeconds(timeBetweenAttacks);
+        #endregion ON DAMAGE AND DESTROY
 
-        Debug.Log("Start attack");
-        Attack();
-    }
+        #region ATTACK
 
-    protected virtual void Attack()
-    {
-        //Default behaviour for melee attack type enemies
-        if (Physics.Raycast(transform.position, transform.forward * playerDetection_Range, playerDetection_Range, whatIsPlayer))
+        private void Attack_SetTriggerCheck()
+        {
+            AttackTriggerCheck();
+        }
+
+        private void AttackTriggerCheck()
+        {
+            if (isAttacking && agent.remainingDistance <= stoppingDistance && CheckPlayerIsNear() && !isExecutingAttack)
+            {
+                TriggerAttack();
+            }
+        }
+
+        private void TriggerAttack()
+        {
+            isExecutingAttack = true;
+            Invoke(nameof(Attack), timeBeforeAttack);
+        }
+
+        protected virtual void Attack()
+        {
+            //Default behaviour for melee attack type enemies
+            if (Physics.Raycast(transform.position, transform.forward * playerDetection_Range, playerDetection_Range, whatIsPlayer))
+            {
+                playerCam.CameraShake();
+                player.GetComponent<Health>().TakeDamage(damage);
+            }
+
+            isExecutingAttack = false;
+        }
+
+        public virtual void HitPlayer(Collider playerCollider)
         {
             playerCam.CameraShake();
             player.GetComponent<Health>().TakeDamage(damage);
         }
 
-        isExecutingAttack = false;
-    }
-
-    public virtual void HitPlayer(Collider playerCollider)
-    {
-        playerCam.CameraShake();
-        player.GetComponent<Health>().TakeDamage(damage);
-    }
-
-    public void PushPlayer(float damageUponHit)
-    {
-        //playerCam.CameraShake();
-
-        player.GetComponent<Health>().TakeDamage(damageUponHit);
-
-        float randomSideValue = Random.Range(-2f, 2f);
-        float randomTimePushed = Random.Range(0.4f, 0.5f);
-        float randomPushedForce = Random.Range(7f, 8f);
-
-        Vector3 pushedDirection = transform.forward + transform.right * randomSideValue;
-
-        player.GetComponent<PlayerMovement>().SetHitMovement(pushedDirection, randomPushedForce, randomTimePushed);
-    }
-
-
-    #endregion ATTACK
-
-    #region MOVEMENT AND ROTATION
-
-    protected virtual void FollowPlayer()
-    {
-        if (!isExecutingAttack && !isMoving)
+        public void PushPlayer(float damageUponHit)
         {
-            agent.destination = player.transform.position;
-        }
-    }
+            //playerCam.CameraShake();
 
-    protected virtual void LookAtPlayer()
-    {
-        if (!isMoving)
-        {
-            transform.rotation = currentFacePlayerRot;
-        }
-    }
+            player.GetComponent<Health>().TakeDamage(damageUponHit);
 
-    private void GetCurrentPlayerRot()
-    {
-        Vector3 lookDirection = player.transform.position - transform.position;
-        Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
-        currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
-    }
+            float randomSideValue = Random.Range(-2f, 2f);
+            float randomTimePushed = Random.Range(0.7f, 0.9f);
+            float randomPushedForce = Random.Range(10f, 13f);
 
-    #endregion MOVEMENT AND ROTATION
+            Vector3 pushedDirection = transform.forward + transform.right * randomSideValue;
 
-    #region AI NAVIGATION
-    private void RunNavigationTimer()
-    {
-        navigationTimer -= Time.deltaTime;
-    }
-
-    private IEnumerator AssignWaitPosition()
-    {
-        navigationTimer = maxNavigationTime;
-        isMoving = true;
-
-        Vector3 calculatedPos = EnemyManager.instance.AssignMovingPosition();
-
-        int attemptsDone = 0;
-        while (Physics.CheckSphere(calculatedPos, agent.radius, whatIsCollision))
-        {
-            if (attemptsDone >= 2)
-            {
-                EnemyManager.instance.IncreaseAreaRadius();
-            }
-
-            calculatedPos = EnemyManager.instance.AssignMovingPosition();
-            attemptsDone++;
-            Debug.Log("New position was generated");
-            yield return null;
+            player.GetComponent<PlayerMovement>().SetHitMovement(pushedDirection, randomPushedForce, randomTimePushed);
         }
 
-        nextPos = calculatedPos;
-        agent.destination = nextPos;
-        //Waits until remaining distance is called and until enemy arrives to its destination
-        yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
-
-        float time = 0f;
-        while (time < 1)
+        private void SetAttackBehaviourSettings()
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
-            time += Time.deltaTime * 0.6f;
-            yield return null;
+            agent.speed = walkSpeed;
+            agent.stoppingDistance = stoppingDistance;
         }
-        transform.rotation = currentFacePlayerRot;
 
-        //Stops the enemy upon arrival
-        agent.speed = 0;
-        isMoving = false;
-        Debug.Log("Set to false");
-
-        GetBehaviour();
-
-        yield return null;
-    }
-
-    private void HandleStuckNavigation()
-    {
-        if (navigationTimer < 0 && isMoving)
-        {
-            StopCoroutine(navigationActiveCoroutine);
-            agent.speed += 1.5f;
-            navigationActiveCoroutine = StartCoroutine(AssignWaitPosition());
-        }
-    }
-
-    private void HandleEnemyExitingArea()
-    {
-        if (!isMoving && Vector3.Distance(transform.position, player.transform.position) > EnemyManager.instance.AreaRadius)
+        private void SetNonAttackBehaviourSettings()
         {
             agent.speed = walkSpeed * 2;
-            StartCoroutine(AssignWaitPosition());
+            agent.stoppingDistance = 0;
         }
-    }
 
-    #endregion AI NAVIGATION
+        #endregion ATTACK
 
-    #region ANIMATOR
+        #region ROTATION
 
-    protected virtual void SetWalkAnimation()
-    {
-        if (agent.velocity.magnitude != 0)
+        private void Rotation_SetLookRotation()
         {
-            animator.SetBool("isWalking", true);
+            GetCurrentPlayerRot();
+            LookAtPlayer();
         }
-        else
+
+        protected virtual void LookAtPlayer()
         {
-            animator.SetBool("isWalking", false);
-        }
-    }
-
-
-    protected void SetRotationAnimation()
-    {
-        int roundedValue = 0;
-
-        if (agent.velocity.magnitude != 0)
-        {
-            animator.SetInteger("yRotation", 0);
-        }
-        else
-        {
-            float currentYRotation = transform.eulerAngles.y;
-            float deltaAngle = Mathf.DeltaAngle(lastYRotation, currentYRotation);
-
-            if (Mathf.Abs(deltaAngle) > 0.1f)
+            if (!isMoving || ableToFace)
             {
-                roundedValue = deltaAngle > 0 ? 1 : deltaAngle < 0 ? -1 : 0;
+                transform.rotation = currentFacePlayerRot;
+            }
+        }
+
+        private void GetCurrentPlayerRot()
+        {
+            Vector3 lookDirection = player.transform.position - transform.position;
+            Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
+            currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
+        }
+
+        protected void SmoothResetRotation()
+        {
+            StartCoroutine(CR_SmoothResetRotation());
+        }
+
+        private IEnumerator CR_SmoothResetRotation()
+        {
+            float time = 0f;
+            while (time < 1)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
+                time += Time.deltaTime * 0.6f;
+                yield return null;
             }
 
-            lastYRotation = transform.eulerAngles.y;
+            transform.rotation = currentFacePlayerRot;
+            ableToFace = true;
 
-            animator.SetInteger("yRotation", roundedValue);
+            yield break;
         }
+
+        #endregion ROTATION
+
+        #region AI NAVIGATION
+
+        private void AINavigation_SetNavigation()
+        {
+            FollowPlayer();
+        }
+
+        protected virtual void FollowPlayer()
+        {
+            if (!isExecutingAttack && !isMoving)
+            {
+                agent.destination = player.transform.position;
+            }
+        }
+        
+        private void RunNavigationTimer()
+        {
+            navigationTimer -= Time.deltaTime;
+        }
+
+        private IEnumerator CR_AssignWaitPosition()
+        {
+            navigationTimer = maxNavigationTime;
+            isMoving = true;
+
+            Vector3 calculatedPos = EnemyManager.instance.AssignMovingPosition();
+
+            int attemptsDone = 0;
+            while (Physics.CheckSphere(calculatedPos, agent.radius, whatAreObstacles))
+            {
+                if (attemptsDone >= 2)
+                {
+                    EnemyManager.instance.IncreaseAreaRadius();
+                }
+
+                calculatedPos = EnemyManager.instance.AssignMovingPosition();
+                attemptsDone++;
+                Debug.Log("New position was generated");
+                yield return null;
+            }
+
+            nextPos = calculatedPos;
+            agent.destination = nextPos;
+            //Waits until remaining distance is called and until enemy arrives to its destination
+            yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
+
+            float time = 0f;
+            while (time < 1)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
+                time += Time.deltaTime * 0.6f;
+                yield return null;
+            }
+            transform.rotation = currentFacePlayerRot;
+
+            //Stops the enemy upon arrival
+            agent.speed = 0;
+            isMoving = false;
+            Debug.Log("Set to false");
+
+            GetBehaviour();
+
+            yield break;
+        }
+
+        private void HandleStuckNavigation()
+        {
+            if (navigationTimer < 0 && isMoving)
+            {
+                StopCoroutine(navigationActiveCoroutine);
+                agent.speed += 1.5f;
+                navigationActiveCoroutine = StartCoroutine(CR_AssignWaitPosition());
+            }
+        }
+
+        private void HandleEnemyExitingArea()
+        {
+            if (!isMoving && Vector3.Distance(transform.position, player.transform.position) > EnemyManager.instance.AreaRadius)
+            {
+                agent.speed = walkSpeed * 2;
+                StartCoroutine(CR_AssignWaitPosition());
+            }
+        }
+
+        #endregion AI NAVIGATION
+
+        #region ANIMATOR
+
+        private void Animator_SetAnimations()
+        {
+            SetWalkAnimation();
+            SetRotationAnimation();
+        }
+
+        protected virtual void SetWalkAnimation()
+        {
+            if (agent.velocity.magnitude != 0)
+            {
+                animator.SetBool("isWalking", true);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+            }
+        }
+
+        protected void SetRotationAnimation()
+        {
+            int roundedValue = 0;
+
+            if (agent.velocity.magnitude != 0)
+            {
+                animator.SetInteger("yRotation", 0);
+            }
+            else
+            {
+                float currentYRotation = transform.eulerAngles.y;
+                float deltaAngle = Mathf.DeltaAngle(lastYRotation, currentYRotation);
+
+                if (Mathf.Abs(deltaAngle) > 0.1f)
+                {
+                    roundedValue = deltaAngle > 0 ? 1 : deltaAngle < 0 ? -1 : 0;
+                }
+
+                lastYRotation = transform.eulerAngles.y;
+
+                animator.SetInteger("yRotation", roundedValue);
+            }
+        }
+
+        #region ANIMATION EVENT METHDOS
+
+        public void AnimEvent_FinishAttack()
+        {
+            isExecutingAttack = false;
+        }
+
+        public void AnimEvent_StopFacingAtPlayer()
+        {
+            ableToFace = false;
+        }
+
+        public void AnimEvent_FaceAtPlayer()
+        {
+            ableToFace = true;
+        }
+
+        #endregion ANIMATION EVENT METHDOS
+
+        #endregion ANIMATOR
+
+        #region START
+
+        private void GetReferences()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            playerCam = Camera.main.GetComponent<PlayerCamera>();
+            agent = GetComponent<NavMeshAgent>();
+        }
+
+        private void SetEnemySettings()
+        {
+            agent.speed = walkSpeed;
+            agent.stoppingDistance = stoppingDistance;
+        }
+
+        #endregion START
+
+        #region PLAYER DETECTION
+
+        private bool CheckPlayerIsNear()
+        {
+            return Physics.CheckSphere(transform.position, playerDetectionRadius, whatIsPlayer);
+        }
+
+        #endregion PLAYER DETECTION 
     }
-
-    #endregion ANIMATOR
-
-    #region START
-
-    private void GetReferences()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-        playerCam = Camera.main.GetComponent<PlayerCamera>();
-        agent = GetComponent<NavMeshAgent>();
-    }
-
-    private void SetEnemySettings()
-    {
-        agent.speed = walkSpeed;
-        agent.stoppingDistance = stoppingDistance;
-        agent.autoBraking = false;
-    }
-
-    #endregion START
-
-    #region PLAYER DETECTION
-
-    private bool CheckPlayerIsNear()
-    {
-        return Physics.CheckSphere(transform.position, playerDetectionRadius, whatIsPlayer);
-    }
-
-    #endregion PLAYER DETECTION 
-
-    #region DEBUG VISUAL GIZMOS
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, playerDetectionRadius);
-    }
-
-    #endregion DEBUG VISUAL GIZMOS
 }
