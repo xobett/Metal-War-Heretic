@@ -23,7 +23,7 @@ public class BruteEnemy : EnemyBase
     [SerializeField, Range(2f, 6f)] private int rmpRunningTime;
     [SerializeField, Range(2f, 6f)] private int rmpAfterRunTime;
 
-    [SerializeField, Range(10f, 15f)] private int rmpCooldown;
+    [SerializeField, Range(10f, 15f)] private int rmpCooldownTime;
 
     private bool rmpIsRunning; // Used to state when its running, also used to stop rotating when doing so
     private bool rmpAbilityActive; // Used to avoid entering the run ability method continuosly, until the ability is completed
@@ -40,6 +40,11 @@ public class BruteEnemy : EnemyBase
         RampageRunMovement();
         RampageRunTriggerCheck();
         GetDistanceFromPlayer();
+    }
+
+    protected override void Attack()
+    {
+        StartCoroutine(StartHeavyPunch());
     }
 
     #region BASE MOVEMENT AND ROTATION
@@ -73,15 +78,24 @@ public class BruteEnemy : EnemyBase
 
     private void RampageRunTriggerCheck()
     {
-        if (isAttacking && !rmpCoolingDown && !isExecutingAttack)
+        if (isAttacking && !isExecutingAttack && !rmpCoolingDown)
         {
             //Checks if rampage run ability is not active, and distance is within range to trigger the ability
-            if ((!rmpAbilityActive && !rmpIsRunning) && playerDistance > minimumDistanceToRun)
+            if (!rmpAbilityActive && playerDistance > minimumDistanceToRun) //////////////////
             {
+                Debug.Log("ENTRO");
                 isExecutingAttack = true;
                 rmpActiveCoroutine = StartCoroutine(StartRampageRun());
             }
         }
+    }
+
+    private IEnumerator StartHeavyPunch()
+    {
+        animator.SetTrigger("Punch");
+        yield return new WaitForSeconds(4.959f); //Fixed animation length
+
+        isExecutingAttack = false;
     }
 
     private IEnumerator StartRampageRun()
@@ -91,17 +105,26 @@ public class BruteEnemy : EnemyBase
 
         Debug.Log("Entered");
         //Stops following the player for a period of time
-        agent.destination = transform.position; 
+        agent.destination = transform.position;
         yield return new WaitForSeconds(rmpBeforeRunTime);
 
-        //While looking at the players position, it moves towards it at a fast pace during a period of time.
+        agent.speed = 0;
         rmpIsRunning = true;
+        animator.SetBool("isRunning", true);
+        animator.SetTrigger("StartRampageRun");
+        yield return new WaitForSeconds(1.625f); //Fixed animation length
+
+        //While looking at the players position, it moves towards it at a fast pace during a period of time.
         agent.speed = rampageRunSpeed;
         yield return new WaitForSeconds(rmpRunningTime);
 
         //Sets speed to 0 and waits until the enemy slows down.
+        animator.SetBool("isRunning", false);
         agent.speed = 0f;
-        yield return new WaitUntil(() => agent.velocity.magnitude == 0);
+        yield return new WaitForSeconds(1.625f); //Fixed animation length
+
+        //Stops completely upon finishing stop animation
+        agent.destination = transform.position;
 
         //Looks smoothly at player before returning to its default state
         float time = 0f;
@@ -113,9 +136,7 @@ public class BruteEnemy : EnemyBase
         }
         transform.rotation = currentFacePlayerRot;
 
-        //Stops running and looks at player again but remains steady for a period of time.
         rmpIsRunning = false;
-        agent.destination = transform.position;
         yield return new WaitForSeconds(rmpAfterRunTime);
 
         //Ability is no longer active and should follow player
@@ -141,12 +162,16 @@ public class BruteEnemy : EnemyBase
     }
 
     private IEnumerator SlowDownPostHit()
-    {        
-        //Slows down and Stops the enemy upon hit
-        agent.speed = 0;
+    {
+        //Sets speed to 0 and waits until the enemy slows down.
+        animator.SetBool("isRunning", false);
+        agent.speed = 0f;
+        yield return new WaitForSeconds(1.625f); //Fixed animation length
+
+        //Stops completely upon finishing stop animation
         agent.destination = transform.position;
 
-        //In case that the player gets pushed away from the enemy's view, rotates it again to the player.
+        //Looks smoothly at player before returning to its default state
         float time = 0f;
         while (time < 1)
         {
@@ -170,7 +195,7 @@ public class BruteEnemy : EnemyBase
 
     private IEnumerator StartRampageRunCooldown()
     {
-        yield return new WaitForSeconds(rmpCooldown);
+        yield return new WaitForSeconds(rmpCooldownTime);
         rmpCoolingDown = false;
 
         yield return null;
