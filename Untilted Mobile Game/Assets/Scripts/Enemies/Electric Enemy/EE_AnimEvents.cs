@@ -10,19 +10,34 @@ public class EE_AnimEvents : MonoBehaviour
         electricEnemy = GetComponentInParent<ElectricEnemy>();
     }
 
-    public void ExecuteDistanceAttack()
+    public void ThrowElectricBall()
     {
-        electricEnemy.ThrowElectricBall();
+        electricEnemy.AnimEvent_ThrowElectricBall();
+    }
+
+    public void SpawnElectricVFX()
+    {
+        electricEnemy.AnimEvent_SpawnElectricVFX();
+    }
+
+    public void SpawnElectricArea()
+    {
+        electricEnemy.AnimEvent_SpawnElectricArea();
     }
 
     public void StopFacingAtPlayer()
     {
-        electricEnemy.AnimEvent_FaceAtPlayer();
+        electricEnemy.AnimEvent_StopFacingAtPlayer();
     }
 
     public void FaceAtPlayer()
     {
-        electricEnemy.AnimEvent_StopFacingAtPlayer();
+        electricEnemy.AnimEvent_FaceAtPlayer();
+    }
+
+    public void ResetRotation()
+    {
+        electricEnemy.SmoothResetRotation();
     }
 
     public void FinishAttack()

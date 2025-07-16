@@ -15,9 +15,6 @@ namespace EnemyAI.ElectricEnemy
         [Header("DISTANCE ATTACK SETTINGS")]
         [SerializeField] private Transform spawnPoint;
 
-        [SerializeField] private float beforeDistanceAttackTime;
-        [SerializeField] private float afterDistanceAttackTime;
-
         [SerializeField] private float distanceAttackSpeed;
         [SerializeField] private float distanceAttackDamage;
         [SerializeField] private float distanceAttackLifetime;
@@ -54,46 +51,41 @@ namespace EnemyAI.ElectricEnemy
             }
         }
 
-        #region MAIN ABILITY - DISTANCE ATTACK
-
         private void DistanceAttack()
         {
             animator.SetTrigger("DistanceAttack");
         }
-
-        public void ThrowElectricBall()
-        {
-            distanceAttackPf.GetComponent<ElectricBall>().SetElectricBallSettings(transform.forward, distanceAttackDamage, distanceAttackSpeed, distanceAttackLifetime);
-            Instantiate(distanceAttackPf, spawnPoint.position, Quaternion.identity);
-        }
-
-        #endregion MAIN ABILITY - DISTANCE ATTACK
-
-        #region SECONDARY ABILITY - ELECTRIC ATTACK
-
         private void ElectricAttack()
         {
             animator.SetTrigger("ElectricAttack");
             electricAttackCoolingDown = true;
         }
 
-        public void SpawnElectricVFX()
+        #region Animation Event Methods
+
+        public void AnimEvent_ThrowElectricBall()
+        {
+            distanceAttackPf.GetComponent<ElectricBall>().SetElectricBallSettings(transform.forward, distanceAttackDamage, distanceAttackSpeed, distanceAttackLifetime);
+            Instantiate(distanceAttackPf, spawnPoint.position, Quaternion.identity);
+        }
+
+        public void AnimEvent_SpawnElectricVFX()
         {
             electricAreaSpawnPos = player.transform.position;
             electricAreaSpawnPos.y = 1.2f;
 
             GameObject vfx = Instantiate(cueElectricVfx, electricAreaSpawnPos, cueElectricVfx.transform.rotation);
-            Destroy(vfx, 3);
-
-            Invoke(nameof(SpawnElectricArea), 3f);
+            Destroy(vfx, 1.6f);
         }
 
-        private void SpawnElectricArea()
+        public void AnimEvent_SpawnElectricArea()
         {
             electricAreaPf.GetComponent<ElectricArea>().SetElectricAreaSettings(electricAreaDamage, electricAreaLifetime);
             Instantiate(electricAreaPf, electricAreaSpawnPos, electricAreaPf.transform.rotation);
             StartCoroutine(StartElectricCooldown());
         }
+
+        #endregion Animation Event Methods
 
         private IEnumerator StartElectricCooldown()
         {
@@ -102,8 +94,6 @@ namespace EnemyAI.ElectricEnemy
             electricAttackCoolingDown = false;
             yield return null;
         }
-
-        #endregion SECONDARY ABILITY - ELECTRIC ATTACK
 
         private void OnDestroy()
         {

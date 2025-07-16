@@ -987,28 +987,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc08246131368d04daef84a58c951522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 1.5
+  stoppingDistance: 3.9
+  whatAreObstacles:
+    serializedVersion: 2
+    m_Bits: 0
   animator: {fileID: 2455943146011525546}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
   playerDetectionRadius: 2.6
   damage: 5
-  timeBetweenAttacks: 1
-  isAttacking: 0
-  walkSpeed: 1.5
-  stoppingDistance: 3.9
-  whatIsCollision:
-    serializedVersion: 2
-    m_Bits: 640
-  isMoving: 0
-  navigationTimer: 0
-  maxNavigationTime: 12
-  rgBeforeSmackTime: 1
+  timeBeforeAttack: 0
+  ableToFace: 1
   rgGuardingTime: 3
   rgAfterPushTime: 1
   rgCooldownTime: 10
-  rgDamage: 20
-  rgSmackRadius: 3
+  guardLookSpeed: 0.8
+  afterPushLookSpeed: 0.6
   rgIsPushing: 0
 --- !u!65 &3735758471813194079
 BoxCollider:
@@ -1252,6 +1248,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2263989365325083043, guid: 2a99a9ce0cd6c9449b300264e3d321ae, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2309308c6ad997c41b8154521b19d731, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

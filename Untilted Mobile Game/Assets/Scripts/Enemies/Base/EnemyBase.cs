@@ -66,7 +66,7 @@ namespace EnemyAI
 
         private float lastYRotation;
 
-        protected bool ableToFace;
+        [SerializeField] protected bool ableToFace = true;
 
         #endregion ROTATION
 
@@ -199,7 +199,7 @@ namespace EnemyAI
 
         protected virtual void LookAtPlayer()
         {
-            if (!isMoving || ableToFace)
+            if (!isMoving && ableToFace)
             {
                 transform.rotation = currentFacePlayerRot;
             }
@@ -212,7 +212,7 @@ namespace EnemyAI
             currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
         }
 
-        protected void SmoothResetRotation()
+        public void SmoothResetRotation()
         {
             StartCoroutine(CR_SmoothResetRotation());
         }
@@ -223,7 +223,7 @@ namespace EnemyAI
             while (time < 1)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
-                time += Time.deltaTime * 0.6f;
+                time += Time.deltaTime * 0.1f;
                 yield return null;
             }
 

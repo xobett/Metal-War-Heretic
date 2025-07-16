@@ -576,22 +576,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234bab64c88d5d64f97b39abee885bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 3
+  stoppingDistance: 2
+  whatAreObstacles:
+    serializedVersion: 2
+    m_Bits: 0
   animator: {fileID: 4108378721913728083}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
   playerDetectionRadius: 3
   damage: 20
-  timeBetweenAttacks: 5
-  isAttacking: 0
-  walkSpeed: 3
-  stoppingDistance: 2
-  whatIsCollision:
-    serializedVersion: 2
-    m_Bits: 128
-  isMoving: 0
-  navigationTimer: 0
-  maxNavigationTime: 12
+  timeBeforeAttack: 0
+  ableToFace: 1
   anim_HammerEnemy: {fileID: 4108378721913728083}
 --- !u!114 &1752446631520181859
 MonoBehaviour:
@@ -1071,6 +1068,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 79.86761
       objectReference: {fileID: 0}
+    - target: {fileID: 4924775031607160206, guid: f907388a51962af46b23ccb962ec7044, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 4f8df0ffbcf13b44f9046aef49eca5be, type: 2}
     - target: {fileID: 6001849839412039662, guid: f907388a51962af46b23ccb962ec7044, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0.052506898
