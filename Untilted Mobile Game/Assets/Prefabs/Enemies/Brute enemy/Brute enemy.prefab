@@ -484,30 +484,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398311949e50f99448fc0a34fc07b71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkSpeed: 2.35
+  stoppingDistance: 3
+  whatAreObstacles:
+    serializedVersion: 2
+    m_Bits: 0
   animator: {fileID: 2431361461976759979}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
   playerDetectionRadius: 2.8
   damage: 30
-  timeBetweenAttacks: 3
-  isAttacking: 0
-  walkSpeed: 2.35
-  stoppingDistance: 3
-  whatIsCollision:
-    serializedVersion: 2
-    m_Bits: 0
-  isMoving: 0
-  navigationTimer: 0
-  maxNavigationTime: 12
-  rampageRunDamage: 30
-  rampageRunHitForce: 0.2
-  rampageRunSpeed: 10
-  minimumDistanceToRun: 5
-  rmpBeforeRunTime: 2
+  timeBeforeAttack: 0
+  ableToFace: 1
+  rmpDamage: 0
+  rmpSpeed: 0
   rmpRunningTime: 2
-  rmpAfterRunTime: 2
-  rmpCooldown: 10
+  rmpCooldownTime: 10
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,6 +769,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7674980728868984862, guid: d202bd2c80d5ad94a8372c846fd9ce60, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: faf8e26f8a85122448fd8acebeb01191, type: 2}
     - target: {fileID: 919132149155446097, guid: d202bd2c80d5ad94a8372c846fd9ce60, type: 3}
       propertyPath: m_Name
       value: Bruto animaciones
@@ -790,6 +787,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d202bd2c80d5ad94a8372c846fd9ce60, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2431361461976759979}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d202bd2c80d5ad94a8372c846fd9ce60, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8920140189580404444}
   m_SourcePrefab: {fileID: 100100000, guid: d202bd2c80d5ad94a8372c846fd9ce60, type: 3}
 --- !u!4 &5932746397749174435 stripped
 Transform:
@@ -823,6 +823,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8920140189580404444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7307740409955179501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8110f61519e59df42927175772cf9192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7935799406959591767 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d202bd2c80d5ad94a8372c846fd9ce60, type: 3}

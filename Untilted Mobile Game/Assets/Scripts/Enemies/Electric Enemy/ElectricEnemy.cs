@@ -57,8 +57,8 @@ namespace EnemyAI.ElectricEnemy
         }
         private void ElectricAttack()
         {
-            animator.SetTrigger("ElectricAttack");
             electricAttackCoolingDown = true;
+            animator.SetTrigger("ElectricAttack");
         }
 
         #region Animation Event Methods
@@ -82,17 +82,19 @@ namespace EnemyAI.ElectricEnemy
         {
             electricAreaPf.GetComponent<ElectricArea>().SetElectricAreaSettings(electricAreaDamage, electricAreaLifetime);
             Instantiate(electricAreaPf, electricAreaSpawnPos, electricAreaPf.transform.rotation);
-            StartCoroutine(StartElectricCooldown());
+            RunCooldown();
         }
 
         #endregion Animation Event Methods
 
-        private IEnumerator StartElectricCooldown()
+        private void RunCooldown()
         {
-            yield return new WaitForSeconds(electricAttackCooldownTime);
+            Invoke(nameof(DisableCooldown), electricAttackCooldownTime);
+        }
 
+        private void DisableCooldown()
+        {
             electricAttackCoolingDown = false;
-            yield return null;
         }
 
         private void OnDestroy()

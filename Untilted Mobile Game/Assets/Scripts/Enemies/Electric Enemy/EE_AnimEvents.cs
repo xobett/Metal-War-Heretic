@@ -30,11 +30,6 @@ public class EE_AnimEvents : MonoBehaviour
         electricEnemy.AnimEvent_StopFacingAtPlayer();
     }
 
-    public void FaceAtPlayer()
-    {
-        electricEnemy.AnimEvent_FaceAtPlayer();
-    }
-
     public void ResetRotation()
     {
         electricEnemy.SmoothResetRotation();

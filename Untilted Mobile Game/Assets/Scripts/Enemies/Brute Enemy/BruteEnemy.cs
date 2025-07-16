@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace EnemyAI.BruteEnemy
@@ -7,209 +8,156 @@ namespace EnemyAI.BruteEnemy
     {
         [Header("--- BRUTE ENEMY SETTINGS ---\n")]
 
-        [Header("RAMPAGE RUN ABILITY\n")]
+        [Header("RAMPAGE RUN\n")]
 
         [Header("RUN SPEED AND DAMAGE SETTINGS")]
-        [SerializeField] private float rampageRunDamage;
-        [SerializeField, Range(0.2f, 1f)] private float rampageRunHitForce;
-        [SerializeField] private int rampageRunSpeed;
-        [SerializeField] private int minimumDistanceToRun;
-
+        [SerializeField] private float rmpDamage;
+        [SerializeField] private int rmpSpeed;
         private bool rmpPlayerHit;
-
+        
+        private int rmpTriggerDistance;
         private float playerDistance;
 
-        [Header("TIMING SETTINGS")]
-        [SerializeField, Range(2f, 6f)] private int rmpBeforeRunTime;
+        [Header("TIMER SETTINGS")]
         [SerializeField, Range(2f, 6f)] private int rmpRunningTime;
-        [SerializeField, Range(2f, 6f)] private int rmpAfterRunTime;
-
         [SerializeField, Range(10f, 15f)] private int rmpCooldownTime;
 
-        private bool rmpIsRunning; // Used to state when its running, also used to stop rotating when doing so
-        private bool rmpAbilityActive; // Used to avoid entering the run ability method continuosly, until the ability is completed
-        private bool rmpCoolingDown; // Used to avoid the run ability method from executing when its cooling down
-
-        private Coroutine rmpActiveCoroutine;
-
-        #region BASE OVERRIDES
+        private bool rmpIsRunning; 
+        private bool rmpCoolingDown;
 
         protected override void Start()
         {
-            rmpCoolingDown = true;
-            StartCoroutine(StartRampageRunCooldown());
             base.Start();
+            //RampageRun_Start();
         }
 
         protected override void Update()
         {
             base.Update();
-
-            RampageRunMovement();
-            RampageRunTriggerCheck();
-            GetDistanceFromPlayer();
+            RampageRun_Update();
         }
 
         protected override void Attack()
         {
-            StartCoroutine(StartHeavyPunch());
+            ExecuteHeavyPunch();
         }
 
-        #region BASE MOVEMENT AND ROTATION
-
-        protected override void LookAtPlayer()
+        #region HEAVY PUNCH
+        private void ExecuteHeavyPunch()
         {
-            if (!rmpIsRunning)
+            animator.SetTrigger("HeavyPunch");
+        }
+
+        #endregion HEAVY PUNCH
+
+        #region ANIMATION EVENT METHODS
+
+        public void AnimEvent_StopMoving()
+        {
+            agent.destination = transform.position;
+        }
+
+        public void AnimEvent_StartRunning()
+        {
+            rmpIsRunning = true;
+            agent.speed = rmpSpeed;
+
+            Invoke(nameof(SlowDown), rmpRunningTime);
+        }
+
+        private void SlowDown()
+        {
+            animator.SetBool("isRunning", false);
+
+            rmpIsRunning = false;
+            agent.speed = 1;
+        }
+
+        public void AnimEvent_StopAcceleration()
+        {
+            agent.destination = transform.position;
+
+            if (rmpPlayerHit)
             {
-                base.LookAtPlayer();
+                rmpPlayerHit = false;
             }
         }
 
-        #endregion BASE MOVEMENT AND ROTATION
+        public void AnimEvent_ResetSpeed()
+        {
+            agent.speed = walkSpeed;
+            RunCooldown();
+        }
 
-        #endregion BASE OVERRIDES
+        #endregion ANIMATION EVENT METHODS
 
         #region RAMPAGE RUN
+
+        private void RampageRun_Start()
+        {
+            rmpCoolingDown = true;
+            RunCooldown();
+        }
+
+        private void RampageRun_Update()
+        {
+            SetRunningMovement();
+            RampageRunTriggerCheck();
+            GetDistanceFromPlayer();
+        }
 
         private void GetDistanceFromPlayer()
         {
             playerDistance = Vector3.Distance(transform.position, player.transform.position);
         }
 
-        private void RampageRunMovement()
-        {
-            if (rmpIsRunning)
-            {
-                agent.destination = agent.transform.position + agent.transform.forward * 5f;
-            }
-        }
-
         private void RampageRunTriggerCheck()
         {
-            if (!rmpCoolingDown && isAttacking && !isExecutingAttack)
+            if (isAttacking && !isExecutingAttack)
             {
-                //Checks if rampage run ability is not active, and distance is within range to trigger the ability
-                if (!rmpAbilityActive && playerDistance > minimumDistanceToRun) //////////////////
+                if (!rmpCoolingDown && playerDistance > rmpTriggerDistance)
                 {
-                    Debug.Log("ENTRO");
-                    isExecutingAttack = true;
-                    rmpActiveCoroutine = StartCoroutine(StartRampageRun());
+                    ExecuteRampageRun();
                 }
             }
         }
 
-        private IEnumerator StartHeavyPunch()
+        private void ExecuteRampageRun()
         {
-            animator.SetTrigger("Punch");
-            yield return new WaitForSeconds(4.959f); //Fixed animation length
-
-            rmpCoolingDown = true;
-            StartCoroutine(StartRampageRunCooldown());
-
-            isExecutingAttack = false;
-        }
-
-        private IEnumerator StartRampageRun()
-        {
-            rmpAbilityActive = true;
+            isExecutingAttack = true;
             rmpCoolingDown = true;
 
-            Debug.Log("Entered");
-            //Stops following the player for a period of time
-            agent.destination = transform.position;
-            yield return new WaitForSeconds(rmpBeforeRunTime);
-
-            agent.speed = 0;
-            rmpIsRunning = true;
             animator.SetBool("isRunning", true);
-            animator.SetTrigger("StartRampageRun");
-            yield return new WaitForSeconds(1.625f); //Fixed animation length
-
-            //While looking at the players position, it moves towards it at a fast pace during a period of time.
-            agent.speed = rampageRunSpeed;
-            yield return new WaitForSeconds(rmpRunningTime);
-
-            //Sets speed to 0 and waits until the enemy slows down.
-            animator.SetBool("isRunning", false);
-            agent.speed = 0f;
-            yield return new WaitForSeconds(1.625f); //Fixed animation length
-
-            //Stops completely upon finishing stop animation
-            agent.destination = transform.position;
-
-            //Looks smoothly at player before returning to its default state
-            float time = 0f;
-            while (time < 1)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
-                time += Time.deltaTime * 0.6f;
-                yield return null;
-            }
-            transform.rotation = currentFacePlayerRot;
-
-            rmpIsRunning = false;
-            yield return new WaitForSeconds(rmpAfterRunTime);
-
-            //Ability is no longer active and should follow player
-            agent.speed = walkSpeed;
-            rmpAbilityActive = false;
-            isExecutingAttack = false;
-
-            StartCoroutine(StartRampageRunCooldown());
-            yield return null;
+            animator.SetTrigger("RampageRun");
         }
 
+        private void SetRunningMovement()
+        {
+            if (rmpIsRunning)
+            {
+                agent.destination = agent.transform.position + agent.transform.forward * 15f;
+            }
+        }
+
+        // Pushes player when running
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player") && (rmpIsRunning && !rmpPlayerHit))
             {
-                //Prevents the player from getting pushed again if slices against the enemy
                 rmpPlayerHit = true;
 
-                PushPlayer(rampageRunDamage);
-                StopCoroutine(rmpActiveCoroutine);
-                rmpActiveCoroutine = StartCoroutine(SlowDownPostHit());
+                PushPlayer(rmpDamage);
             }
         }
 
-        private IEnumerator SlowDownPostHit()
+        private void RunCooldown()
         {
-            //Sets speed to 0 and waits until the enemy slows down.
-            animator.SetBool("isRunning", false);
-            agent.speed = 0f;
-            yield return new WaitForSeconds(1.625f); //Fixed animation length
-
-            //Stops completely upon finishing stop animation
-            agent.destination = transform.position;
-
-            //Looks smoothly at player before returning to its default state
-            float time = 0f;
-            while (time < 1)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
-                time += Time.deltaTime * 0.6f;
-                yield return null;
-            }
-            transform.rotation = currentFacePlayerRot;
-
-            rmpIsRunning = false;
-            rmpPlayerHit = false;
-            yield return new WaitForSeconds(rmpAfterRunTime);
-
-            agent.speed = walkSpeed;
-            rmpAbilityActive = false;
-            isExecutingAttack = false;
-
-            StartCoroutine(StartRampageRunCooldown());
-            yield return null;
+            Invoke(nameof(DisableCooldown), rmpCooldownTime);
         }
 
-        private IEnumerator StartRampageRunCooldown()
+        private void DisableCooldown()
         {
-            yield return new WaitForSeconds(rmpCooldownTime);
             rmpCoolingDown = false;
-
-            yield return null;
         }
 
         #endregion RAMPAGE RUN
