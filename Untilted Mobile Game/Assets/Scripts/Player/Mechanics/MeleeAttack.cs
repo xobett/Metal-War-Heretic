@@ -1,48 +1,39 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MeleeAttack : MonoBehaviour
 {
-    private Animator playerAnimator;
-
-    [Header("ATTACK BUTTON")]
-    [SerializeField] private Button attackButton;
-
-    [Header("MELEE ATTACK SETTINGS")]
-    [SerializeField, Range(10f, 50f)] private float damage;
-    [SerializeField] private float hitRange = 0.5f;
-    [SerializeField] private LayerMask whatIsMelee;
-
-    private bool isPressingHit;
-
-    private int hitsMade;
+    private Animator animator;
 
     private PlayerCamera playerCam;
 
+    [Header("ATTACK BUTTON")]
+    [SerializeField] private Button attackButton;
+    private bool isPressingHit;
+
+    [Header("MELEE ATTACK SETTINGS")]
+    [SerializeField, Range(10f, 50f)] private float damage;
+    [SerializeField] private float range = 0.5f;
+    [SerializeField] private LayerMask whatIsMelee;
+
     [Header("MELEE COOLDOWN SETTINGS")]
-    [SerializeField] private float afterComboCooldownTime = 1.5f;
-    private const float inComboCooldownTime = 0.1f;
 
-    //Timer used to limit player from spamming attack
-    private float meleeCooldownTimer;
-    private float meleeCooldownDuration;
-
-    private const float meleeCooldownPostSlice = 0.7f;
+    private float cooldownTimer;
+    private float hitRate = 0.18f;
 
     [Header("COMBAT STATE SETTINGS")]
-    //Timer used to handle combat state of player
-    //Controls animations and player movement independently from melee cooldown time
-    [SerializeField] private float inComboCombatDuration = 1f;
-    [SerializeField] private float afterComboCombatDuration;
 
     private float combatTimer;
-    private float combatDuration;
+    private const float combatDuration = 0.27f;
 
     [HideInInspector] public bool InCombat { get; private set; }
 
     [Header("AIM ASSIT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float radius;
     [HideInInspector] public bool aimAssitActive;
+
+    public bool usedRightHand = false;
 
     private void Start()
     {
@@ -63,7 +54,7 @@ public class MeleeAttack : MonoBehaviour
 
     private void RunTimers()
     {
-        meleeCooldownTimer -= Time.deltaTime;
+        cooldownTimer -= Time.deltaTime;
         combatTimer -= Time.deltaTime;
     }
 
@@ -80,40 +71,19 @@ public class MeleeAttack : MonoBehaviour
         else
         {
             InCombat = false;
-
-            //Resets hits count to avoid animator bugs and melee coldown incorrect cooldown timing
-            hitsMade = 0;
         }
 
-        playerAnimator.SetBool("inCombat", InCombat);
+        animator.SetBool("inCombat", InCombat);
     }
 
     public void CancelCombatState()
     {
         combatTimer = 0;
-        hitsMade = 0;
-        meleeCooldownTimer = meleeCooldownPostSlice;
     }
 
     private void SetCombatAndCooldownDurations()
     {
-        hitsMade++;
-
-        if (hitsMade <= 3)
-        {
-            meleeCooldownDuration = inComboCooldownTime;
-            combatDuration = inComboCombatDuration;
-        }
-        else
-        {
-            meleeCooldownDuration = afterComboCooldownTime;
-            combatDuration = afterComboCombatDuration;
-
-            //Resets hits count upon last combo hit.
-            hitsMade = 0;
-        }
-
-        meleeCooldownTimer = meleeCooldownDuration;
+        cooldownTimer = hitRate;
         combatTimer = combatDuration;
     }
 
@@ -123,9 +93,9 @@ public class MeleeAttack : MonoBehaviour
 
     public void HitCheck()
     {
-        if (playerIsPushed) return;
+        if (PlayerIsPushed) return;
 
-        if (meleeCooldownTimer <= 0 && (IsHitting() || isPressingHit))
+        if (cooldownTimer <= 0 && (IsHitting() || isPressingHit))
         {
             SetCombatAnimations();
             SetCombatAndCooldownDurations();
@@ -146,17 +116,19 @@ public class MeleeAttack : MonoBehaviour
     #region COMBAT ANIMATIONS
     private void SetCombatAnimations()
     {
-        if (hitsMade == 0)
+        if (!usedRightHand)
         {
-            playerAnimator.Play($"Combo {GetRandomComboAnimation()} - 1", 0, 0.15f);
+            animator.CrossFade($"Base Layer.Golpe derecha {GetRandomComboIndex()}", 0.03f, 0, 0, 0);
+            usedRightHand = true;
         }
         else
         {
-            playerAnimator.SetTrigger("Hit");
+            animator.CrossFade($"Base Layer.Golpe izquierda {GetRandomComboIndex()}", 0.03f, 0, 0, 0);
+            usedRightHand = false;
         }
     }
 
-    private int GetRandomComboAnimation()
+    private int GetRandomComboIndex()
     {
         return Random.Range(1, 4);
     }
@@ -169,7 +141,7 @@ public class MeleeAttack : MonoBehaviour
     {
         Collider[] enemyColliders = Physics.OverlapSphere(transform.position, radius, whatIsMelee, QueryTriggerInteraction.UseGlobal);
 
-        if (enemyColliders.Length != 0 && InCombat && (!isDashing && !playerIsPushed))
+        if (enemyColliders.Length != 0 && InCombat && (!IsDashing && !PlayerIsPushed))
         {
             GameObject enemy = enemyColliders[0].gameObject;
 
@@ -193,7 +165,7 @@ public class MeleeAttack : MonoBehaviour
     private void GetReferences()
     {
         playerCam = Camera.main.GetComponent<PlayerCamera>();
-        playerAnimator = GetComponent<PlayerMovement>().playerAnimator;
+        animator = GetComponent<PlayerMovement>().playerAnimator;
     }
 
     private void AddButtonEvents()
@@ -216,9 +188,9 @@ public class MeleeAttack : MonoBehaviour
 
     #region CHECKS
 
-    private bool isDashing => GetComponent<SliceAttack>().IsDashing;
+    private bool IsDashing => GetComponent<SliceAttack>().IsDashing;
 
-    private bool playerIsPushed => GetComponent<PlayerMovement>().IsHit;
+    private bool PlayerIsPushed => GetComponent<PlayerMovement>().IsHit;
 
     #endregion CHECKS
 
@@ -227,7 +199,7 @@ public class MeleeAttack : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * hitRange);
+        Gizmos.DrawRay(transform.position, transform.forward * range);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, radius);
