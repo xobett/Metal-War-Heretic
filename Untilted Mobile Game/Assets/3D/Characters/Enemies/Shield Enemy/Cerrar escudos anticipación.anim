@@ -52635,15 +52635,22 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: StopFacingAtPlayer
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 1.6666666
-    functionName: EnablePushAttack
+    functionName: EnablePush
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 2.0833333
-    functionName: DisablePushAttack
+    functionName: DisablePush
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

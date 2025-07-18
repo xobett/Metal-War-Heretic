@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace EnemyAI.ShieldEnemy
@@ -7,35 +6,33 @@ namespace EnemyAI.ShieldEnemy
     {
         [Header("--- SHIELD ENEMY SETTINGS --- \n")]
 
-        [Header("ROYAL GUARD TIME SETTINGS")]
+        [Header("ROYAL GUARD\n")]
+
+        [Header("COLLIDERS")]
+        [SerializeField] private Collider[] colliders;
+        private bool ableToPush;
+
+        [Header("TIMER SETTINGS")]
         [SerializeField, Range(1f, 10f)] private int rgGuardingTime;
-        [SerializeField, Range(1f, 10f)] private int rgAfterPushTime;
         [SerializeField, Range(5f, 10f)] private int rgCooldownTime;
 
-        [Header("ROYAL GUARD ROTATION SPEED")]
-        [SerializeField, Tooltip("Controls how fast it will look at the player while guarding")]
-        private float guardLookSpeed = 0.8f;
-        [SerializeField, Tooltip("Controls how fast it will look again at the player after using its ability")]
-        private float afterPushLookSpeed = 0.6f;
-
-        private bool rgCooldownActive;
         private bool rgGuardActive;
-        private bool rgPlayingAnimations;
-        [HideInInspector] public bool rgIsPushing;
+        private bool rgCooldownActive;
 
-        #region BASE OVERRIDES
+        [Header("GUARDING ROTATION SPEED")]
+        [SerializeField] private float guardLookSpeed = 0.8f;
 
         protected override void Update()
         {
             base.Update();
-            LookSlowAtPlayer();
+            RoyalGuard_Update();
         }
 
         protected override void Attack()
         {
             if (!rgCooldownActive)
             {
-                StartCoroutine(StartRoyalGuard());
+                ExecuteRoyalGuard();
             }
             else
             {
@@ -48,73 +45,79 @@ namespace EnemyAI.ShieldEnemy
             PushPlayer(damage);
         }
 
-        protected override void LookAtPlayer()
+        #region ROYAL GUARD
+
+        private void RoyalGuard_Update()
         {
-            if (!rgGuardActive)
-            {
-                base.LookAtPlayer();
-            }
+            SetSlowRotation();
         }
 
-        #endregion BASE OVERRIDES
-
-        #region ATTACK ABILITY
-
-        private void LookSlowAtPlayer()
+        private void ExecuteRoyalGuard()
         {
-            if (!rgPlayingAnimations && rgGuardActive)
+            rgCooldownActive = true;
+            animator.SetTrigger("RoyalGuard");
+        }
+
+        private void SetSlowRotation()
+        {
+            if (rgGuardActive)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, guardLookSpeed * Time.deltaTime);
             }
         }
 
-        private IEnumerator StartRoyalGuard()
+        private void RunCooldown()
         {
-            rgCooldownActive = true;
-
-            animator.SetTrigger("StartRoyalGuard");
-
-            rgGuardActive = true;
-            rgPlayingAnimations = true;
-            yield return new WaitForSeconds(5.375f); //Fixed animations duration
-
-            rgPlayingAnimations = false;
-            yield return new WaitForSeconds(rgGuardingTime);
-
-            animator.SetTrigger("Push");
-            rgPlayingAnimations = true;
-            yield return new WaitForSeconds(4.208f); //Fixed animations durations
-
-            //Rotates smoothly towards player
-            float time = 0f;
-            while (time < 1)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
-                time += Time.deltaTime * afterPushLookSpeed;
-                yield return null;
-            }
-            transform.rotation = currentFacePlayerRot;
-
-            //Returns to its original look rotation state and waits before finalizing attack
-            rgGuardActive = false;
-            rgPlayingAnimations = false;
-            yield return new WaitForSeconds(rgAfterPushTime);
-
-            isExecutingAttack = false;
-
-            StartCoroutine(RoyalGuardCooldown());
-            yield return null;
+            Invoke(nameof(DisableCooldown), rgCooldownTime);
         }
 
-        private IEnumerator RoyalGuardCooldown()
+        private void DisableCooldown()
         {
-            yield return new WaitForSeconds(rgCooldownTime);
-
             rgCooldownActive = false;
-            yield return null;
         }
 
-        #endregion ATTACK ABILITY
+        #endregion ROYAL GUARD
+
+        #region ANIMATION EVENT METHODS
+
+        public void AnimEvent_EnablePush()
+        {
+            foreach (Collider collider in colliders)
+            {
+                collider.isTrigger = true;
+            }
+
+            ableToPush = true;
+        }
+
+        public void AnimEvent_DisablePush()
+        {
+            foreach (Collider collider in colliders)
+            {
+                collider.isTrigger = false;
+            }
+
+            ableToPush = false;
+        }
+
+        public void AnimEvent_RunGuardTime()
+        {
+            Invoke(nameof(PushForward), rgGuardingTime);
+            rgGuardActive = true;
+        }
+
+        private void PushForward()
+        {
+            rgGuardActive = false;
+            animator.SetTrigger("Push");
+        }
+
+        public void AnimEvent_RunCooldown()
+        {
+            RunCooldown();
+        }
+
+        #endregion ANIMATION EVENT METHODS
     }
 }
 

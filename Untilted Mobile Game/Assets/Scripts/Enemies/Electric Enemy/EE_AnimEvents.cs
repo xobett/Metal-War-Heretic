@@ -32,7 +32,7 @@ public class EE_AnimEvents : MonoBehaviour
 
     public void ResetRotation()
     {
-        electricEnemy.SmoothResetRotation();
+        electricEnemy.AnimEvent_SmoothResetRotation();
     }
 
     public void FinishAttack()

@@ -84,10 +84,10 @@ namespace EnemyAI
 
         protected virtual void Update()
         {
-            Animator_SetAnimations();
-            Rotation_SetLookRotation();
-            Attack_SetTriggerCheck();
-            AINavigation_SetNavigation();
+            Animator_Update();
+            Rotation_Update();
+            Attack_Update();
+            AINavigation_Update();
         }
 
         #region BEHAVIOUR CHECK
@@ -123,7 +123,7 @@ namespace EnemyAI
 
         #region ATTACK
 
-        private void Attack_SetTriggerCheck()
+        private void Attack_Update()
         {
             AttackTriggerCheck();
         }
@@ -191,7 +191,7 @@ namespace EnemyAI
 
         #region ROTATION
 
-        private void Rotation_SetLookRotation()
+        private void Rotation_Update()
         {
             GetCurrentPlayerRot();
             LookAtPlayer();
@@ -210,11 +210,6 @@ namespace EnemyAI
             Vector3 lookDirection = player.transform.position - transform.position;
             Quaternion lookTarget = Quaternion.LookRotation(lookDirection);
             currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
-        }
-
-        public void SmoothResetRotation()
-        {
-            StartCoroutine(CR_SmoothResetRotation());
         }
 
         private IEnumerator CR_SmoothResetRotation()
@@ -237,7 +232,7 @@ namespace EnemyAI
 
         #region AI NAVIGATION
 
-        private void AINavigation_SetNavigation()
+        private void AINavigation_Update()
         {
             FollowPlayer();
         }
@@ -323,7 +318,7 @@ namespace EnemyAI
 
         #region ANIMATOR
 
-        private void Animator_SetAnimations()
+        private void Animator_Update()
         {
             SetWalkAnimation();
             SetRotationAnimation();
@@ -377,9 +372,9 @@ namespace EnemyAI
             ableToFace = false;
         }
 
-        public void AnimEvent_FaceAtPlayer()
+        public void AnimEvent_SmoothResetRotation()
         {
-            ableToFace = true;
+            StartCoroutine(CR_SmoothResetRotation());
         }
 
         #endregion ANIMATION EVENT METHDOS

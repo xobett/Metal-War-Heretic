@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace EnemyAI.ElectricEnemy
@@ -43,23 +42,41 @@ namespace EnemyAI.ElectricEnemy
         {
             if (!electricAttackCoolingDown)
             {
-                ElectricAttack();
+                ExecuteElectricAttack();
             }
             else
             {
-                DistanceAttack();
+                ExecuteDistanceAttack();
             }
         }
 
-        private void DistanceAttack()
+        #region DISTANCE ATTACK
+
+        private void ExecuteDistanceAttack()
         {
             animator.SetTrigger("DistanceAttack");
         }
-        private void ElectricAttack()
+
+        #endregion DISTANCE ATTACK
+
+        #region ELECTRIC ATTACK
+        private void ExecuteElectricAttack()
         {
             electricAttackCoolingDown = true;
             animator.SetTrigger("ElectricAttack");
         }
+
+        private void RunCooldown()
+        {
+            Invoke(nameof(DisableCooldown), electricAttackCooldownTime);
+        }
+
+        private void DisableCooldown()
+        {
+            electricAttackCoolingDown = false;
+        }
+
+        #endregion ELECTRIC ATTACK
 
         #region Animation Event Methods
 
@@ -87,23 +104,6 @@ namespace EnemyAI.ElectricEnemy
 
         #endregion Animation Event Methods
 
-        private void RunCooldown()
-        {
-            Invoke(nameof(DisableCooldown), electricAttackCooldownTime);
-        }
-
-        private void DisableCooldown()
-        {
-            electricAttackCoolingDown = false;
-        }
-
-        private void OnDestroy()
-        {
-            if (GameManager.Instance != null)
-            {
-                GameManager.Instance.IncreaseScore(50);
-            }
-        }
     }
 }
 

@@ -4,31 +4,44 @@ using EnemyAI.ShieldEnemy;
 public class SE_AnimEvents : MonoBehaviour
 {
     private ShieldEnemy shieldEnemy;
-    [SerializeField] Collider[] hitColliders;
 
     private void Start()
     {
         shieldEnemy = GetComponentInParent<ShieldEnemy>();
     }
 
-    public void EnablePushAttack()
+    public void EnablePush()
     {
-        foreach (Collider collider in hitColliders)
-        {
-            collider.isTrigger = true;
-        }
-
-        shieldEnemy.rgIsPushing = true;
+        shieldEnemy.AnimEvent_EnablePush();
     }
 
-    public void DisablePushAttack()
+    public void DisablePush()
     {
+        shieldEnemy.AnimEvent_DisablePush();
+    }
 
-        foreach (Collider collider in hitColliders)
-        {
-            collider.isTrigger = false;
-        }
+    public void StopFacingAtPlayer()
+    {
+        shieldEnemy.AnimEvent_StopFacingAtPlayer();
+    }
 
-        shieldEnemy.rgIsPushing = false;
+    public void RunGuardTime()
+    {
+        shieldEnemy.AnimEvent_RunGuardTime();
+    }
+
+    public void RunCooldown()
+    {
+        shieldEnemy.AnimEvent_RunCooldown();
+    }
+
+    public void ResetRotation()
+    {
+        shieldEnemy.AnimEvent_SmoothResetRotation();
+    }
+
+    public void FinishAttack()
+    {
+        shieldEnemy.AnimEvent_FinishAttack();
     }
 }

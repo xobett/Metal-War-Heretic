@@ -16,7 +16,7 @@ public class BE_AnimEvents : MonoBehaviour
         bruteEnemy.AnimEvent_StopMoving();
     }
 
-    public void StartRunning()
+    public void StartRunning() 
     {
         bruteEnemy.AnimEvent_StartRunning();
     }
@@ -38,7 +38,7 @@ public class BE_AnimEvents : MonoBehaviour
 
     public void ResetRotation()
     {
-        bruteEnemy.SmoothResetRotation();
+        bruteEnemy.AnimEvent_SmoothResetRotation();
     }
 
     public void FinishAttack()

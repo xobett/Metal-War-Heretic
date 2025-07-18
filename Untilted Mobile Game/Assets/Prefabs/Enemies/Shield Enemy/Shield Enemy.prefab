@@ -1000,12 +1000,12 @@ MonoBehaviour:
   damage: 5
   timeBeforeAttack: 0
   ableToFace: 1
+  colliders:
+  - {fileID: 560008674519117305}
+  - {fileID: 3234478128477429545}
   rgGuardingTime: 3
-  rgAfterPushTime: 1
   rgCooldownTime: 10
   guardLookSpeed: 0.8
-  afterPushLookSpeed: 0.6
-  rgIsPushing: 0
 --- !u!65 &3735758471813194079
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1308,9 +1308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79887988ad1ca6c45ad54c0779a9d464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitColliders:
-  - {fileID: 560008674519117305}
-  - {fileID: 3234478128477429545}
 --- !u!4 &6371494544032208606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2a99a9ce0cd6c9449b300264e3d321ae, type: 3}

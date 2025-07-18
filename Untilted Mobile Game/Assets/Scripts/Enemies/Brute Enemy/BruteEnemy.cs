@@ -1,5 +1,3 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace EnemyAI.BruteEnemy
@@ -28,7 +26,7 @@ namespace EnemyAI.BruteEnemy
         protected override void Start()
         {
             base.Start();
-            //RampageRun_Start();
+            RampageRun_Start();
         }
 
         protected override void Update()
@@ -49,47 +47,6 @@ namespace EnemyAI.BruteEnemy
         }
 
         #endregion HEAVY PUNCH
-
-        #region ANIMATION EVENT METHODS
-
-        public void AnimEvent_StopMoving()
-        {
-            agent.destination = transform.position;
-        }
-
-        public void AnimEvent_StartRunning()
-        {
-            rmpIsRunning = true;
-            agent.speed = rmpSpeed;
-
-            Invoke(nameof(SlowDown), rmpRunningTime);
-        }
-
-        private void SlowDown()
-        {
-            animator.SetBool("isRunning", false);
-
-            rmpIsRunning = false;
-            agent.speed = 1;
-        }
-
-        public void AnimEvent_StopAcceleration()
-        {
-            agent.destination = transform.position;
-
-            if (rmpPlayerHit)
-            {
-                rmpPlayerHit = false;
-            }
-        }
-
-        public void AnimEvent_ResetSpeed()
-        {
-            agent.speed = walkSpeed;
-            RunCooldown();
-        }
-
-        #endregion ANIMATION EVENT METHODS
 
         #region RAMPAGE RUN
 
@@ -161,6 +118,47 @@ namespace EnemyAI.BruteEnemy
         }
 
         #endregion RAMPAGE RUN
+
+        #region ANIMATION EVENT METHODS
+
+        public void AnimEvent_StopMoving()
+        {
+            agent.destination = transform.position;
+        }
+
+        public void AnimEvent_StartRunning()
+        {
+            rmpIsRunning = true;
+            agent.speed = rmpSpeed;
+
+            Invoke(nameof(SlowDown), rmpRunningTime);
+        }
+
+        private void SlowDown()
+        {
+            animator.SetBool("isRunning", false);
+
+            agent.speed = 1;
+        }
+
+        public void AnimEvent_StopAcceleration()
+        {
+            rmpIsRunning = false;
+            agent.destination = transform.position;
+
+            if (rmpPlayerHit)
+            {
+                rmpPlayerHit = false;
+            }
+        }
+
+        public void AnimEvent_ResetSpeed()
+        {
+            agent.speed = walkSpeed;
+            RunCooldown();
+        }
+
+        #endregion ANIMATION EVENT METHODS
     }
 }
 
