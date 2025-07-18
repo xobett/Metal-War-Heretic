@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +24,7 @@ public class MeleeAttack : MonoBehaviour
     [Header("COMBAT STATE SETTINGS")]
 
     private float combatTimer;
-    private const float combatDuration = 0.27f;
+    private const float combatDuration = 0.7f;
 
     [HideInInspector] public bool InCombat { get; private set; }
 
@@ -50,17 +49,13 @@ public class MeleeAttack : MonoBehaviour
         CheckCombatState();
     }
 
-    #region TIMERS
+    #region COMBAT STATE
 
     private void RunTimers()
     {
         cooldownTimer -= Time.deltaTime;
         combatTimer -= Time.deltaTime;
     }
-
-    #endregion TIMERS
-
-    #region COMBAT STATE
 
     private void CheckCombatState()
     {
@@ -91,7 +86,7 @@ public class MeleeAttack : MonoBehaviour
 
     #region MELEE
 
-    public void HitCheck()
+    private void HitCheck()
     {
         if (PlayerIsPushed) return;
 
@@ -111,6 +106,14 @@ public class MeleeAttack : MonoBehaviour
         GetComponent<ComboCounter>().IncreaseComboCount();
     }
 
+    private void CheckUpperCutTrigger()
+    {
+        //Enemies spawned per area
+        //Get the EnemyAreaManager
+        //If its the last enemy and its health is below the damage dealth
+        //Play uppercut animation
+    }
+
     #endregion MELEE
 
     #region COMBAT ANIMATIONS
@@ -118,12 +121,12 @@ public class MeleeAttack : MonoBehaviour
     {
         if (!usedRightHand)
         {
-            animator.CrossFade($"Base Layer.Golpe derecha {GetRandomComboIndex()}", 0.03f, 0, 0, 0);
+            animator.CrossFade($"Base Layer.Golpe derecha {GetRandomComboIndex()}", 0f, 0, 0f, 1f);
             usedRightHand = true;
         }
         else
         {
-            animator.CrossFade($"Base Layer.Golpe izquierda {GetRandomComboIndex()}", 0.03f, 0, 0, 0);
+            animator.CrossFade($"Base Layer.Golpe izquierda {GetRandomComboIndex()}", 0f, 0, 0f, 1f);
             usedRightHand = false;
         }
     }

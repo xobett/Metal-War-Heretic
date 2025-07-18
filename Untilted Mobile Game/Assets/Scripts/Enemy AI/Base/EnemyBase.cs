@@ -4,30 +4,32 @@ using UnityEngine.AI;
 
 namespace EnemyAI
 {
+    public enum EnemyState
+    {
+        Idle,
+        Attack
+    }
+
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Health))]
     public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
-        #region AI NAVIGATION
+        #region 
+
+        private EnemyAreaManager enemyArea;
+
+        #endregion
+
+        #region NAVIGATION
 
         [Header("--- ENEMY BASE SETTINGS ---\n")]
         protected NavMeshAgent agent;
 
-        [Header("AI NAVIGATION SETTINGS")]
+        [Header("NAVIGATION SETTINGS")]
         [SerializeField] protected float walkSpeed = 1.5f;
         [SerializeField] protected float stoppingDistance;
 
-        [SerializeField] private LayerMask whatAreObstacles;
-        private Vector3 nextPos;
-
-        private bool isMoving;
-
-        private float navigationTimer;
-        private float maxNavigationTime = 12f;
-
-        private Coroutine navigationActiveCoroutine;
-
-        #endregion AI NAVIGATION
+        #endregion NAVIGATION
 
         #region ANIMATOR
 
@@ -78,7 +80,7 @@ namespace EnemyAI
 
         protected virtual void Start()
         {
-            isAttacking = true;
+            //isAttacking = true;
             lastYRotation = transform.rotation.eulerAngles.y;
         }
 
@@ -87,20 +89,12 @@ namespace EnemyAI
             Animator_Update();
             Rotation_Update();
             Attack_Update();
-            AINavigation_Update();
+            Navigation_Update();
         }
 
         #region BEHAVIOUR CHECK
 
-        private void GetBehaviour()
-        {
-            if (!isMoving && EnemyManager.instance.ActiveAttackingEnemiesCount < 3 && !isAttacking)
-            {
-                EnemyManager.instance.AddAttackingEnemy(this);
-                SetAttackBehaviourSettings();
-                isAttacking = true;
-            }
-        }
+
 
         #endregion BEHAVIOUR CHECK
 
@@ -113,13 +107,26 @@ namespace EnemyAI
 
         private void OnDestroy()
         {
-            if (isAttacking && EnemyManager.instance != null)
+            if (enemyArea != null)
             {
-                EnemyManager.instance.RemoveAttackingEnemy(this);
+                enemyArea.RemoveEnemyFromArea(this); 
+            }
+            else
+            {
+                Debug.LogWarning($"{name} does not have an Enemy Area assigned!");
             }
         }
 
         #endregion ON DAMAGE AND DESTROY
+
+        #region ENEMY AREA
+
+        public void AssignArea(EnemyAreaManager area)
+        {
+            enemyArea = area;
+        }
+
+        #endregion ENEMY ARAE
 
         #region ATTACK
 
@@ -199,7 +206,7 @@ namespace EnemyAI
 
         protected virtual void LookAtPlayer()
         {
-            if (!isMoving && ableToFace)
+            if (ableToFace)
             {
                 transform.rotation = currentFacePlayerRot;
             }
@@ -232,85 +239,16 @@ namespace EnemyAI
 
         #region AI NAVIGATION
 
-        private void AINavigation_Update()
+        private void Navigation_Update()
         {
             FollowPlayer();
         }
 
         protected virtual void FollowPlayer()
         {
-            if (!isExecutingAttack && !isMoving)
+            if (!isExecutingAttack)
             {
                 agent.destination = player.transform.position;
-            }
-        }
-        
-        private void RunNavigationTimer()
-        {
-            navigationTimer -= Time.deltaTime;
-        }
-
-        private IEnumerator CR_AssignWaitPosition()
-        {
-            navigationTimer = maxNavigationTime;
-            isMoving = true;
-
-            Vector3 calculatedPos = EnemyManager.instance.AssignMovingPosition();
-
-            int attemptsDone = 0;
-            while (Physics.CheckSphere(calculatedPos, agent.radius, whatAreObstacles))
-            {
-                if (attemptsDone >= 2)
-                {
-                    EnemyManager.instance.IncreaseAreaRadius();
-                }
-
-                calculatedPos = EnemyManager.instance.AssignMovingPosition();
-                attemptsDone++;
-                Debug.Log("New position was generated");
-                yield return null;
-            }
-
-            nextPos = calculatedPos;
-            agent.destination = nextPos;
-            //Waits until remaining distance is called and until enemy arrives to its destination
-            yield return new WaitUntil(() => !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance);
-
-            float time = 0f;
-            while (time < 1)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
-                time += Time.deltaTime * 0.6f;
-                yield return null;
-            }
-            transform.rotation = currentFacePlayerRot;
-
-            //Stops the enemy upon arrival
-            agent.speed = 0;
-            isMoving = false;
-            Debug.Log("Set to false");
-
-            GetBehaviour();
-
-            yield break;
-        }
-
-        private void HandleStuckNavigation()
-        {
-            if (navigationTimer < 0 && isMoving)
-            {
-                StopCoroutine(navigationActiveCoroutine);
-                agent.speed += 1.5f;
-                navigationActiveCoroutine = StartCoroutine(CR_AssignWaitPosition());
-            }
-        }
-
-        private void HandleEnemyExitingArea()
-        {
-            if (!isMoving && Vector3.Distance(transform.position, player.transform.position) > EnemyManager.instance.AreaRadius)
-            {
-                agent.speed = walkSpeed * 2;
-                StartCoroutine(CR_AssignWaitPosition());
             }
         }
 
@@ -399,7 +337,6 @@ namespace EnemyAI
         #endregion START
 
         #region PLAYER DETECTION
-
         private bool CheckPlayerIsNear()
         {
             return Physics.CheckSphere(transform.position, playerDetectionRadius, whatIsPlayer);
