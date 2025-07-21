@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75ef5cda0fe96f647812cf5e06b3dcbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAnimator: {fileID: 4729229268436796057}
+  animator: {fileID: 0}
   movementSpeed: 4.4
   rotationSpeed: 0.01
   whatIsGround:
@@ -404,8 +404,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sliceButton: {fileID: 0}
-  sliceSpeed: 10
-  sliceDuration: 0.55
+  speed: 0
+  duration: 0.2
   assistRadius: 1.6
   whatIsEnemy:
     serializedVersion: 2

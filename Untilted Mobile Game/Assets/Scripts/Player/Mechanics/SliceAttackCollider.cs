@@ -20,7 +20,7 @@ public class SliceAttackCollider : MonoBehaviour
             other.GetComponent<IDamageable>().OnDamage(sliceDamage);
         }
 
-        GetComponentInParent<SliceAttack>().OnSliceEnemy();
+        GetComponentInParent<SliceAttack>().CancelSliceMovement();
     }
     private bool isDashing => GetComponentInParent<SliceAttack>().IsDashing;
 }

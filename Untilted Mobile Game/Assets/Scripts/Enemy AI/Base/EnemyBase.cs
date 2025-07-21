@@ -34,7 +34,7 @@ namespace EnemyAI
         #region ANIMATOR
 
         [Header("ENEMY ANIMATOR SETTINGS")]
-        [SerializeField] protected Animator animator;
+        protected Animator animator;
 
         #endregion ANIMATOR
 
@@ -323,9 +323,11 @@ namespace EnemyAI
 
         private void GetReferences()
         {
+            agent = GetComponent<NavMeshAgent>();
+            animator = GetComponentInChildren<Animator>();
+
             player = GameObject.FindGameObjectWithTag("Player");
             playerCam = Camera.main.GetComponent<PlayerCamera>();
-            agent = GetComponent<NavMeshAgent>();
         }
 
         private void SetEnemySettings()

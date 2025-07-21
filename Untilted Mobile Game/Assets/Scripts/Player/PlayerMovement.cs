@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -6,8 +5,7 @@ public class PlayerMovement : MonoBehaviour
     //Player settings
     private CharacterController charCtrlr;
 
-    [Header("ANIMATOR SETTINGS")]
-    [SerializeField] public Animator playerAnimator;
+    private Animator animator;
 
     [Header("NORMAL MOVEMENT SETTINGS")]
     [SerializeField, Range(1f, 5f)] private float movementSpeed;
@@ -21,7 +19,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 hitDirection;
 
-    [HideInInspector] public bool IsHit {  get; private set; }
+    [Header("MELEE ASSIST MOVEMENT SETTINGS")]
+    [SerializeField] private LayerMask whatIsMelee;
+
+    [HideInInspector] public bool IsHit { get; private set; }
 
     [Header("GRAVITY SETTINGS")]
     [SerializeField] private LayerMask whatIsGround;
@@ -53,16 +54,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!IsHit)
         {
-            if (!inCombat)
+            if (inCombat)
             {
-                if (aimAssistActive)
-                {
-                    AimMovement();
-                }
-                else
-                {
-                    NormalMovement();
-                } 
+                MeleeAssistMovement();
+                Debug.Log("In combat movement");
+            }
+            else
+            {
+                NormalMovement();
             }
         }
         else
@@ -79,7 +78,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (move.magnitude != 0)
         {
-            playerAnimator.SetBool("isWalking", true);
+            animator.SetBool("isWalking", true);
 
             float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref velocity, rotationSpeed);
@@ -92,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            playerAnimator.SetBool("isWalking", false);
+            animator.SetBool("isWalking", false);
         }
     }
 
@@ -107,35 +106,48 @@ public class PlayerMovement : MonoBehaviour
         hitForce = pushedTime;
 
         IsHit = true;
-        StartCoroutine(StartHitMovementTimer());
+        Invoke(nameof(DisableHitMovement), hitForce);
     }
 
-    public void HitMovement()
+    private void HitMovement()
     {
         charCtrlr.Move(hitDirection * hitSpeed * Time.deltaTime);
     }
 
-    private IEnumerator StartHitMovementTimer()
+    private void DisableHitMovement()
     {
-        yield return new WaitForSeconds(hitForce);
-
         IsHit = false;
-        yield return null;
     }
 
     #endregion HIT MOVEMENT
 
-    #region AIM MOVEMENT
+    #region MELEE ASSIST MOVEMENT
 
-    private void AimMovement()
+    private void MeleeAssistMovement()
     {
-        Vector3 aimMove = Vector3.right * JoystickManager.Instance.HorizontalInput() + Vector3.forward * JoystickManager.Instance.ForwardInput();
-        charCtrlr.Move(aimMove * movementSpeed * Time.deltaTime);
+        Vector3 faceDirection = new Vector3(JoystickManager.Instance.HorizontalInput(), 0f, JoystickManager.Instance.ForwardInput());
+
+        if (Physics.Raycast(transform.position, faceDirection * 5f, out RaycastHit hit, 5f, whatIsMelee))
+        {
+            Vector3 direction = hit.collider.transform.position - transform.position;
+
+            Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 30f * Time.deltaTime);
+
+            Vector3 nearEnemyPos = hit.collider.transform.position + hit.transform.forward * 1.5f;
+            Vector3 moveDirection = nearEnemyPos - transform.position;
+
+            float distance = Vector3.Distance(transform.position, nearEnemyPos);
+
+            if (distance > 0.1f)
+            {
+                charCtrlr.Move(moveDirection.normalized * Mathf.Pow(movementSpeed, 2) * Time.deltaTime);
+            }
+        }
     }
 
-    private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
-
-    #endregion AIM MOVEMENT
+    #endregion MELEE ASSIST MOVEMENT
 
     #endregion
 
@@ -177,6 +189,7 @@ public class PlayerMovement : MonoBehaviour
     {
         charCtrlr = GetComponent<CharacterController>();
         groundCheck = transform.GetChild(0);
+        animator = GetComponentInChildren<Animator>();
     }
 
     #endregion START

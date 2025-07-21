@@ -32,8 +32,6 @@ public class MeleeAttack : MonoBehaviour
     [SerializeField, Range(1f, 5f)] private float radius;
     [HideInInspector] public bool aimAssitActive;
 
-    public bool usedRightHand = false;
-
     private void Start()
     {
         GetReferences();
@@ -42,14 +40,17 @@ public class MeleeAttack : MonoBehaviour
 
     private void Update()
     {
-        HitCheck();
-        AimAssit();
-
-        RunTimers();
-        CheckCombatState();
+        Melee_Update();
+        CombatState_Update();
     }
 
     #region COMBAT STATE
+
+    private void CombatState_Update()
+    {
+        RunTimers();
+        SetCombatState();
+    }
 
     private void RunTimers()
     {
@@ -57,7 +58,7 @@ public class MeleeAttack : MonoBehaviour
         combatTimer -= Time.deltaTime;
     }
 
-    private void CheckCombatState()
+    private void SetCombatState()
     {
         if (combatTimer > 0)
         {
@@ -86,13 +87,20 @@ public class MeleeAttack : MonoBehaviour
 
     #region MELEE
 
+    private void Melee_Update()
+    {
+        HitCheck();
+    }
+
     private void HitCheck()
     {
         if (PlayerIsPushed) return;
 
         if (cooldownTimer <= 0 && (IsHitting() || isPressingHit))
         {
-            SetCombatAnimations();
+            if (IsDashing) GetComponent<SliceAttack>().CancelSliceMovement();
+
+            SetMeleeAnimations();
             SetCombatAndCooldownDurations();
 
             isPressingHit = false;
@@ -114,61 +122,21 @@ public class MeleeAttack : MonoBehaviour
         //Play uppercut animation
     }
 
+    private void SetMeleeAnimations()
+    {
+        if (!InCombat)
+        {
+            animator.CrossFade($"Base Layer.Golpes TODOS", 0f);
+        }
+    }
     #endregion MELEE
-
-    #region COMBAT ANIMATIONS
-    private void SetCombatAnimations()
-    {
-        if (!usedRightHand)
-        {
-            animator.CrossFade($"Base Layer.Golpe derecha {GetRandomComboIndex()}", 0f, 0, 0f, 1f);
-            usedRightHand = true;
-        }
-        else
-        {
-            animator.CrossFade($"Base Layer.Golpe izquierda {GetRandomComboIndex()}", 0f, 0, 0f, 1f);
-            usedRightHand = false;
-        }
-    }
-
-    private int GetRandomComboIndex()
-    {
-        return Random.Range(1, 4);
-    }
-
-    #endregion COMBAT ANIMATIONS
-
-    #region ASSIST
-
-    private void AimAssit()
-    {
-        Collider[] enemyColliders = Physics.OverlapSphere(transform.position, radius, whatIsMelee, QueryTriggerInteraction.UseGlobal);
-
-        if (enemyColliders.Length != 0 && InCombat && (!IsDashing && !PlayerIsPushed))
-        {
-            GameObject enemy = enemyColliders[0].gameObject;
-
-            Quaternion direction = Quaternion.LookRotation(enemy.transform.position - transform.position);
-            Quaternion target = Quaternion.Euler(0, direction.eulerAngles.y, 0);
-            Quaternion lookRotation = Quaternion.Slerp(transform.rotation, target, 10.5f * Time.deltaTime);
-            transform.rotation = lookRotation;
-
-            aimAssitActive = true;
-        }
-        else
-        {
-            aimAssitActive = false;
-        }
-    }
-
-    #endregion ASSIST
 
     #region GET REFERENCES
 
     private void GetReferences()
     {
         playerCam = Camera.main.GetComponent<PlayerCamera>();
-        animator = GetComponent<PlayerMovement>().playerAnimator;
+        animator = GetComponentInChildren<Animator>();
     }
 
     private void AddButtonEvents()
@@ -201,11 +169,11 @@ public class MeleeAttack : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, transform.forward * range);
+        if (JoystickManager.Instance == null) return;
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, radius);
+        Vector3 direction = new Vector3(JoystickManager.Instance.HorizontalInput(), 0f, JoystickManager.Instance.ForwardInput());
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position, direction * 5f);
     }
 
     #endregion VISUAL DEBUG GIZMOS

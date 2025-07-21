@@ -9,14 +9,14 @@ public class SliceAttack : MonoBehaviour
     /// Attack logic and damage is done in the SliceAttackCollider
     /// </summary>
 
-    private Animator playerAnimator;
+    private Animator animator;
 
     [Header("SLICE BUTTON")]
     [SerializeField] private Button sliceButton;
 
     [Header("SLICE ATTACK SETTINGS")]
-    [SerializeField] private float sliceSpeed;
-    [SerializeField] private float sliceDuration = 0.2f;
+    [SerializeField] private float speed;
+    [SerializeField] private float duration = 0.2f;
 
     private PlayerCamera cam;
 
@@ -51,7 +51,7 @@ public class SliceAttack : MonoBehaviour
 
     #region SLICE ATTACK
 
-    public void OnSliceEnemy()
+    public void CancelSliceMovement()
     {
         IsDashing = false;
     }
@@ -63,7 +63,7 @@ public class SliceAttack : MonoBehaviour
             StartCoroutine(StartSlice());
 
             //Change from trigger to play for better transition
-            playerAnimator.SetTrigger("Dash");
+            animator.CrossFade("Base Layer.Dash", 0f);
         }
     }
 
@@ -76,7 +76,7 @@ public class SliceAttack : MonoBehaviour
 
         IsDashing = true;
         isCooling = true;
-        yield return new WaitForSeconds(sliceDuration);
+        yield return new WaitForSeconds(duration);
 
         IsDashing = false;
         yield return new WaitForSeconds(cooldownTime);
@@ -105,21 +105,11 @@ public class SliceAttack : MonoBehaviour
                 dashMovement = transform.rotation * Vector3.forward;
             }
 
-            charCtrlr.Move(dashMovement * sliceSpeed * Time.deltaTime);
+            charCtrlr.Move(dashMovement * speed * Time.deltaTime);
         }
     }
 
     #endregion SLICE ATTACK
-
-    #region VISUAL DEBUG GIZMOS
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(transform.position, assistRadius);
-    }
-
-    #endregion VISUAL DEBUG GIZMOS
 
     #region SNAP ASSIST
 
@@ -132,7 +122,7 @@ public class SliceAttack : MonoBehaviour
             if (enemyColliders.Length != 0)
             {
                 GameObject lockedEnemy = enemyColliders[0].gameObject;
-                transform.position = Vector3.MoveTowards(transform.position, lockedEnemy.transform.position, Time.deltaTime * Mathf.Pow(sliceSpeed, 2));
+                transform.position = Vector3.MoveTowards(transform.position, lockedEnemy.transform.position, Time.deltaTime * Mathf.Pow(speed, 2));
             }
         }
     }
@@ -149,7 +139,7 @@ public class SliceAttack : MonoBehaviour
 
     #region INPUT
 
-    private void PressSliceButton()
+    private void OnPressSliceButton()
     {
         isPressingSlice = true;
     }
@@ -165,14 +155,14 @@ public class SliceAttack : MonoBehaviour
 
     private void AddButtonEvents()
     {
-        sliceButton.onClick.AddListener(PressSliceButton);
+        sliceButton.onClick.AddListener(OnPressSliceButton);
     }
 
     private void GetReferences()
     {
         charCtrlr = GetComponent<CharacterController>();
         cam = Camera.main.GetComponent<PlayerCamera>();
-        playerAnimator = GetComponent<PlayerMovement>().playerAnimator;
+        animator = GetComponentInChildren<Animator>();
     }
 
     #endregion GET REFERENCES

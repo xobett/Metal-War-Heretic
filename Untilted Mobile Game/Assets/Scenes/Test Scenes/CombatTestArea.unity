@@ -1778,6 +1778,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.00000261557
       objectReference: {fileID: 0}
+    - target: {fileID: 4415241851385853430, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
+      propertyPath: whatIsMelee.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 4430985041169670792, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.42280543
@@ -2129,6 +2133,14 @@ PrefabInstance:
     - target: {fileID: 7376455716938573289, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 75.84764
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385239553009452054, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
+      propertyPath: speed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7385239553009452054, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
+      propertyPath: duration
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 7385239553009452054, guid: b52f4441e5334dd4e9f10bedd44a4e9f, type: 3}
       propertyPath: sliceButton
@@ -4566,53 +4578,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126710094}
   m_CullTransparentMesh: 1
---- !u!1 &1178401295
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1178401296}
-  - component: {fileID: 1178401297}
-  m_Layer: 0
-  m_Name: Enemy Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1178401296
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178401295}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6874317, y: 2.0598435, z: 0.04130283}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1965207030}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1178401297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1178401295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd73bb1b973b8854abc3cefdd5b4483e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  areaRadius: 10
-  playerPos: {fileID: 763292652}
-  attackingEnemies: []
 --- !u!1 &1216483507
 GameObject:
   m_ObjectHideFlags: 0
@@ -7630,7 +7595,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1597492467}
-  - {fileID: 1178401296}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2004635410
