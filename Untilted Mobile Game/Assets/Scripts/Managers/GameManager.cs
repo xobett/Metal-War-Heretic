@@ -4,10 +4,12 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {  get; private set; }
+
+    private List<SOPlayerSkin> purchasedSkins = new List<SOPlayerSkin>();
+
+    public SOPlayerSkin EquippedSkin;
  
     [SerializeField] public int coins;
-
-    public PlayerSkin[] PlayerSkins = new PlayerSkin[6];
 
     private const int maxAddedScore = 100;
 
@@ -36,5 +38,27 @@ public class GameManager : MonoBehaviour
         {
             coins += scoreToAdd;
         }
+    }
+
+    public void EquipSkin(SOPlayerSkin skin)
+    {
+        if (purchasedSkins.Contains(skin))
+        {
+            if (EquippedSkin != null)
+            {
+                EquippedSkin.isEquipped = false;
+            }
+
+            EquippedSkin = skin;
+        }
+        else
+        {
+            Debug.Log("Unexpected bug!");
+        }
+    }
+
+    public void AddPurchasedSkin(SOPlayerSkin skin)
+    {
+        purchasedSkins.Add(skin);
     }
 }

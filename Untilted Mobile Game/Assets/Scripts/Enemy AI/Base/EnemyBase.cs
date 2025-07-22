@@ -16,7 +16,7 @@ namespace EnemyAI
     {
         #region ENEMY BASE
 
-        private EnemyAreaManager enemyArea;
+        private EnemyArea enemyArea;
         [SerializeField] private EnemyState enemyState;
 
         #endregion ENEMY BASE
@@ -128,6 +128,8 @@ namespace EnemyAI
         public void OnDamage(float damage)
         {
             GetComponent<Health>().TakeDamage(damage);
+            agent.speed = 0;
+            Invoke(nameof(RegainMovement), 5f);
         }
 
         private void OnDestroy()
@@ -147,11 +149,16 @@ namespace EnemyAI
             }
         }
 
+        private void RegainMovement()
+        {
+            agent.speed = walkSpeed;
+        }
+
         #endregion ON DAMAGE AND DESTROY
 
         #region ENEMY AREA
 
-        public void AssignArea(EnemyAreaManager area)
+        public void AssignArea(EnemyArea area)
         {
             enemyArea = area;
         }

@@ -21,7 +21,7 @@ public class SceneLoader : MonoBehaviour
         loadingBar.interactable = false;
         continueButton.interactable = false;
         
-        StartCoroutine(LoadScene());
+        StartCoroutine(CR_LoadScene());
     }
 
     private void Update()
@@ -34,7 +34,7 @@ public class SceneLoader : MonoBehaviour
         loadingBar.value = Mathf.MoveTowards(loadingBar.value, targetValue, loadingBarSpeed * Time.deltaTime);
     }
 
-    private IEnumerator LoadScene()
+    private IEnumerator CR_LoadScene()
     {
         AsyncOperation loadSceneOp = SceneManager.LoadSceneAsync(sceneName);
         loadSceneOp.allowSceneActivation = false;

@@ -1,50 +1,106 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StoreManager : MonoBehaviour
 {
-    public static StoreManager Instance {  get; private set; }
+    public static StoreManager Instance { get; private set; }
 
-    [SerializeField] private TextMeshProUGUI itemNameText;
+    [SerializeField] private TextMeshProUGUI playerCoins;
     [SerializeField] private TextMeshProUGUI itemCostText;
+
+    [SerializeField] private Button equipButton;
+    [SerializeField] private Button buyButton;
+
+    [SerializeField] private SOPlayerSkin selectedSkin;
 
     /// <summary>
     /// DISABLE BUY BUTTON UPON SKIN PURCHASED
     /// </summary>
 
-    private StoreItem itemToBuy;
 
     private void Awake()
     {
         Instance = this;
     }
 
-    public void DisplayItemInformation(StoreItem item)
+    private void Start()
     {
-        itemNameText.text = $"Outfit Name: \"{item.skinItem.name}\"";
-        itemCostText.text = $"Outfit Cost: ${item.skinItem.cost}";
+        UpdatePlayerCoinsText();
     }
 
-    public void SelectItem(StoreItem item)
+    public void SelectItem(SOPlayerSkin skin)
     {
-        itemToBuy = item;
+        selectedSkin = skin;
+
+        DisplaySkinCost();
+        UpdateItemState();
+    }
+
+    public void DisplaySkinCost()
+    {
+        if (selectedSkin.isPurchased)
+        {
+            itemCostText.text = "OWNED";
+        }
+        else
+        {
+            itemCostText.text = $"Cost: {selectedSkin.cost}";
+        }
     }
 
     public void BuySelectedItem()
     {
-        Debug.Log("Entered");
-        if (GameManager.Instance.coins >= itemToBuy.skinItem.cost)
+        if (GameManager.Instance.coins >= selectedSkin.cost)
         {
-            for (int i = 0; i < GameManager.Instance.PlayerSkins.Length; i++)
+            selectedSkin.isPurchased = true;
+            selectedSkin.isEquipped = true;
+
+            GameManager.Instance.coins -= selectedSkin.cost;
+            GameManager.Instance.AddPurchasedSkin(selectedSkin);
+            GameManager.Instance.EquipSkin(selectedSkin);
+
+            UpdateItemState();
+            UpdatePlayerCoinsText();
+        }
+    }
+
+    private void UpdateItemState()
+    {
+        if (selectedSkin.isPurchased)
+        {
+            buyButton.interactable = false;
+
+            if (selectedSkin.isEquipped)
             {
-                if (GameManager.Instance.PlayerSkins[i].name == itemToBuy.skinItem.name)
-                {
-                    GameManager.Instance.PlayerSkins[i].purchased = true;
-                    GameManager.Instance.coins -= itemToBuy.skinItem.cost;
-                    break;
-                }
+                equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIPPED";
+                equipButton.interactable = false;
+            }
+            else
+            {
+                equipButton.interactable = true;
+                equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIP";
             }
         }
+        else
+        {
+            buyButton.interactable = true;
+            equipButton.interactable = false;
+
+            equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIP";
+        }
+    }
+
+    private void UpdatePlayerCoinsText()
+    {
+        playerCoins.text = $"Coins: {GameManager.Instance.coins}";
+    }
+
+    public void EquipSelectedSkin()
+    {
+        GameManager.Instance.EquipSkin(selectedSkin);
+        selectedSkin.isEquipped = true;
+        UpdateItemState();
     }
 }
 

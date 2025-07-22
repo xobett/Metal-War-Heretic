@@ -12,9 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Build Scenes/Loading Game.unity
     guid: 92f67b9d0ff13b94ca89a8a3e8323096
   - enabled: 1
-    path: Assets/Scenes/Test Scenes/Cesar.unity
+    path: Assets/Scenes/Build Scenes/Cesar.unity
     guid: 09ed68ce430912843aac7945c4cf832a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Build Scenes/Game.unity
     guid: 4a8a99ae8ce0b63448c58b71dca46419
   - enabled: 1

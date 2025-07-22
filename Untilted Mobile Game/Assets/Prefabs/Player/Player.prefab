@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 6675594337820638394}
   - component: {fileID: 3751038221672409844}
   - component: {fileID: 358284110550781473}
+  - component: {fileID: 5889554875252968580}
   - component: {fileID: 4415241851385853430}
   - component: {fileID: 7385239553009452054}
   - component: {fileID: 2862152783596723406}
@@ -372,6 +373,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &5889554875252968580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7667774295053278460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac7b888fc7ad983448943daa219e5256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rndr: {fileID: 0}
 --- !u!114 &4415241851385853430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -811,6 +825,10 @@ PrefabInstance:
     - target: {fileID: -6651558751995037552, guid: ee4a9f5f892661c469a2600e9f2c6151, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 74.81232
+      objectReference: {fileID: 0}
+    - target: {fileID: -6517123458742289175, guid: ee4a9f5f892661c469a2600e9f2c6151, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6517123458742289175, guid: ee4a9f5f892661c469a2600e9f2c6151, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
