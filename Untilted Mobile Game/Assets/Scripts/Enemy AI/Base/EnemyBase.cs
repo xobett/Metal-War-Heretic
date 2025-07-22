@@ -129,6 +129,7 @@ namespace EnemyAI
         {
             GetComponent<Health>().TakeDamage(damage);
             agent.speed = 0;
+            StartCoroutine(CR_SmoothResetRotation());
             Invoke(nameof(RegainMovement), 5f);
         }
 
