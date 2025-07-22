@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 faceDirection = new Vector3(JoystickManager.Instance.HorizontalInput(), 0f, JoystickManager.Instance.ForwardInput());
 
-        if (Physics.Raycast(transform.position, faceDirection * 5f, out RaycastHit hit, 5f, whatIsMelee))
+        if (Physics.Raycast(transform.position, faceDirection * 5f, out RaycastHit hit, 3f, whatIsMelee))
         {
             Vector3 direction = hit.collider.transform.position - transform.position;
 
@@ -145,13 +145,6 @@ public class PlayerMovement : MonoBehaviour
                 charCtrlr.Move(moveDirection.normalized * Mathf.Pow(movementSpeed, 2) * Time.deltaTime);
             }
         }
-        //else
-        //{
-        //    float targetAngle = Mathf.Atan2(faceDirection.x, faceDirection.z) * Mathf.Rad2Deg;
-        //    float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref velocity, rotationSpeed);
-
-        //    transform.rotation = Quaternion.Euler(0f, angle, 0f);
-        //}
     }
 
     #endregion MELEE ASSIST MOVEMENT

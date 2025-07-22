@@ -107,7 +107,7 @@ namespace EnemyAI
 
         public void GetBehavior()
         {
-            if (enemyArea.GetTotalAttackingEnemies() < 1)
+            if (enemyArea.GetTotalAttackingEnemies() < 4)
             {
                 enemyArea.AddAttackingEnemy(this);
                 enemyState = EnemyState.Attack;
