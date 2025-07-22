@@ -472,12 +472,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117a93bdf110595448a0278b829f69c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
   walkSpeed: 1.5
   stoppingDistance: 7
-  whatAreObstacles:
-    serializedVersion: 2
-    m_Bits: 0
-  animator: {fileID: 1628026574623285126}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512

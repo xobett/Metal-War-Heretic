@@ -24,7 +24,7 @@ public class HUDStatsDisplay : MonoBehaviour
 
     private void DisplayActualScore()
     {
-        scoreText.text = $"Score : {GameManager.Instance.Score.ToString()}";
+        scoreText.text = $"Score : {GameManager.Instance.coins.ToString()}";
     }
 
     private void DisplayActualComboCount()

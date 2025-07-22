@@ -82,7 +82,7 @@ public class SliceAttack : MonoBehaviour
         yield return new WaitForSeconds(cooldownTime);
 
         isCooling = false;
-        yield return null;
+        yield break;
     }
 
     void SliceMovement()

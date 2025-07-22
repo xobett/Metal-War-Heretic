@@ -446,7 +446,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -839,7 +839,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -987,12 +987,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc08246131368d04daef84a58c951522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
   walkSpeed: 1.5
   stoppingDistance: 3.9
-  whatAreObstacles:
-    serializedVersion: 2
-    m_Bits: 0
-  animator: {fileID: 2455943146011525546}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512

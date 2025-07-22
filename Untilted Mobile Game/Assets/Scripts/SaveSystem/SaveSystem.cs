@@ -8,10 +8,23 @@ public static class SaveSystem
     public static void SaveData(PlayerData playerData)
     {
         string json = JsonUtility.ToJson(playerData);
+
+        File.WriteAllText(path, json);
     }
 
-    public static void LoadPlayerData()
+    public static PlayerData LoadPlayerData()
     {
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
 
+            PlayerData loadedData = JsonUtility.FromJson<PlayerData>(json);
+            return loadedData;
+        }
+        else
+        {
+            Debug.Log("No player data was found!");
+            return null;
+        }
     }
 }

@@ -14,11 +14,12 @@ namespace EnemyAI
     [RequireComponent(typeof(Health))]
     public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
-        #region 
+        #region ENEMY BASE
 
         private EnemyAreaManager enemyArea;
+        [SerializeField] private EnemyState enemyState;
 
-        #endregion
+        #endregion ENEMY BASE
 
         #region NAVIGATION
 
@@ -80,23 +81,47 @@ namespace EnemyAI
 
         protected virtual void Start()
         {
-            //isAttacking = true;
             lastYRotation = transform.rotation.eulerAngles.y;
+            enemyState = EnemyState.Idle;
         }
 
         protected virtual void Update()
         {
-            Animator_Update();
-            Rotation_Update();
-            Attack_Update();
-            Navigation_Update();
+            BehaviorCheck_Update();
+
         }
 
-        #region BEHAVIOUR CHECK
+        #region BEHAVIOR CHECK
 
+        private void BehaviorCheck_Update()
+        {
+            if (enemyState == EnemyState.Attack)
+            {
+                Rotation_Update();
+                Attack_Update();
+                Navigation_Update();
+            }
 
+            Animator_Update();
+        }
 
-        #endregion BEHAVIOUR CHECK
+        public void GetBehavior()
+        {
+            if (enemyArea.GetTotalAttackingEnemies() < 1)
+            {
+                enemyArea.AddAttackingEnemy(this);
+                enemyState = EnemyState.Attack;
+                isAttacking = true;
+            }
+            else
+            {
+                NavigateToRandomPoint();
+                Debug.Log("Too much enemies were attacking, will check again in 10 seconds");
+                Invoke(nameof(GetBehavior), 10f);
+            }
+        }
+
+        #endregion BEHAVIOR CHECK
 
         #region ON DAMAGE AND DESTROY
 
@@ -109,7 +134,12 @@ namespace EnemyAI
         {
             if (enemyArea != null)
             {
-                enemyArea.RemoveEnemyFromArea(this); 
+                if (isAttacking)
+                {
+                    enemyArea.RemoveAttackingEnemy(this);
+                }
+
+                enemyArea.RemoveEnemyFromArea(this);
             }
             else
             {
@@ -149,17 +179,7 @@ namespace EnemyAI
             Invoke(nameof(Attack), timeBeforeAttack);
         }
 
-        protected virtual void Attack()
-        {
-            //Default behaviour for melee attack type enemies
-            if (Physics.Raycast(transform.position, transform.forward * playerDetection_Range, playerDetection_Range, whatIsPlayer))
-            {
-                playerCam.CameraShake();
-                player.GetComponent<Health>().TakeDamage(damage);
-            }
-
-            isExecutingAttack = false;
-        }
+        protected abstract void Attack();
 
         public virtual void HitPlayer(Collider playerCollider)
         {
@@ -242,6 +262,24 @@ namespace EnemyAI
         private void Navigation_Update()
         {
             FollowPlayer();
+        }
+
+        private void NavigateToRandomPoint()
+        {
+            agent.destination = GetPosAroundPlayer();
+        }
+
+        private Vector3 GetPosAroundPlayer()
+        {
+            float randomAngle = Random.Range(0f, Mathf.PI * 2);
+            float radius = Random.Range(2f, 5f);
+
+            float offsetX = Mathf.Cos(randomAngle) * radius;
+            float offsetZ = Mathf.Sin(randomAngle) * radius;
+
+            Vector3 randomPos = new Vector3(player.transform.position.x + offsetX, transform.position.y, player.transform.position.z + offsetZ);
+
+            return randomPos;
         }
 
         protected virtual void FollowPlayer()

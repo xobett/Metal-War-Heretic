@@ -1,10 +1,16 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance {  get; private set; }
-    public float Score { get; private set; }
-    private const float maxAddedScore = 100f;
+ 
+    [SerializeField] public int coins;
+
+    public PlayerSkin[] PlayerSkins = new PlayerSkin[6];
+
+    private const int maxAddedScore = 100;
+
     public int RoundCount { get; private set; }
 
     private void Awake()
@@ -20,25 +26,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
-
-    public void IncreaseScore(float scoreToAdd)
+    public void IncreaseScore(int scoreToAdd)
     {
         if (scoreToAdd > maxAddedScore)
         {
-            Score += maxAddedScore;
+            coins += maxAddedScore;
         }
         else
         {
-            Score += scoreToAdd;
+            coins += scoreToAdd;
         }
     }
 }

@@ -3,16 +3,17 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public int coinsAmount;
-    public bool[] purchasedSkins = new bool[6];
+    public int coins;
 
-    public PlayerData(PlayerData data)
+    public PlayerSkin[] skin = new PlayerSkin[6];
+
+    public PlayerData(GameManager data)
     {
-        coinsAmount = data.coinsAmount;
+        this.coins = data.coins;
 
-        for (int i = 0; i < data.purchasedSkins.Length; i++)
+        for (int i = 0; i < data.PlayerSkins.Length; i++)
         {
-            purchasedSkins[i] = data.purchasedSkins[i];
+            this.skin[i] = data.PlayerSkins[i];
         }
     }
 }
