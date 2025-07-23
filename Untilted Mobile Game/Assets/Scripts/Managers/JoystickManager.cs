@@ -58,7 +58,6 @@ public class JoystickManager : MonoBehaviour, IDragHandler, IPointerDownHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        joystick_Bckgrnd.GetComponent<Image>().enabled = true;
         joystick_Handler.GetComponent<Image>().enabled = true;
 
         //Calls the drag function immediately after touching
@@ -67,7 +66,6 @@ public class JoystickManager : MonoBehaviour, IDragHandler, IPointerDownHandler,
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        joystick_Bckgrnd.GetComponent<Image>().enabled = false;
         joystick_Handler.GetComponent<Image>().enabled = false;
 
         //Resets the position input and joystick handler position
