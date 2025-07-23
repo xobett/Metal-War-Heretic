@@ -5,7 +5,7 @@ public class MeleeAttack : MonoBehaviour
 {
     private Animator animator;
 
-    private PlayerCamera playerCam;
+    private CameraFollow playerCam;
 
     [Header("ATTACK BUTTON")]
     [SerializeField] private Button attackButton;
@@ -110,7 +110,6 @@ public class MeleeAttack : MonoBehaviour
     public void HitEnemy(Collider enemyCollider)
     {
         enemyCollider.GetComponent<IDamageable>().OnDamage(damage);
-        playerCam.CameraShake();
         GetComponent<ComboCounter>().IncreaseComboCount();
     }
 
@@ -135,7 +134,7 @@ public class MeleeAttack : MonoBehaviour
 
     private void GetReferences()
     {
-        playerCam = Camera.main.GetComponent<PlayerCamera>();
+        playerCam = Camera.main.GetComponent<CameraFollow>();
         animator = GetComponentInChildren<Animator>();
     }
 

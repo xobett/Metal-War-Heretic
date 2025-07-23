@@ -79,7 +79,6 @@ public class ElectricBall : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var cam = Camera.main;
-            cam.GetComponent<PlayerCamera>().CameraShake();
 
             other.GetComponent<Health>().TakeDamage(damage);
             Destroy(gameObject);

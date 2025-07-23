@@ -53,7 +53,6 @@ public class ElectricArea : MonoBehaviour
         if (other.CompareTag("Player") && ableToZap)
         {
             var cam = Camera.main;
-            cam.GetComponent<PlayerCamera>().CameraShake();
             other.GetComponent<Health>().TakeDamage(damage);
 
             timer = timeBetweenZaps;

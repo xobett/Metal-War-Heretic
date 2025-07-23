@@ -46,7 +46,7 @@ namespace EnemyAI
         [SerializeField] private float playerDetectionRadius;
         protected GameObject player;
 
-        protected PlayerCamera playerCam;
+        protected CameraFollow playerCam;
 
         #endregion PLAYER AND CAMERA REFERENCES
 
@@ -191,14 +191,11 @@ namespace EnemyAI
 
         public virtual void HitPlayer(Collider playerCollider)
         {
-            playerCam.CameraShake();
             player.GetComponent<Health>().TakeDamage(damage);
         }
 
         public void PushPlayer(float damageUponHit)
         {
-            //playerCam.CameraShake();
-
             player.GetComponent<Health>().TakeDamage(damageUponHit);
 
             float randomSideValue = Random.Range(-2f, 2f);
@@ -373,7 +370,7 @@ namespace EnemyAI
             animator = GetComponentInChildren<Animator>();
 
             player = GameObject.FindGameObjectWithTag("Player");
-            playerCam = Camera.main.GetComponent<PlayerCamera>();
+            playerCam = Camera.main.GetComponent<CameraFollow>();
         }
 
         private void SetEnemySettings()
