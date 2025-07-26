@@ -46,19 +46,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseNormal:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3bd057f619eb27a4886d63b0b4f1ecea, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseNormal_1:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 3bd057f619eb27a4886d63b0b4f1ecea, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseRoughness:
-        m_Texture: {fileID: 2800000, guid: b41036a3620f0bd4eb4288d8ebc12074, type: 3}
+        m_Texture: {fileID: 2800000, guid: dda3751183cb0ac47bf9b70911d4138b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseRoughness_1:
-        m_Texture: {fileID: 2800000, guid: b41036a3620f0bd4eb4288d8ebc12074, type: 3}
+        m_Texture: {fileID: 2800000, guid: dda3751183cb0ac47bf9b70911d4138b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HeighBlendMap:
