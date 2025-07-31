@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 56f262d49a67fa04ea2ae2f8ce04aa58, type: 3}
-  m_Name: Testeo Posicion
+  m_Name: Test
   m_EditorClassIdentifier: 
   shakeType: 0
   amplitude: 1
   frequency: 1
-  duration: 5
+  duration: 1
   lifetimeCurve:
     serializedVersion: 2
     m_Curve:

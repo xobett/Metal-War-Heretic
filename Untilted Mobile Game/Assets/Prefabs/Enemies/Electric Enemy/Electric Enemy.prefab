@@ -473,12 +473,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyState: 0
-  walkSpeed: 1.5
+  agent: {fileID: 0}
+  walkSpeed: 4
+  runSpeed: 2.5
   stoppingDistance: 7
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 0
+  waitingPos: {x: 0, y: 0, z: 0}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 512
   playerDetectionRadius: 6
+  player: {fileID: 0}
   damage: 90
   timeBeforeAttack: 1
   ableToFace: 1

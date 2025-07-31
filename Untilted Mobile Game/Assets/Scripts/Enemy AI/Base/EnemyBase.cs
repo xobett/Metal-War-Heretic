@@ -4,12 +4,6 @@ using UnityEngine.AI;
 
 namespace EnemyAI
 {
-    public enum EnemyState
-    {
-        Idle,
-        Attack
-    }
-
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Health))]
     public abstract class EnemyBase : MonoBehaviour, IDamageable
@@ -24,11 +18,17 @@ namespace EnemyAI
         #region NAVIGATION
 
         [Header("--- ENEMY BASE SETTINGS ---\n")]
-        protected NavMeshAgent agent;
+        public NavMeshAgent agent;
 
         [Header("NAVIGATION SETTINGS")]
-        [SerializeField] protected float walkSpeed = 1.5f;
-        [SerializeField] protected float stoppingDistance;
+        [SerializeField] public float walkSpeed = 1.5f;
+        [SerializeField] public float runSpeed = 2.5f;
+
+        [SerializeField] public float stoppingDistance;
+
+        public LayerMask whatIsEnemy;
+
+        public Vector3 waitingPos;
 
         #endregion NAVIGATION
 
@@ -44,9 +44,7 @@ namespace EnemyAI
         [Header("PLAYER REFERENCES")]
         [SerializeField] protected LayerMask whatIsPlayer;
         [SerializeField] private float playerDetectionRadius;
-        protected GameObject player;
-
-        protected CameraFollow playerCam;
+        public GameObject player;
 
         #endregion PLAYER AND CAMERA REFERENCES
 
@@ -58,8 +56,6 @@ namespace EnemyAI
 
         protected bool isExecutingAttack;
         protected bool isAttacking;
-
-        private const float playerDetection_Range = 3f;
 
         #endregion ATTACK
 
@@ -73,65 +69,46 @@ namespace EnemyAI
 
         #endregion ROTATION
 
+        private FiniteStateMachine fsm = new FiniteStateMachine();
+
         protected void Awake()
         {
-            GetReferences();
-            SetEnemySettings();
+            Awake_GetReferences();
+
+            fsm.Initialize(new IdleState(this));
         }
+
+        #region AWAKE
+
+        private void Awake_GetReferences()
+        {
+            agent = GetComponent<NavMeshAgent>();
+            animator = GetComponentInChildren<Animator>();
+
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
+        #endregion AWAKE
 
         protected virtual void Start()
         {
+            whatIsEnemy = LayerMask.GetMask("Enemy");
             lastYRotation = transform.rotation.eulerAngles.y;
-            enemyState = EnemyState.Idle;
+
+            QueryWaitPosition();
+        }
+
+        private void ChangeState()
+        {
+            fsm.ChangeState(new ChaseState(this));
         }
 
         protected virtual void Update()
         {
-            BehaviorCheck_Update();
-
+            fsm.Update();
         }
-
-        #region BEHAVIOR CHECK
-
-        private void BehaviorCheck_Update()
-        {
-            if (enemyState == EnemyState.Attack)
-            {
-                Rotation_Update();
-                Attack_Update();
-                Navigation_Update();
-            }
-
-            Animator_Update();
-        }
-
-        public void GetBehavior()
-        {
-            if (enemyArea.GetTotalAttackingEnemies() < 4)
-            {
-                enemyArea.AddAttackingEnemy(this);
-                enemyState = EnemyState.Attack;
-                isAttacking = true;
-            }
-            else
-            {
-                NavigateToRandomPoint();
-                Debug.Log("Too much enemies were attacking, will check again in 10 seconds");
-                Invoke(nameof(GetBehavior), 10f);
-            }
-        }
-
-        #endregion BEHAVIOR CHECK
 
         #region ON DAMAGE AND DESTROY
-
-        public void OnDamage(float damage)
-        {
-            GetComponent<Health>().TakeDamage(damage);
-            agent.speed = 0;
-            StartCoroutine(CR_SmoothResetRotation());
-            Invoke(nameof(RegainMovement), 5f);
-        }
 
         private void OnDestroy()
         {
@@ -150,9 +127,9 @@ namespace EnemyAI
             }
         }
 
-        private void RegainMovement()
+        public void OnDamage(float damage)
         {
-            agent.speed = walkSpeed;
+            GetComponent<Health>().TakeDamage(damage);
         }
 
         #endregion ON DAMAGE AND DESTROY
@@ -164,24 +141,11 @@ namespace EnemyAI
             enemyArea = area;
         }
 
-        #endregion ENEMY ARAE
+        #endregion ENEMY AREA
 
         #region ATTACK
 
-        private void Attack_Update()
-        {
-            AttackTriggerCheck();
-        }
-
-        private void AttackTriggerCheck()
-        {
-            if (isAttacking && agent.remainingDistance <= stoppingDistance && CheckPlayerIsNear() && !isExecutingAttack)
-            {
-                TriggerAttack();
-            }
-        }
-
-        private void TriggerAttack()
+        public void TriggerAttack()
         {
             isExecutingAttack = true;
             Invoke(nameof(Attack), timeBeforeAttack);
@@ -205,18 +169,6 @@ namespace EnemyAI
             Vector3 pushedDirection = transform.forward + transform.right * randomSideValue;
 
             player.GetComponent<PlayerMovement>().SetHitMovement(pushedDirection, randomPushedForce, randomTimePushed);
-        }
-
-        private void SetAttackBehaviourSettings()
-        {
-            agent.speed = walkSpeed;
-            agent.stoppingDistance = stoppingDistance;
-        }
-
-        private void SetNonAttackBehaviourSettings()
-        {
-            agent.speed = walkSpeed * 2;
-            agent.stoppingDistance = 0;
         }
 
         #endregion ATTACK
@@ -244,6 +196,11 @@ namespace EnemyAI
             currentFacePlayerRot = Quaternion.Euler(0, lookTarget.eulerAngles.y, 0);
         }
 
+        public void SmoothResetRotation()
+        {
+            StartCoroutine(CR_SmoothResetRotation());
+        }
+
         private IEnumerator CR_SmoothResetRotation()
         {
             float time = 0f;
@@ -263,36 +220,15 @@ namespace EnemyAI
         #endregion ROTATION
 
         #region AI NAVIGATION
-
-        private void Navigation_Update()
+        public void QueryWaitPosition()
         {
-            FollowPlayer();
+            enemyArea.QueryWaitPosition(this);
         }
 
-        private void NavigateToRandomPoint()
+        public void SetWaitPosition(Vector3 waitPosition)
         {
-            agent.destination = GetPosAroundPlayer();
-        }
-
-        private Vector3 GetPosAroundPlayer()
-        {
-            float randomAngle = Random.Range(0f, Mathf.PI * 2);
-            float radius = Random.Range(2f, 5f);
-
-            float offsetX = Mathf.Cos(randomAngle) * radius;
-            float offsetZ = Mathf.Sin(randomAngle) * radius;
-
-            Vector3 randomPos = new Vector3(player.transform.position.x + offsetX, transform.position.y, player.transform.position.z + offsetZ);
-
-            return randomPos;
-        }
-
-        protected virtual void FollowPlayer()
-        {
-            if (!isExecutingAttack)
-            {
-                agent.destination = player.transform.position;
-            }
+            waitingPos = waitPosition;
+            fsm.ChangeState(new ChaseState(this));
         }
 
         #endregion AI NAVIGATION
@@ -362,31 +298,5 @@ namespace EnemyAI
 
         #endregion ANIMATOR
 
-        #region START
-
-        private void GetReferences()
-        {
-            agent = GetComponent<NavMeshAgent>();
-            animator = GetComponentInChildren<Animator>();
-
-            player = GameObject.FindGameObjectWithTag("Player");
-            playerCam = Camera.main.GetComponent<CameraFollow>();
-        }
-
-        private void SetEnemySettings()
-        {
-            agent.speed = walkSpeed;
-            agent.stoppingDistance = stoppingDistance;
-        }
-
-        #endregion START
-
-        #region PLAYER DETECTION
-        private bool CheckPlayerIsNear()
-        {
-            return Physics.CheckSphere(transform.position, playerDetectionRadius, whatIsPlayer);
-        }
-
-        #endregion PLAYER DETECTION 
     }
 }

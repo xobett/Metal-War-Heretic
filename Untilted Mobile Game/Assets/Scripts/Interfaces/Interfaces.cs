@@ -8,4 +8,9 @@ public interface IInteractable
 public interface IDamageable
 {
     public void OnDamage(float damage);
-} 
+}
+
+public interface IAttack
+{
+    public abstract void OnAttack();
+}

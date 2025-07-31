@@ -13,7 +13,10 @@ public class CameraFollow : MonoBehaviour
 
     private Vector3 velocity;
 
-
+    private void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
     private void LateUpdate()
     {
         FollowTarget();
