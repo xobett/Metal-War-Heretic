@@ -5,21 +5,40 @@ public class Player : MonoBehaviour
     [SerializeField] private Renderer rndr;
     [SerializeField] private Material newMTL;
 
+    public static Player Instance { get; private set; }
+
+    private void Awake()
+    {
+        Awake_GetReferences();
+    }
+
+    #region AWAKE
+    private void Awake_GetReferences()
+    {
+        Instance = this;
+        rndr = GetComponentInChildren<Renderer>();
+    }
+
+    #endregion AWAKE
+
+
     void Start()
     {
-        ChangeSkin();
+        Start_EquipSavedSkin();
     }
+
+    #region START
+
+    private void Start_EquipSavedSkin()
+    {
+        rndr.material = GameManager.Instance.EquippedSkin.skinMTL;
+    }
+
+    #endregion START
 
     // Update is called once per frame
     void Update()
     {
         
-    }
-
-    private void ChangeSkin()
-    {
-        rndr = GetComponentInChildren<Renderer>();
-
-        rndr.material = GameManager.Instance.EquippedSkin.skinMTL;
     }
 }

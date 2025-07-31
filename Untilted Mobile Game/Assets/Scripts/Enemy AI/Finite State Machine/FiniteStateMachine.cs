@@ -3,23 +3,23 @@ using UnityEngine;
 
 public class FiniteStateMachine
 {
-    private EnemyState currentState;
+    public EnemyState CurrentState { get; private set; }
 
     public void Update()
     {
-        currentState?.Update();
+        CurrentState?.Update();
     }
 
     public void Initialize(EnemyState state)
     {
-        currentState = state;
-        currentState.Enter();
+        CurrentState = state;
+        CurrentState.Enter();
     }
 
     public void ChangeState(EnemyState newState)
     {
-        currentState.Exit();
-        currentState = newState;
-        currentState.Enter();
+        CurrentState.Exit();
+        CurrentState = newState;
+        CurrentState.Enter();
     }
 }

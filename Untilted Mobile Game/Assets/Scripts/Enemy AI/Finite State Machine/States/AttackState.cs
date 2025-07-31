@@ -1,21 +1,28 @@
 using UnityEngine;
+using EnemyAI;
 
 public class AttackState : EnemyState
 {
-    public AttackState(EnemyAI.EnemyBase enemy) : base(enemy) { }
+    public AttackState(EnemyBase enemy) : base(enemy) { }
 
     public override void Enter()
     {
-        Debug.Log("Enter Attack State");
-    }
-
-    public override void Exit()
-    {
-        Debug.Log("Exit Attack State");
+        enemy.QueryAttackPos();
     }
 
     public override void Update()
     {
-        Debug.Log("Attack is active");
+        if (enemy.attackPos != Vector3.zero)
+        {
+            enemy.agent.destination = enemy.attackPos;
+        }
+
+
     }
+
+    public override void Exit()
+    {
+        //Stop looking at player
+    }
+
 }

@@ -4,16 +4,18 @@ using UnityEngine.AI;
 
 namespace EnemyAI
 {
+    public enum State
+    {
+        Idle,
+        Chase,
+        OnQueue,
+        Attack
+    }
+    
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Health))]
     public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
-        #region ENEMY BASE
-
-        private EnemyArea enemyArea;
-        [SerializeField] private EnemyState enemyState;
-
-        #endregion ENEMY BASE
 
         #region NAVIGATION
 
@@ -26,9 +28,11 @@ namespace EnemyAI
 
         [SerializeField] public float stoppingDistance;
 
-        public LayerMask whatIsEnemy;
-
         public Vector3 waitingPos;
+        public Vector3 lastAssignedPos;
+
+        public Vector3 attackPos;
+        public Vector3 lastAttackPos;
 
         #endregion NAVIGATION
 
@@ -39,14 +43,11 @@ namespace EnemyAI
 
         #endregion ANIMATOR
 
-        #region PLAYER AND CAMERA REFERENCES
+        #region PLAYER REFERENCES
 
-        [Header("PLAYER REFERENCES")]
-        [SerializeField] protected LayerMask whatIsPlayer;
-        [SerializeField] private float playerDetectionRadius;
-        public GameObject player;
+        [HideInInspector] public GameObject player;
 
-        #endregion PLAYER AND CAMERA REFERENCES
+        #endregion PLAYER REFERENCES
 
         #region ATTACK
 
@@ -61,70 +62,86 @@ namespace EnemyAI
 
         #region ROTATION
 
+        public bool ableToFace = false;
+
         protected Quaternion currentFacePlayerRot;
 
         private float lastYRotation;
 
-        [SerializeField] protected bool ableToFace = true;
-
         #endregion ROTATION
 
-        private FiniteStateMachine fsm = new FiniteStateMachine();
-
-        protected void Awake()
+        protected virtual void Start()
         {
-            Awake_GetReferences();
-
-            fsm.Initialize(new IdleState(this));
+            Start_GetReferences();
+            Start_CreateFSMStates();
+            Start_InitializeFSM();
+            lastYRotation = transform.rotation.eulerAngles.y;
         }
 
-        #region AWAKE
+        #region START
 
-        private void Awake_GetReferences()
+        private void Start_GetReferences()
         {
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponentInChildren<Animator>();
 
-            player = GameObject.FindGameObjectWithTag("Player");
+            player = Player.Instance.gameObject;
         }
 
-        #endregion AWAKE
-
-        protected virtual void Start()
+        private void Start_CreateFSMStates()
         {
-            whatIsEnemy = LayerMask.GetMask("Enemy");
-            lastYRotation = transform.rotation.eulerAngles.y;
-
-            QueryWaitPosition();
+            idleState = new IdleState(this);
+            chaseState = new ChaseState(this);
+            onQueueState = new OnQueueState(this);
+            attackState = new AttackState(this);
         }
 
-        private void ChangeState()
+        private void Start_InitializeFSM()
         {
-            fsm.ChangeState(new ChaseState(this));
+            fsm.Initialize(idleState);
         }
+
+        #endregion START
+
+        #region FSM
+
+        private EnemyArea enemyArea;
+
+        private FiniteStateMachine fsm = new FiniteStateMachine();
+
+        private IdleState idleState;
+        private ChaseState chaseState;
+        private OnQueueState onQueueState;
+        private AttackState attackState;
+
+        public void ChangeState(State newState)
+        {
+            switch (newState)
+            {
+                case State.Idle: fsm.ChangeState(idleState); break;
+                case State.Chase: fsm.ChangeState(chaseState); break;
+                case State.OnQueue: fsm.ChangeState(onQueueState); break;
+                case State.Attack: fsm.ChangeState(attackState); break;
+            }
+        }
+
+        #endregion FSM
 
         protected virtual void Update()
         {
             fsm.Update();
+            Rotation_Update();
         }
 
         #region ON DAMAGE AND DESTROY
 
         private void OnDestroy()
         {
-            if (enemyArea != null)
-            {
-                if (isAttacking)
-                {
-                    enemyArea.RemoveAttackingEnemy(this);
-                }
+            if (enemyArea == null) return;
 
-                enemyArea.RemoveEnemyFromArea(this);
-            }
-            else
-            {
-                Debug.LogWarning($"{name} does not have an Enemy Area assigned!");
-            }
+            if (isAttacking) enemyArea.RemoveAttackingEnemy(this);
+
+            enemyArea.RemoveEnemyFromArea(this);
         }
 
         public void OnDamage(float damage)
@@ -141,6 +158,42 @@ namespace EnemyAI
             enemyArea = area;
         }
 
+        public void QueryWaitPosition()
+        {
+            enemyArea.QueryWaitPosition(this);
+
+        }
+        public void SetWaitPosition(Vector3 assignedPosition)
+        {
+            waitingPos = assignedPosition;
+            lastAssignedPos = waitingPos;
+            if (fsm.CurrentState == chaseState || fsm.CurrentState == onQueueState) Invoke(nameof(QueryWaitPosition), 7f);
+        }
+
+        public void QueryAttack()
+        {
+            enemyArea.QueryAttack(this);
+            Debug.Log($"{name} queried an attack");
+        }
+
+        public void QueryAttackPos()
+        {
+            enemyArea.QueryAttackPos(this);
+        }
+
+        public void SetAttackState()
+        {
+            ChangeState(State.Attack);
+        }
+
+        public void SetAttackPosition(Vector3 position)
+        {
+            attackPos = position;
+            lastAttackPos = position;
+
+            if (fsm.CurrentState == attackState) Invoke(nameof(QueryAttackPos), 7f);
+        }
+
         #endregion ENEMY AREA
 
         #region ATTACK
@@ -151,7 +204,7 @@ namespace EnemyAI
             Invoke(nameof(Attack), timeBeforeAttack);
         }
 
-        protected abstract void Attack();
+        public abstract void Attack();
 
         public virtual void HitPlayer(Collider playerCollider)
         {
@@ -219,19 +272,6 @@ namespace EnemyAI
 
         #endregion ROTATION
 
-        #region AI NAVIGATION
-        public void QueryWaitPosition()
-        {
-            enemyArea.QueryWaitPosition(this);
-        }
-
-        public void SetWaitPosition(Vector3 waitPosition)
-        {
-            waitingPos = waitPosition;
-            fsm.ChangeState(new ChaseState(this));
-        }
-
-        #endregion AI NAVIGATION
 
         #region ANIMATOR
 

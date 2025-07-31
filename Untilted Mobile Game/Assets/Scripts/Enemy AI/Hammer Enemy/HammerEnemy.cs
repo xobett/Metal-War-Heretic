@@ -9,7 +9,7 @@ namespace EnemyAI.HammerEnemy
             base.Update();
         }
 
-        protected override void Attack()
+        public override void Attack()
         {
             ExecuteHammerPunch();
         }

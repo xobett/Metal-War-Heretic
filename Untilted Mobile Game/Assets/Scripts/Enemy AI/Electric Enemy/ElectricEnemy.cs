@@ -33,7 +33,7 @@ namespace EnemyAI.ElectricEnemy
         [SerializeField, Range(1f, 10f)] private int electricAttackCooldownTime;
         private bool electricAttackCoolingDown;
 
-        protected override void Attack()
+        public override void Attack()
         {
             GetAttackAbility();
         }

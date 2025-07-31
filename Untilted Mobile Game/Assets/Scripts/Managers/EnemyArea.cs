@@ -13,27 +13,35 @@ public class EnemyArea : MonoBehaviour
     [SerializeField] private float areaRadius = 10f;
 
     private List<EnemyBase> aliveEnemies = new List<EnemyBase>();
-    private List<EnemyBase> attackingEnemies = new List<EnemyBase>();
 
-    private List<EnemyBase> positionQueryQueue = new List<EnemyBase>();
+    private List<EnemyBase> positionQueue = new List<EnemyBase>();
     private List<Vector3> usedPositions = new List<Vector3>();
+
+    private List<EnemyBase> attackQueue = new List<EnemyBase>();
+
+    private List<EnemyBase> attackPosQueue = new List<EnemyBase>();
+    [SerializeField] private List<Vector3> usedAttackPositions = new List<Vector3>();
+    [SerializeField] private List<EnemyBase> attackingEnemies = new List<EnemyBase>();
 
     private const float waitPositionDistance = 4.0f;
 
     private GameObject player;
-    private LayerMask whatIsEnemy;
 
     private void Start()
     {
-        SpawnEnemies();
-        whatIsEnemy = LayerMask.GetMask("Enemy");
-        player = GameObject.FindGameObjectWithTag("Player");
-
-        StartCoroutine(CR_AssignPosition());
+        Start_GetReferences();
+        Start_SpawnEnemies();
+        Start_RunPositionQueries();
     }
 
-    #region SPAWN
-    private void SpawnEnemies()
+    #region START
+
+    private void Start_GetReferences()
+    {
+        player = Player.Instance.gameObject;
+    }
+
+    private void Start_SpawnEnemies()
     {
         for (int i = 0; i < enemiesToSpawn.Length; i++)
         {
@@ -43,6 +51,15 @@ public class EnemyArea : MonoBehaviour
             enemy.transform.parent = transform.GetChild(0);
         }
     }
+
+    private void Start_RunPositionQueries()
+    {
+        StartCoroutine(CR_HandleQueries());
+    }
+
+    #endregion START
+
+    #region SPAWN
 
     private Vector3 GetRandomSpawnPos()
     {
@@ -68,24 +85,54 @@ public class EnemyArea : MonoBehaviour
 
     public void QueryWaitPosition(EnemyBase enemy)
     {
-        positionQueryQueue.Add(enemy);
+        if (enemy.lastAssignedPos != null)
+        {
+            usedPositions.Remove(enemy.lastAssignedPos);
+        }
+
+        positionQueue.Add(enemy);
     }
 
-    private IEnumerator CR_AssignPosition()
+    private IEnumerator CR_HandleQueries()
     {
         yield return new WaitForSeconds(1f);
 
-        if (positionQueryQueue.Count != 0)
+        if (positionQueue.Count != 0)
         {
-            for (int i = positionQueryQueue.Count - 1; i >= 0 ; i--)
+            for (int i = positionQueue.Count - 1; i >= 0; i--)
             {
                 Vector3 pos = GetWaitingPosition();
-                positionQueryQueue[i].SetWaitPosition(pos);
-                positionQueryQueue.RemoveAt(i);
+                positionQueue[i].SetWaitPosition(pos);
+                positionQueue.RemoveAt(i);
             }
         }
 
-        StartCoroutine(CR_AssignPosition());
+        if (attackQueue.Count != 0)
+        {
+            for (int i = attackQueue.Count - 1; i >= 0; i--)
+            {
+                if (attackingEnemies.Count < 3)
+                {
+                    attackingEnemies.Add(attackQueue[i]);
+
+                    attackQueue[i].SetAttackState();
+                    attackQueue.RemoveAt(i);
+                }
+            }
+        }
+
+        if (attackPosQueue.Count != 0)
+        {
+            for (int i = attackPosQueue.Count - 1; i >= 0; i--)
+            {
+                Vector3 pos = GetAttackPosition();
+
+                attackPosQueue[i].SetAttackPosition(pos);
+                attackPosQueue.RemoveAt(i);
+            }
+        }
+
+        StartCoroutine(CR_HandleQueries());
     }
 
     private Vector3 GetWaitingPosition()
@@ -114,6 +161,28 @@ public class EnemyArea : MonoBehaviour
         return fallBackPos;
     }
 
+    private Vector3 GetAttackPosition()
+    {
+        int positions = 3;
+
+        for (int i = 0 ; i < positions; i++)
+        {
+            float angle = (360 / positions) * i;
+
+            Vector3 offset = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * 2f;
+            Vector3 attackPos = player.transform.position + offset;
+
+            if (!usedAttackPositions.Contains(attackPos))
+            {
+                usedAttackPositions.Add(attackPos);
+                return attackPos;
+            }
+        }
+
+        Vector3 fallback = player.transform.right * 2f;
+        return fallback;
+    }
+
     #endregion AREA
 
     #region ATTACK
@@ -123,9 +192,19 @@ public class EnemyArea : MonoBehaviour
         return attackingEnemies.Count;
     }
 
-    public void AddAttackingEnemy(EnemyBase enemy)
+    public void QueryAttack(EnemyBase enemy)
     {
-        attackingEnemies.Add(enemy);
+        attackQueue.Add(enemy);
+    }
+
+    public void QueryAttackPos(EnemyBase enemy)
+    {
+        if (enemy.lastAttackPos != null)
+        {
+            usedAttackPositions.Remove(enemy.lastAttackPos);
+        }
+
+        attackPosQueue.Add(enemy);
     }
 
     public void RemoveAttackingEnemy(EnemyBase enemy)
@@ -133,20 +212,28 @@ public class EnemyArea : MonoBehaviour
         attackingEnemies.Remove(enemy);
     }
 
-    private void StartAttack()
-    {
+    #endregion ATTACK
 
+    #region TRIGGERS
+
+    private void OnTrigger_AttackPlayer()
+    {
+        foreach (EnemyBase enemy in aliveEnemies)
+        {
+            enemy.ChangeState(State.Chase);
+        }
     }
 
-    #endregion ATTACK
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            StartAttack();
+            OnTrigger_AttackPlayer();
         }
     }
+
+    #endregion TRIGGERS
 
     private void OnDrawGizmos()
     {

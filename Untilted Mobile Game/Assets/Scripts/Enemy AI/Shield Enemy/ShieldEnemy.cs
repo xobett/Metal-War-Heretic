@@ -28,7 +28,7 @@ namespace EnemyAI.ShieldEnemy
             RoyalGuard_Update();
         }
 
-        protected override void Attack()
+        public override void Attack()
         {
             if (!rgCooldownActive)
             {

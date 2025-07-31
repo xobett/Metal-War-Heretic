@@ -1,21 +1,24 @@
 using System.Collections;
 using UnityEngine;
+using EnemyAI;
 
 public class IdleState : EnemyState
 {
-    public IdleState(EnemyAI.EnemyBase enemy) : base(enemy) { }
+    public IdleState(EnemyBase enemy) : base(enemy) { }
 
     public override void Enter()
     {
-        SetNavMeshSettings();
+        Enter_SetIdleSettings();
     }
 
     #region ENTER
 
-    private void SetNavMeshSettings()
+    private void Enter_SetIdleSettings()
     {
         enemy.agent.speed = enemy.walkSpeed;
         enemy.agent.stoppingDistance = 0;
+
+        enemy.ableToFace = false;
     }
 
     #endregion ENTER
@@ -24,6 +27,10 @@ public class IdleState : EnemyState
     {
 
     }
+
+    #region UPDATE
+
+    #endregion UPDATE
 
     public override void Exit()
     {

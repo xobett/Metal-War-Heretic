@@ -35,7 +35,7 @@ namespace EnemyAI.BruteEnemy
             RampageRun_Update();
         }
 
-        protected override void Attack()
+        public override void Attack()
         {
             ExecuteHeavyPunch();
         }

@@ -472,23 +472,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 117a93bdf110595448a0278b829f69c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyState: 0
   agent: {fileID: 0}
-  walkSpeed: 4
-  runSpeed: 2.5
+  walkSpeed: 7
+  runSpeed: 8
   stoppingDistance: 7
-  whatIsEnemy:
-    serializedVersion: 2
-    m_Bits: 0
   waitingPos: {x: 0, y: 0, z: 0}
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 512
-  playerDetectionRadius: 6
+  lastAssignedPos: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   damage: 90
   timeBeforeAttack: 1
-  ableToFace: 1
   distanceAttackPf: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
   spawnPoint: {fileID: 2194113442272978875}
   distanceAttackSpeed: 7
