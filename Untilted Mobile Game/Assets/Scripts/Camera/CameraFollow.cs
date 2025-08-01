@@ -4,7 +4,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     //Follow settings
-    [SerializeField] private Transform target;
+    private Transform target;
 
     //Camera settings
     [SerializeField] private Vector3 offsetPosition;
@@ -15,7 +15,7 @@ public class CameraFollow : MonoBehaviour
 
     private void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        target = Player.Instance.gameObject.transform;
     }
     private void LateUpdate()
     {

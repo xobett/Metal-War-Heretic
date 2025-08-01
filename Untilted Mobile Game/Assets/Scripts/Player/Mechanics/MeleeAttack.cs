@@ -136,6 +136,7 @@ public class MeleeAttack : MonoBehaviour
     {
         playerCam = Camera.main.GetComponent<CameraFollow>();
         animator = GetComponentInChildren<Animator>();
+        attackButton = GameObject.FindGameObjectWithTag("Attack Button").GetComponent<Button>();
     }
 
     private void AddButtonEvents()

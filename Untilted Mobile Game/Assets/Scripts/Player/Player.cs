@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private Renderer rndr;
-    [SerializeField] private Material newMTL;
+    private Renderer rndr;
+    private Material newMTL;
 
     public static Player Instance { get; private set; }
 

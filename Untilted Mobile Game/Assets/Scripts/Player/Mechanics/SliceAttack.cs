@@ -163,6 +163,7 @@ public class SliceAttack : MonoBehaviour
         charCtrlr = GetComponent<CharacterController>();
         cam = Camera.main.GetComponent<CameraFollow>();
         animator = GetComponentInChildren<Animator>();
+        sliceButton = GameObject.FindGameObjectWithTag("Slice Button").GetComponent<Button>();
     }
 
     #endregion GET REFERENCES

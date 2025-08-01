@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - Attack Button
+  - Slice Button
+  - Player Lifebar
   layers:
   - Default
   - TransparentFX

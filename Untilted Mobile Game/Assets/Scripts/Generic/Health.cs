@@ -8,9 +8,20 @@ public class Health : MonoBehaviour
 
     [SerializeField] private Slider lifebar;
 
+    private void Awake()
+    {
+        Start_GetReferences();
+        
+    }
+
     void Start()
     {
         SetHealth(maxHealth);
+    }
+
+    private void Start_GetReferences()
+    {
+        lifebar = GameObject.FindGameObjectWithTag("Player Lifebar").GetComponentInChildren<Slider>();
     }
 
     public void TakeDamage(float damage)
