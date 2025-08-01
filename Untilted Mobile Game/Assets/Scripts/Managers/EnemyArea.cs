@@ -199,6 +199,11 @@ public class EnemyArea : MonoBehaviour
 
     public void QueryAttackPos(EnemyBase enemy)
     {
+        if (enemy.lastAssignedPos != null)
+        {
+            usedPositions.Remove(enemy.lastAssignedPos);
+        }
+
         if (enemy.lastAttackPos != null)
         {
             usedAttackPositions.Remove(enemy.lastAttackPos);

@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
 
     [Header("NORMAL MOVEMENT SETTINGS")]
-    [SerializeField, Range(1f, 5f)] private float movementSpeed;
+    [SerializeField] private float movementSpeed;
     [SerializeField, Range(0f, 1f)] private float rotationSpeed;
 
     private float velocity;
@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovementCheck()
     {
-        if (!IsHit)
+        if (!IsHit && !isDashing)
         {
             if (inCombat)
             {
