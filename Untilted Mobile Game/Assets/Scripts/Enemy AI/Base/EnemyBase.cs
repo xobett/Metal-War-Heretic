@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.InputSystem.XR.Haptics;
 
 namespace EnemyAI
 {
@@ -16,6 +17,8 @@ namespace EnemyAI
     [RequireComponent(typeof(Health))]
     public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
+        [SerializeField] public State currentState;
+        [SerializeField] private bool attackCooldown;
 
         #region NAVIGATION
 
@@ -29,10 +32,8 @@ namespace EnemyAI
         [SerializeField] public float stoppingDistance;
 
         public Vector3 waitingPos;
-        public Vector3 lastAssignedPos;
 
         public Vector3 attackPos;
-        public Vector3 lastAttackPos;
 
         #endregion NAVIGATION
 
@@ -57,6 +58,7 @@ namespace EnemyAI
 
         protected bool isExecutingAttack;
         protected bool isAttacking;
+
 
         #endregion ATTACK
 
@@ -161,37 +163,48 @@ namespace EnemyAI
         public void QueryWaitPosition()
         {
             enemyArea.QueryWaitPosition(this);
-
         }
+
+        public bool waitPosQueried = false;
+
         public void SetWaitPosition(Vector3 assignedPosition)
         {
             waitingPos = assignedPosition;
-            lastAssignedPos = waitingPos;
-            if (fsm.CurrentState == chaseState || fsm.CurrentState == onQueueState) Invoke(nameof(QueryWaitPosition), 7f);
+        }
+
+        public void RemoveWaitPos()
+        {
+            enemyArea.RemoveWaitPos(this);
         }
 
         public void QueryAttack()
         {
-            enemyArea.QueryAttack(this);
-            Debug.Log($"{name} queried an attack");
+            enemyArea.QueryAttackState(this);
         }
 
-        public void QueryAttackPos()
+        public void QueryAttackPosition()
         {
             enemyArea.QueryAttackPos(this);
-        }
-
-        public void SetAttackState()
-        {
-            ChangeState(State.Attack);
         }
 
         public void SetAttackPosition(Vector3 position)
         {
             attackPos = position;
-            lastAttackPos = position;
+        }
 
-            if (fsm.CurrentState == attackState) Invoke(nameof(QueryAttackPos), 7f);
+        public void RemoveFromAttackList()
+        {
+            enemyArea.RemoveAttackingEnemy(this);
+        }
+
+        public void RunAttackCooldown()
+        {
+            attackCooldown = true;
+        }
+
+        private void DisableAttackCooldown()
+        {
+            attackCooldown = false;
         }
 
         #endregion ENEMY AREA

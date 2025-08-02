@@ -5,24 +5,108 @@ public class AttackState : EnemyState
 {
     public AttackState(EnemyBase enemy) : base(enemy) { }
 
+    private float attackTimer;
+    private const float maxAttackTime = 8f;
+
+    private float attackNavTimer;
+    private const float timeBeforeNavigating = 7f;
+
+    private bool transitionedToQueue = false;
+
     public override void Enter()
     {
-        enemy.QueryAttackPos();
+        Enter_SetAttackSettings();
+        Enter_SetTimerSettings();
     }
 
+    #region ENTER
+
+    private void Enter_SetAttackSettings()
+    {
+        //enemy.agent.avoidancePriority = 0;
+    }
+
+    private void Enter_SetTimerSettings()
+    {
+        attackTimer = maxAttackTime;
+    }
+
+    #endregion ENTER
+
     public override void Update()
+    {
+        Update_MoveToAttackPos();
+
+        enemy.currentState = State.Attack;
+    }
+
+    #region UPDATE
+
+    private void Update_MoveToAttackPos()
     {
         if (enemy.attackPos != Vector3.zero)
         {
             enemy.agent.destination = enemy.attackPos;
         }
-
-
     }
+
+    private void Update_RunAttackTimer()
+    {
+        attackTimer -= Time.deltaTime;
+    }
+
+    private void Update_RunNavigationTimer()
+    {
+        attackNavTimer -= Time.deltaTime;
+    }
+
+    private void Update_HandleNavigationUpdate()
+    {
+        if (attackNavTimer <= 0)
+        {
+            attackNavTimer = timeBeforeNavigating;
+            enemy.QueryAttackPosition();
+        }
+    } 
+
+    private void Update_HandleAttackTime()
+    {
+        if (attackTimer <= 0)
+        {
+            TransitionToQueue();
+        }
+    }
+
+    private void TransitionToQueue()
+    {
+        if (transitionedToQueue) return;
+        transitionedToQueue = true;
+        enemy.ChangeState(State.OnQueue);
+    }
+
+    #endregion UPDATE
 
     public override void Exit()
     {
-        //Stop looking at player
+        Exit_ResetSettings();
+        Exit_FinishAttack();
     }
+
+    #region EXIT
+
+    private void Exit_ResetSettings()
+    {
+        enemy.ableToFace = false;
+        enemy.agent.avoidancePriority = 50;
+    }
+
+    private void Exit_FinishAttack()
+    {
+        enemy.RunAttackCooldown();
+        enemy.RemoveFromAttackList();
+        enemy.waitPosQueried = false;
+
+    }
+    #endregion EXIT
 
 }

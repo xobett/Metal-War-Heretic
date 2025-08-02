@@ -13,15 +13,16 @@ public class EnemyArea : MonoBehaviour
     [SerializeField] private float areaRadius = 10f;
 
     private List<EnemyBase> aliveEnemies = new List<EnemyBase>();
-
-    private List<EnemyBase> positionQueue = new List<EnemyBase>();
-    private List<Vector3> usedPositions = new List<Vector3>();
-
-    private List<EnemyBase> attackQueue = new List<EnemyBase>();
-
-    private List<EnemyBase> attackPosQueue = new List<EnemyBase>();
-    [SerializeField] private List<Vector3> usedAttackPositions = new List<Vector3>();
     [SerializeField] private List<EnemyBase> attackingEnemies = new List<EnemyBase>();
+
+    //QUEUES
+    private List<EnemyBase> getWaitPositionQueue = new List<EnemyBase>();
+    private List<EnemyBase> getAttackPositionQueue = new List<EnemyBase>();
+    private List<EnemyBase> getAttackStateQueue = new List<EnemyBase>();
+
+
+    [SerializeField] private Dictionary<EnemyBase, Vector3> usedWaitPositions = new Dictionary<EnemyBase, Vector3>();
+    [SerializeField] private Dictionary<EnemyBase, Vector3> usedAttackPositions = new Dictionary<EnemyBase, Vector3>();
 
     private const float waitPositionDistance = 4.0f;
 
@@ -31,7 +32,7 @@ public class EnemyArea : MonoBehaviour
     {
         Start_GetReferences();
         Start_SpawnEnemies();
-        Start_RunPositionQueries();
+        Start_RunQueriesHandler();
     }
 
     #region START
@@ -49,12 +50,13 @@ public class EnemyArea : MonoBehaviour
             AddEnemyToArea(enemy.GetComponent<EnemyBase>());
             enemy.GetComponent<EnemyBase>().AssignArea(this);
             enemy.transform.parent = transform.GetChild(0);
+            enemy.name = enemiesToSpawn[i].name + $" {i}";
         }
     }
 
-    private void Start_RunPositionQueries()
+    private void Start_RunQueriesHandler()
     {
-        StartCoroutine(CR_HandleQueries());
+        StartCoroutine(CR_QueriesHandler());
     }
 
     #endregion START
@@ -73,6 +75,95 @@ public class EnemyArea : MonoBehaviour
 
     #region AREA
 
+    #region QUERIES
+    public void QueryAttackState(EnemyBase enemy)
+    {
+        getAttackStateQueue.Add(enemy);
+    }
+
+    public void QueryWaitPosition(EnemyBase enemy)
+    {
+        OnQuery_RemoveUsedPositions(enemy);
+        getWaitPositionQueue.Add(enemy);
+        Debug.Log($"{enemy.gameObject.name} queried");
+    }
+
+    public void QueryAttackPos(EnemyBase enemy)
+    {
+        OnQuery_RemoveUsedPositions(enemy);
+        getAttackPositionQueue.Add(enemy);
+    }
+
+    private void OnQuery_RemoveUsedPositions(EnemyBase enemy)
+    {
+        if (usedWaitPositions.ContainsKey(enemy))
+        {
+            usedWaitPositions.Remove(enemy);
+        }
+    }
+
+    public void RemoveWaitPos(EnemyBase enemy)
+    {
+        if (usedWaitPositions.ContainsKey(enemy))
+        {
+            usedWaitPositions.Remove(enemy);
+        }
+    }
+
+    [ContextMenu("Print Wait Positions")]
+    private void Debug_PrintWaitPositions()
+    {
+        foreach (var kvp in usedWaitPositions)
+        {
+            Debug.Log($"{kvp.Key.name} & {kvp.Value}");
+        }
+    }
+
+
+    private IEnumerator CR_QueriesHandler()
+    {
+        yield return new WaitForSeconds(1f);
+
+        if (getWaitPositionQueue.Count != 0)
+        {
+            for (int i = getWaitPositionQueue.Count - 1; i >= 0; i--)
+            {
+                Vector3 pos = GetWaitingPosition(getWaitPositionQueue[i]);
+                getWaitPositionQueue[i].SetWaitPosition(pos);
+                getWaitPositionQueue.RemoveAt(i);
+            }
+        }
+
+        if (getAttackStateQueue.Count != 0)
+        {
+            for (int i = getAttackStateQueue.Count - 1; i >= 0; i--)
+            {
+                if (attackingEnemies.Count < 3)
+                {
+                    attackingEnemies.Add(getAttackStateQueue[i]);
+
+                    getAttackStateQueue[i].ChangeState(State.Attack);
+                    getAttackStateQueue.RemoveAt(i);
+                }
+            }
+        }
+
+        if (getAttackPositionQueue.Count != 0)
+        {
+            for (int i = getAttackPositionQueue.Count - 1; i >= 0; i--)
+            {
+                Vector3 pos = GetAttackPosition(getAttackPositionQueue[i]);
+
+                getAttackPositionQueue[i].SetAttackPosition(pos);
+                getAttackPositionQueue.RemoveAt(i);
+            }
+        }
+
+        StartCoroutine(CR_QueriesHandler());
+    }
+
+    #endregion QUERIES
+
     public void AddEnemyToArea(EnemyBase enemy)
     {
         aliveEnemies.Add(enemy);
@@ -83,59 +174,7 @@ public class EnemyArea : MonoBehaviour
         aliveEnemies.Remove(enemy);
     }
 
-    public void QueryWaitPosition(EnemyBase enemy)
-    {
-        if (enemy.lastAssignedPos != null)
-        {
-            usedPositions.Remove(enemy.lastAssignedPos);
-        }
-
-        positionQueue.Add(enemy);
-    }
-
-    private IEnumerator CR_HandleQueries()
-    {
-        yield return new WaitForSeconds(1f);
-
-        if (positionQueue.Count != 0)
-        {
-            for (int i = positionQueue.Count - 1; i >= 0; i--)
-            {
-                Vector3 pos = GetWaitingPosition();
-                positionQueue[i].SetWaitPosition(pos);
-                positionQueue.RemoveAt(i);
-            }
-        }
-
-        if (attackQueue.Count != 0)
-        {
-            for (int i = attackQueue.Count - 1; i >= 0; i--)
-            {
-                if (attackingEnemies.Count < 3)
-                {
-                    attackingEnemies.Add(attackQueue[i]);
-
-                    attackQueue[i].SetAttackState();
-                    attackQueue.RemoveAt(i);
-                }
-            }
-        }
-
-        if (attackPosQueue.Count != 0)
-        {
-            for (int i = attackPosQueue.Count - 1; i >= 0; i--)
-            {
-                Vector3 pos = GetAttackPosition();
-
-                attackPosQueue[i].SetAttackPosition(pos);
-                attackPosQueue.RemoveAt(i);
-            }
-        }
-
-        StartCoroutine(CR_HandleQueries());
-    }
-
-    private Vector3 GetWaitingPosition()
+    private Vector3 GetWaitingPosition(EnemyBase enemy)
     {
         int positions = enemiesToSpawn.Length;
 
@@ -144,12 +183,12 @@ public class EnemyArea : MonoBehaviour
             float angle = (360f / positions) * i;
 
             Vector3 offsetPos = Quaternion.Euler(0, angle, 0f) * Vector3.forward * 5;
-            Vector3 noCollisionPos = player.transform.position + offsetPos;
+            Vector3 waitPos = player.transform.position + offsetPos;
 
-            if (!usedPositions.Contains(noCollisionPos))
+            if (!usedWaitPositions.ContainsValue(waitPos))
             {
-                usedPositions.Add(noCollisionPos);
-                return noCollisionPos;
+                usedWaitPositions[enemy] = waitPos;
+                return waitPos;
             }
         }
 
@@ -161,7 +200,7 @@ public class EnemyArea : MonoBehaviour
         return fallBackPos;
     }
 
-    private Vector3 GetAttackPosition()
+    private Vector3 GetAttackPosition(EnemyBase enemy)
     {
         int positions = 3;
 
@@ -172,9 +211,9 @@ public class EnemyArea : MonoBehaviour
             Vector3 offset = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * 2f;
             Vector3 attackPos = player.transform.position + offset;
 
-            if (!usedAttackPositions.Contains(attackPos))
+            if (!usedWaitPositions.ContainsValue(attackPos))
             {
-                usedAttackPositions.Add(attackPos);
+                usedWaitPositions[enemy] = attackPos;
                 return attackPos;
             }
         }
@@ -190,26 +229,6 @@ public class EnemyArea : MonoBehaviour
     public int GetTotalAttackingEnemies()
     {
         return attackingEnemies.Count;
-    }
-
-    public void QueryAttack(EnemyBase enemy)
-    {
-        attackQueue.Add(enemy);
-    }
-
-    public void QueryAttackPos(EnemyBase enemy)
-    {
-        if (enemy.lastAssignedPos != null)
-        {
-            usedPositions.Remove(enemy.lastAssignedPos);
-        }
-
-        if (enemy.lastAttackPos != null)
-        {
-            usedAttackPositions.Remove(enemy.lastAttackPos);
-        }
-
-        attackPosQueue.Add(enemy);
     }
 
     public void RemoveAttackingEnemy(EnemyBase enemy)
@@ -228,7 +247,6 @@ public class EnemyArea : MonoBehaviour
             enemy.ChangeState(State.Chase);
         }
     }
-
 
     private void OnTriggerEnter(Collider other)
     {

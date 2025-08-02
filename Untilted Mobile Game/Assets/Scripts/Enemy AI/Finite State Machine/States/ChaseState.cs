@@ -10,7 +10,7 @@ public class ChaseState : EnemyState
     public override void Enter()
     {
         Enter_SetChaseSettings();
-        Enter_GetChasePosition();
+        enemy.QueryWaitPosition();
     }
 
     #region ENTER
@@ -25,24 +25,29 @@ public class ChaseState : EnemyState
         transitionedToQueue = false;
     }
 
-    private void Enter_GetChasePosition()
-    {
-        enemy.QueryWaitPosition();
-    }
-
     #endregion ENTER
 
     public override void Update()
+    {
+        Update_MoveToWaitPos();
+
+        Update_OnArriveToDestination();
+
+        enemy.currentState = State.Chase;
+
+    }
+
+    #region UPDATE
+
+    private void Update_MoveToWaitPos()
     {
         if (enemy.waitingPos != Vector3.zero)
         {
             enemy.agent.destination = enemy.waitingPos;
         }
-
-        OnArriveToDestination();
     }
 
-    private void OnArriveToDestination()
+    private void Update_OnArriveToDestination()
     {
         float distance = Vector3.Distance(enemy.transform.position, enemy.waitingPos);
 
@@ -58,6 +63,8 @@ public class ChaseState : EnemyState
         transitionedToQueue = true;
         enemy.ChangeState(State.OnQueue);
     }
+
+    #endregion UPDATE
 
     public override void Exit()
     {
