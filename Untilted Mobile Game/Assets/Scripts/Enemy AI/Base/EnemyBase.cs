@@ -179,6 +179,8 @@ namespace EnemyAI
 
         public void QueryAttack()
         {
+            if (attackCooldown) return;
+
             enemyArea.QueryAttackState(this);
         }
 
@@ -192,6 +194,11 @@ namespace EnemyAI
             attackPos = position;
         }
 
+        public void RemoveAttackPos()
+        {
+            enemyArea.RemoveAttackPos(this);
+        }
+
         public void RemoveFromAttackList()
         {
             enemyArea.RemoveAttackingEnemy(this);
@@ -200,6 +207,8 @@ namespace EnemyAI
         public void RunAttackCooldown()
         {
             attackCooldown = true;
+
+            Invoke(nameof(DisableAttackCooldown), 6f);
         }
 
         private void DisableAttackCooldown()

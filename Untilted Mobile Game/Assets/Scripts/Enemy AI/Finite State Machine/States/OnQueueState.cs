@@ -12,6 +12,7 @@ public class OnQueueState : EnemyState
     {
         Enter_ResetRotation();
         enemy.QueryAttack();
+        enemy.QueryWaitPosition();
         timer = timeBeforeMoving;
     }
 
@@ -52,6 +53,7 @@ public class OnQueueState : EnemyState
         if (timer <= 0)
         {
             timer = timeBeforeMoving;
+            enemy.QueryAttack();
             enemy.QueryWaitPosition();
         }
     }

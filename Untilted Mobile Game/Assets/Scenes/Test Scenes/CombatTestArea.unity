@@ -759,11 +759,8 @@ MonoBehaviour:
   - {fileID: 7993994855593321819, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
   - {fileID: 7993994855593321819, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
   - {fileID: 7993994855593321819, guid: 92d88865c5d775d4a8c1531d6bb9c5a7, type: 3}
-  - {fileID: 7993994855593321819, guid: 87fea4ec13c01e6498befac9d39450aa, type: 3}
-  - {fileID: 7993994855593321819, guid: 92d88865c5d775d4a8c1531d6bb9c5a7, type: 3}
   spawnOrigin: {fileID: 1453160737}
   areaRadius: 10
-  usedAttackPositions: []
   attackingEnemies: []
 --- !u!43 &614375513
 Mesh:

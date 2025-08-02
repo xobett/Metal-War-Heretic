@@ -17,6 +17,9 @@ public class AttackState : EnemyState
     {
         Enter_SetAttackSettings();
         Enter_SetTimerSettings();
+        enemy.QueryAttackPosition();
+        attackNavTimer = maxAttackTime;
+        transitionedToQueue = false;
     }
 
     #region ENTER
@@ -37,6 +40,9 @@ public class AttackState : EnemyState
     {
         Update_MoveToAttackPos();
 
+        Update_RunAttackTimer();
+        Update_HandleAttackTime();
+
         enemy.currentState = State.Attack;
     }
 
@@ -54,6 +60,13 @@ public class AttackState : EnemyState
     {
         attackTimer -= Time.deltaTime;
     }
+    private void Update_HandleAttackTime()
+    {
+        if (attackTimer <= 0)
+        {
+            TransitionToQueue();
+        }
+    }
 
     private void Update_RunNavigationTimer()
     {
@@ -69,13 +82,6 @@ public class AttackState : EnemyState
         }
     } 
 
-    private void Update_HandleAttackTime()
-    {
-        if (attackTimer <= 0)
-        {
-            TransitionToQueue();
-        }
-    }
 
     private void TransitionToQueue()
     {
@@ -88,6 +94,7 @@ public class AttackState : EnemyState
 
     public override void Exit()
     {
+        Debug.Log($"{enemy.gameObject.name} exit attack state");
         Exit_ResetSettings();
         Exit_FinishAttack();
     }
@@ -103,9 +110,8 @@ public class AttackState : EnemyState
     private void Exit_FinishAttack()
     {
         enemy.RunAttackCooldown();
+        enemy.RemoveAttackPos();
         enemy.RemoveFromAttackList();
-        enemy.waitPosQueried = false;
-
     }
     #endregion EXIT
 

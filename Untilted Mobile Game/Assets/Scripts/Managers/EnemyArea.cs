@@ -96,10 +96,8 @@ public class EnemyArea : MonoBehaviour
 
     private void OnQuery_RemoveUsedPositions(EnemyBase enemy)
     {
-        if (usedWaitPositions.ContainsKey(enemy))
-        {
-            usedWaitPositions.Remove(enemy);
-        }
+        RemoveWaitPos(enemy);
+        RemoveAttackPos(enemy);
     }
 
     public void RemoveWaitPos(EnemyBase enemy)
@@ -107,6 +105,19 @@ public class EnemyArea : MonoBehaviour
         if (usedWaitPositions.ContainsKey(enemy))
         {
             usedWaitPositions.Remove(enemy);
+        }
+
+        if (getWaitPositionQueue.Contains(enemy))
+        {
+            Debug.Log($"{enemy.gameObject.name} is still on queue");
+        }
+    }
+
+    public void RemoveAttackPos(EnemyBase enemy)
+    {
+        if (usedAttackPositions.ContainsKey(enemy))
+        {
+            usedAttackPositions.Remove(enemy);
         }
     }
 
@@ -211,9 +222,9 @@ public class EnemyArea : MonoBehaviour
             Vector3 offset = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * 2f;
             Vector3 attackPos = player.transform.position + offset;
 
-            if (!usedWaitPositions.ContainsValue(attackPos))
+            if (!usedAttackPositions.ContainsValue(attackPos))
             {
-                usedWaitPositions[enemy] = attackPos;
+                usedAttackPositions[enemy] = attackPos;
                 return attackPos;
             }
         }
