@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseDifuse:
-        m_Texture: {fileID: 2800000, guid: 8573f3c777452ae428c04bc0ad2c0fa8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseDifuse_1:
@@ -33,7 +33,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseNormal:
-        m_Texture: {fileID: 2800000, guid: 169d85a1f53325e4597f14b7c2dc4b9c, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseNormal_1:
@@ -41,15 +41,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseRoughness:
-        m_Texture: {fileID: 2800000, guid: dda3751183cb0ac47bf9b70911d4138b, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseRoughness_1:
-        m_Texture: {fileID: 2800000, guid: dda3751183cb0ac47bf9b70911d4138b, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HeighBlendMap:
-        m_Texture: {fileID: 2800000, guid: 8573f3c777452ae428c04bc0ad2c0fa8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Texture2D:
@@ -100,7 +100,7 @@ Material:
     m_Floats:
     - _BaseTextureSize: 0.5
     - _BlendAmount: 1
-    - _HeightBlendMapSize: 1
+    - _HeightBlendMapSize: 0.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RedTextureSize: 0.5
