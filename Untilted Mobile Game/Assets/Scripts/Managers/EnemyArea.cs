@@ -16,15 +16,14 @@ public class EnemyArea : MonoBehaviour
     [SerializeField] private List<EnemyBase> attackingEnemies = new List<EnemyBase>();
 
     //QUEUES
-    private List<EnemyBase> getWaitPositionQueue = new List<EnemyBase>();
-    private List<EnemyBase> getAttackPositionQueue = new List<EnemyBase>();
-    private List<EnemyBase> getAttackStateQueue = new List<EnemyBase>();
+    [SerializeField] private List<EnemyBase> getWaitPositionQueue = new List<EnemyBase>();
+    [SerializeField] private List<EnemyBase> getAttackPositionQueue = new List<EnemyBase>();
+    [SerializeField] private List<EnemyBase> getAttackStateQueue = new List<EnemyBase>();
 
+    private Dictionary<EnemyBase, Vector3> usedWaitPositions = new Dictionary<EnemyBase, Vector3>();
+    private Dictionary<EnemyBase, Vector3> usedAttackPositions = new Dictionary<EnemyBase, Vector3>();
 
-    [SerializeField] private Dictionary<EnemyBase, Vector3> usedWaitPositions = new Dictionary<EnemyBase, Vector3>();
-    [SerializeField] private Dictionary<EnemyBase, Vector3> usedAttackPositions = new Dictionary<EnemyBase, Vector3>();
-
-    private const float waitPositionDistance = 4.0f;
+    private const float waitPositionDistance = 6.0f;
 
     private GameObject player;
 
@@ -109,7 +108,7 @@ public class EnemyArea : MonoBehaviour
 
         if (getWaitPositionQueue.Contains(enemy))
         {
-            Debug.Log($"{enemy.gameObject.name} is still on queue");
+            getWaitPositionQueue.Remove(enemy);
         }
     }
 
@@ -118,6 +117,11 @@ public class EnemyArea : MonoBehaviour
         if (usedAttackPositions.ContainsKey(enemy))
         {
             usedAttackPositions.Remove(enemy);
+        }
+
+        if (getAttackPositionQueue.Contains(enemy))
+        {
+            getAttackPositionQueue.Remove(enemy);
         }
     }
 
@@ -134,16 +138,6 @@ public class EnemyArea : MonoBehaviour
     private IEnumerator CR_QueriesHandler()
     {
         yield return new WaitForSeconds(1f);
-
-        if (getWaitPositionQueue.Count != 0)
-        {
-            for (int i = getWaitPositionQueue.Count - 1; i >= 0; i--)
-            {
-                Vector3 pos = GetWaitingPosition(getWaitPositionQueue[i]);
-                getWaitPositionQueue[i].SetWaitPosition(pos);
-                getWaitPositionQueue.RemoveAt(i);
-            }
-        }
 
         if (getAttackStateQueue.Count != 0)
         {
@@ -170,6 +164,16 @@ public class EnemyArea : MonoBehaviour
             }
         }
 
+        if (getWaitPositionQueue.Count != 0)
+        {
+            for (int i = getWaitPositionQueue.Count - 1; i >= 0; i--)
+            {
+                Vector3 pos = GetWaitingPosition(getWaitPositionQueue[i]);
+                getWaitPositionQueue[i].SetWaitPosition(pos);
+                getWaitPositionQueue.RemoveAt(i);
+            }
+        }
+
         StartCoroutine(CR_QueriesHandler());
     }
 
@@ -187,7 +191,7 @@ public class EnemyArea : MonoBehaviour
 
     private Vector3 GetWaitingPosition(EnemyBase enemy)
     {
-        int positions = enemiesToSpawn.Length;
+        int positions = attackingEnemies.Count == 3 ? enemiesToSpawn.Length - 3 : enemiesToSpawn.Length;
 
         for (int i = 0; i < positions; i++)
         {

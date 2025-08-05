@@ -5,7 +5,7 @@ public class MeleeAttack : MonoBehaviour
 {
     private Animator animator;
 
-    private CameraFollow playerCam;
+    private CameraFollowPH playerCam;
 
     [Header("ATTACK BUTTON")]
     [SerializeField] private Button attackButton;
@@ -134,7 +134,7 @@ public class MeleeAttack : MonoBehaviour
 
     private void GetReferences()
     {
-        playerCam = Camera.main.GetComponent<CameraFollow>();
+        playerCam = Camera.main.GetComponent<CameraFollowPH>();
         animator = GetComponentInChildren<Animator>();
         attackButton = GameObject.FindGameObjectWithTag("Attack Button").GetComponent<Button>();
     }

@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem.XR.Haptics;
 
 namespace EnemyAI
 {
@@ -149,6 +148,15 @@ namespace EnemyAI
         public void OnDamage(float damage)
         {
             GetComponent<Health>().TakeDamage(damage);
+
+            switch (currentState)
+            {
+                case State.Attack:
+                    {
+                        Debug.Log("Damaged while being in attack");
+                        break;
+                    }
+            }
         }
 
         #endregion ON DAMAGE AND DESTROY

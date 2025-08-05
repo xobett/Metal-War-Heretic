@@ -6,14 +6,13 @@ public class OnQueueState : EnemyState
     public OnQueueState(EnemyBase enemy) : base(enemy) { }
 
     private float timer;
-    private const float timeBeforeMoving = 10f;
+    private const float timeBeforeMoving = 5f;
 
     public override void Enter()
     {
         Enter_ResetRotation();
-        enemy.QueryAttack();
-        enemy.QueryWaitPosition();
         timer = timeBeforeMoving;
+        enemy.QueryWaitPosition();
     }
 
     #region ENTER
@@ -53,9 +52,14 @@ public class OnQueueState : EnemyState
         if (timer <= 0)
         {
             timer = timeBeforeMoving;
-            enemy.QueryAttack();
-            enemy.QueryWaitPosition();
+            RunQueries();
         }
+    }
+
+    private void RunQueries()
+    {
+        enemy.QueryAttack();
+        enemy.QueryWaitPosition();
     }
 
     #endregion UPDATE

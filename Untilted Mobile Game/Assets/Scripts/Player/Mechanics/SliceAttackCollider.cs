@@ -5,11 +5,11 @@ public class SliceAttackCollider : MonoBehaviour
     [Header("SLICE ATTACK SETTINGS")]
     [SerializeField] private float sliceDamage;
 
-    private CameraFollow playerCam;
+    private CameraFollowPH playerCam;
 
     private void Start()
     {
-        playerCam = Camera.main.GetComponent<CameraFollow>();
+        playerCam = Camera.main.GetComponent<CameraFollowPH>();
     }
 
     private void OnTriggerEnter(Collider other)
