@@ -150,13 +150,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
   m_Name: LiftGammaGain
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   lift:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: -0.0053640045}
   gamma:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 1, z: 1, w: 0.18934911}
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0.9426004, z: 0.94602245, w: 0.10918879}
   gain:
     m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: -0.037735607}
@@ -337,13 +337,13 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.43
+    m_Value: 3.09
   intensity:
     m_OverrideState: 1
-    m_Value: 1.8
+    m_Value: 0.6
   scatter:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 0.78
   clamp:
     m_OverrideState: 0
     m_Value: 65472
@@ -506,7 +506,7 @@ MonoBehaviour:
   master:
     m_OverrideState: 1
     m_Value:
-      <length>k__BackingField: 3
+      <length>k__BackingField: 2
       m_Loop: 0
       m_ZeroValue: 0
       m_Range: 1
