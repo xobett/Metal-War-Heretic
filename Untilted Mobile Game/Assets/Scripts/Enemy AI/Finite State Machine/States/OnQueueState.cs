@@ -56,10 +56,19 @@ public class OnQueueState : EnemyState
         }
     }
 
+    private bool entered = false;
+
     private void RunQueries()
     {
         enemy.QueryAttack();
-        enemy.QueryWaitPosition();
+
+        if (enemy.AttackPositionsAssigned)
+        {
+            if (enemy.UpdatedPosition) return;
+            enemy.UpdatedPosition = true;
+            Debug.Log("Enter here");
+            enemy.QueryWaitPosition();
+        }
     }
 
     #endregion UPDATE

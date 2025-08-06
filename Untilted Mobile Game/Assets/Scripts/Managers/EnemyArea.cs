@@ -23,7 +23,7 @@ public class EnemyArea : MonoBehaviour
     private Dictionary<EnemyBase, Vector3> usedWaitPositions = new Dictionary<EnemyBase, Vector3>();
     private Dictionary<EnemyBase, Vector3> usedAttackPositions = new Dictionary<EnemyBase, Vector3>();
 
-    private const float waitPositionDistance = 6.0f;
+    private const float waitPositionDistance = 9.0f;
 
     private GameObject player;
 
@@ -74,9 +74,20 @@ public class EnemyArea : MonoBehaviour
 
     #region AREA
 
+    public int UsedAttackPosCount => usedAttackPositions.Count;
+
+    public void ResetUpdatePositionValue()
+    {
+        foreach (EnemyBase enemy in aliveEnemies)
+        {
+            enemy.UpdatedPosition = false;
+        }
+    }
+
     #region QUERIES
     public void QueryAttackState(EnemyBase enemy)
     {
+        if (getAttackStateQueue.Contains(enemy)) return;
         getAttackStateQueue.Add(enemy);
     }
 
@@ -84,7 +95,6 @@ public class EnemyArea : MonoBehaviour
     {
         OnQuery_RemoveUsedPositions(enemy);
         getWaitPositionQueue.Add(enemy);
-        Debug.Log($"{enemy.gameObject.name} queried");
     }
 
     public void QueryAttackPos(EnemyBase enemy)
@@ -133,7 +143,6 @@ public class EnemyArea : MonoBehaviour
             Debug.Log($"{kvp.Key.name} & {kvp.Value}");
         }
     }
-
 
     private IEnumerator CR_QueriesHandler()
     {
@@ -219,7 +228,7 @@ public class EnemyArea : MonoBehaviour
     {
         int positions = 3;
 
-        for (int i = 0 ; i < positions; i++)
+        for (int i = 0; i < positions; i++)
         {
             float angle = (360 / positions) * i;
 

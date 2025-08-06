@@ -21,13 +21,19 @@ public class Health : MonoBehaviour
 
     private void Start_GetReferences()
     {
-        lifebar = GameObject.FindGameObjectWithTag("Player Lifebar").GetComponentInChildren<Slider>();
+        if (gameObject.CompareTag("Player"))
+        {
+            lifebar = GameObject.FindGameObjectWithTag("Player Lifebar").GetComponentInChildren<Slider>();
+        }
+        else
+        {
+            lifebar = GetComponentInChildren<Slider>();
+        }
     }
 
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
-        Debug.Log($"Se ha recibido {damage} pts de daño. Vida actual = {CurrentHealth}");
 
         SetLifebarValue();
 

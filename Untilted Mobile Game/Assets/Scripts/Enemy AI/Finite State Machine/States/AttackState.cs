@@ -6,7 +6,7 @@ public class AttackState : EnemyState
     public AttackState(EnemyBase enemy) : base(enemy) { }
 
     private float attackTimer;
-    private const float maxAttackTime = 8f;
+    private const float maxAttackTime = 18f;
 
     private float attackNavTimer;
     private const float timeBeforeNavigating = 7f;
@@ -15,23 +15,23 @@ public class AttackState : EnemyState
 
     public override void Enter()
     {
-        Enter_SetAttackSettings();
         Enter_SetTimerSettings();
+        Enter_SetEnemySettings();
         enemy.QueryAttackPosition();
-        attackNavTimer = maxAttackTime;
+        ResetTimer();
         transitionedToQueue = false;
     }
 
     #region ENTER
 
-    private void Enter_SetAttackSettings()
-    {
-        //enemy.agent.avoidancePriority = 0;
-    }
-
     private void Enter_SetTimerSettings()
     {
         attackTimer = maxAttackTime;
+    }
+
+    private void Enter_SetEnemySettings()
+    {
+        enemy.agent.avoidancePriority = 0;
     }
 
     #endregion ENTER
@@ -47,6 +47,11 @@ public class AttackState : EnemyState
     }
 
     #region UPDATE
+
+    public void ResetTimer()
+    {
+        attackTimer = maxAttackTime;
+    }
 
     private void Update_MoveToAttackPos()
     {
@@ -78,7 +83,7 @@ public class AttackState : EnemyState
         if (attackNavTimer <= 0)
         {
             attackNavTimer = timeBeforeNavigating;
-            enemy.QueryAttackPosition();
+            enemy.Attack();
         }
     } 
 
@@ -112,6 +117,7 @@ public class AttackState : EnemyState
         enemy.RunAttackCooldown();
         enemy.RemoveAttackPos();
         enemy.RemoveFromAttackList();
+        enemy.ResetUpdatePositionValue();
     }
     #endregion EXIT
 

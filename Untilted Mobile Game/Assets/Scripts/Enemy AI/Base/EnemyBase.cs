@@ -11,7 +11,7 @@ namespace EnemyAI
         OnQueue,
         Attack
     }
-    
+
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Health))]
     public abstract class EnemyBase : MonoBehaviour, IDamageable
@@ -140,7 +140,14 @@ namespace EnemyAI
         {
             if (enemyArea == null) return;
 
-            if (isAttacking) enemyArea.RemoveAttackingEnemy(this);
+            switch (currentState)
+            {
+                case State.Attack:
+                    {
+
+                        break;
+                    }
+            }
 
             enemyArea.RemoveEnemyFromArea(this);
         }
@@ -153,7 +160,7 @@ namespace EnemyAI
             {
                 case State.Attack:
                     {
-                        Debug.Log("Damaged while being in attack");
+                        attackState.ResetTimer();
                         break;
                     }
             }
@@ -168,12 +175,18 @@ namespace EnemyAI
             enemyArea = area;
         }
 
+        public bool AttackPositionsAssigned => enemyArea.UsedAttackPosCount == 3;
+        [SerializeField] public bool UpdatedPosition = false;
+
+        public void ResetUpdatePositionValue()
+        {
+            enemyArea.ResetUpdatePositionValue();
+        }
+
         public void QueryWaitPosition()
         {
             enemyArea.QueryWaitPosition(this);
         }
-
-        public bool waitPosQueried = false;
 
         public void SetWaitPosition(Vector3 assignedPosition)
         {

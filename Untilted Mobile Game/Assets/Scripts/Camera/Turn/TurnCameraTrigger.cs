@@ -8,7 +8,7 @@ public class TurnCameraTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Camera.main.GetComponent<CameraFollow>().TurnCamera(targetCameraRotation);
+            Camera.main.GetComponentInParent<CameraFollow>().TurnCamera(targetCameraRotation);
         }
     }
 }

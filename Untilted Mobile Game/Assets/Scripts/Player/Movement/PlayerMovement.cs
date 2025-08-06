@@ -57,7 +57,6 @@ public class PlayerMovement : MonoBehaviour
             if (inCombat)
             {
                 MeleeAssistMovement();
-                Debug.Log("In combat movement");
             }
             else
             {
@@ -80,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isWalking", true);
 
-            float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
+            float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref velocity, rotationSpeed);
 
             transform.rotation = Quaternion.Euler(0f, angle, 0f);

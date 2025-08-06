@@ -72,13 +72,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569119869429879493}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.3420201, y: -0, z: -0, w: 0.9396927}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8249547556372822626}
-  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &3965313558490273203
 Camera:
   m_ObjectHideFlags: 0
@@ -191,7 +191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1462311749157997363}
-  - component: {fileID: 8365865627577743655}
+  - component: {fileID: 6219462358336521716}
   m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
@@ -215,7 +215,7 @@ Transform:
   - {fileID: 8249547556372822626}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8365865627577743655
+--- !u!114 &6219462358336521716
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,8 +224,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 4822834743234512239}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c632b1fa4e261f4db2699c08755c7d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 4bf5f7af0f0199c4e99e53a90886e9d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetPosition: {x: 0, y: 6.3, z: -5.2}
-  followSpeed: 0
+  followTarget: {fileID: 0}
+  maxDistance: 4
+  cameraSensitivity: {x: 10, y: 10}
+  upLimit: 70
+  downLimit: -70
+  test: 0
+  whatIsCollision:
+    serializedVersion: 2
+    m_Bits: 0
+  nearPlaneSize: {x: 0, y: 0}
+  safeDistance: 0
