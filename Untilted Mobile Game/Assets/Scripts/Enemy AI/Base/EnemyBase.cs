@@ -132,6 +132,7 @@ namespace EnemyAI
         {
             fsm.Update();
             Rotation_Update();
+            Animator_Update();
         }
 
         #region ON DAMAGE AND DESTROY
@@ -144,7 +145,7 @@ namespace EnemyAI
             {
                 case State.Attack:
                     {
-
+                        RemoveFromAttackList();
                         break;
                     }
             }
@@ -225,7 +226,7 @@ namespace EnemyAI
             enemyArea.RemoveAttackingEnemy(this);
         }
 
-        public void RunAttackCooldown()
+        public void RunAttackStateCooldown()
         {
             attackCooldown = true;
 
@@ -240,6 +241,19 @@ namespace EnemyAI
         #endregion ENEMY AREA
 
         #region ATTACK
+
+        public bool attacked = false;
+
+        public void RunAttackCooldown()
+        {
+            Invoke(nameof(DisableCooldown), Random.Range(5f, 10f));
+        }
+
+        private void DisableCooldown()
+        {
+            Debug.Log("Cooled down");
+            attacked = false;
+        }
 
         public void TriggerAttack()
         {

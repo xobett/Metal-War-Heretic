@@ -6,7 +6,7 @@ public class AttackState : EnemyState
     public AttackState(EnemyBase enemy) : base(enemy) { }
 
     private float attackTimer;
-    private const float maxAttackTime = 18f;
+    private const float maxAttackTime = 38f;
 
     private float attackNavTimer;
     private const float timeBeforeNavigating = 7f;
@@ -40,8 +40,10 @@ public class AttackState : EnemyState
     {
         Update_MoveToAttackPos();
 
-        Update_RunAttackTimer();
-        Update_HandleAttackTime();
+        //Update_RunAttackTimer();
+        //Update_HandleAttackTime();
+
+        HandleOnArrive();
 
         enemy.currentState = State.Attack;
     }
@@ -58,6 +60,17 @@ public class AttackState : EnemyState
         if (enemy.attackPos != Vector3.zero)
         {
             enemy.agent.destination = enemy.attackPos;
+        }
+    }
+
+    private void HandleOnArrive()
+    {
+        if (Vector3.Distance(enemy.transform.position, enemy.attackPos) < 0.2f)
+        {
+            if (enemy.attacked) return;
+            enemy.attacked = true;
+            enemy.Attack();
+            enemy.RunAttackCooldown();
         }
     }
 
@@ -114,7 +127,7 @@ public class AttackState : EnemyState
 
     private void Exit_FinishAttack()
     {
-        enemy.RunAttackCooldown();
+        enemy.RunAttackStateCooldown();
         enemy.RemoveAttackPos();
         enemy.RemoveFromAttackList();
         enemy.ResetUpdatePositionValue();

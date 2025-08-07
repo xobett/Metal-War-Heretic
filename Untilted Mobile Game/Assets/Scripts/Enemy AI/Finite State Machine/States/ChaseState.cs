@@ -7,10 +7,12 @@ public class ChaseState : EnemyState
 
     private bool transitionedToQueue = false;
 
+    private GameObject player;
+
     public override void Enter()
     {
+        player = Player.Instance.gameObject;
         Enter_SetChaseSettings();
-        enemy.QueryWaitPosition();
     }
 
     #region ENTER
@@ -41,17 +43,14 @@ public class ChaseState : EnemyState
 
     private void Update_MoveToWaitPos()
     {
-        if (enemy.waitingPos != Vector3.zero)
-        {
-            enemy.agent.destination = enemy.waitingPos;
-        }
+        enemy.agent.destination = player.transform.position;
     }
 
     private void Update_OnArriveToDestination()
     {
-        float distance = Vector3.Distance(enemy.transform.position, enemy.waitingPos);
+        float distance = Vector3.Distance(enemy.transform.position, player.transform.position);
 
-        if (distance < 0.2f)
+        if (distance < 3f)
         {
             TransitionToAttackQueue();
         }
@@ -61,6 +60,8 @@ public class ChaseState : EnemyState
     {
         if (transitionedToQueue) return;
         transitionedToQueue = true;
+
+        enemy.agent.destination = enemy.transform.position;
         enemy.ChangeState(State.OnQueue);
     }
 

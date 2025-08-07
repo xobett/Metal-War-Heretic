@@ -56,8 +56,6 @@ public class OnQueueState : EnemyState
         }
     }
 
-    private bool entered = false;
-
     private void RunQueries()
     {
         enemy.QueryAttack();
@@ -66,7 +64,6 @@ public class OnQueueState : EnemyState
         {
             if (enemy.UpdatedPosition) return;
             enemy.UpdatedPosition = true;
-            Debug.Log("Enter here");
             enemy.QueryWaitPosition();
         }
     }

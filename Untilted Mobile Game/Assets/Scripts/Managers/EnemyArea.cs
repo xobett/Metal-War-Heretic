@@ -25,21 +25,17 @@ public class EnemyArea : MonoBehaviour
 
     private const float waitPositionDistance = 9.0f;
 
-    private GameObject player;
+    private Vector3 playerPos;
+
+    private bool enteredArea = false;
 
     private void Start()
     {
-        Start_GetReferences();
         Start_SpawnEnemies();
         Start_RunQueriesHandler();
     }
 
     #region START
-
-    private void Start_GetReferences()
-    {
-        player = Player.Instance.gameObject;
-    }
 
     private void Start_SpawnEnemies()
     {
@@ -148,6 +144,8 @@ public class EnemyArea : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
 
+        playerPos = Player.Instance.gameObject.transform.position;
+
         if (getAttackStateQueue.Count != 0)
         {
             for (int i = getAttackStateQueue.Count - 1; i >= 0; i--)
@@ -206,8 +204,8 @@ public class EnemyArea : MonoBehaviour
         {
             float angle = (360f / positions) * i;
 
-            Vector3 offsetPos = Quaternion.Euler(0, angle, 0f) * Vector3.forward * 5;
-            Vector3 waitPos = player.transform.position + offsetPos;
+            Vector3 offsetPos = Quaternion.Euler(0, angle, 0f) * Vector3.forward * 6f;
+            Vector3 waitPos = playerPos + offsetPos;
 
             if (!usedWaitPositions.ContainsValue(waitPos))
             {
@@ -219,7 +217,7 @@ public class EnemyArea : MonoBehaviour
         float incrementedDistance = waitPositionDistance + Random.Range(7f, 9f);
         float fallbackAngle = (360f / positions * 2) * Random.Range(1, (positions * 2) + 1);
         Vector3 fallBackPos = Quaternion.Euler(0f, fallbackAngle, 0) * Vector3.forward * incrementedDistance;
-        fallBackPos = player.transform.position + fallBackPos;
+        fallBackPos = playerPos + fallBackPos;
 
         return fallBackPos;
     }
@@ -232,8 +230,9 @@ public class EnemyArea : MonoBehaviour
         {
             float angle = (360 / positions) * i;
 
-            Vector3 offset = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * 2f;
-            Vector3 attackPos = player.transform.position + offset;
+            Vector3 offset = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * enemy.stoppingDistance;
+            //Make a variable that holds info of all the enemies positions
+            Vector3 attackPos = playerPos + offset;
 
             if (!usedAttackPositions.ContainsValue(attackPos))
             {
@@ -242,7 +241,7 @@ public class EnemyArea : MonoBehaviour
             }
         }
 
-        Vector3 fallback = player.transform.right * 2f;
+        Vector3 fallback = playerPos * 2f;
         return fallback;
     }
 
@@ -276,6 +275,9 @@ public class EnemyArea : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (enteredArea) return;
+            enteredArea = true;
+
             OnTrigger_AttackPlayer();
         }
     }
