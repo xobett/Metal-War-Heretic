@@ -576,15 +576,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 234bab64c88d5d64f97b39abee885bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentState: 0
+  attackStateCooldown: 0
   agent: {fileID: 0}
   walkSpeed: 7
   runSpeed: 8
   stoppingDistance: 2
   waitingPos: {x: 0, y: 0, z: 0}
-  lastAssignedPos: {x: 0, y: 0, z: 0}
+  attackPos: {x: 0, y: 0, z: 0}
+  UpdatedPosition: 0
   player: {fileID: 0}
   damage: 20
   timeBeforeAttack: 0
+  attackCooldown: 0
+  score: 150
+  ableToFace: 0
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -47,6 +46,11 @@ public class TrainWagon : MonoBehaviour
             manager.ResetWagon(this.gameObject);
 
             if (gameObject.name == "End Wagon") manager.SpawnTrain();
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            other.GetComponent<Health>().TakeDamage(100);
         }
     }
 

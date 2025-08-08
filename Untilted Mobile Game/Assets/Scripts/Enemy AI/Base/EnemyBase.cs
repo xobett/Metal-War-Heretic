@@ -63,6 +63,8 @@ namespace EnemyAI
 
         public bool attackCooldown = false;
 
+        [SerializeField] private int score;
+
         #endregion ATTACK
 
         #region ROTATION
@@ -155,6 +157,7 @@ namespace EnemyAI
             }
 
             enemyArea.RemoveEnemyFromArea(this);
+            GameManager.Instance.IncreaseScore(score);
         }
 
         public void OnDamage(float damage)

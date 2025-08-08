@@ -1000,6 +1000,7 @@ MonoBehaviour:
   damage: 5
   timeBeforeAttack: 0
   attackCooldown: 0
+  score: 250
   ableToFace: 1
   colliders:
   - {fileID: 560008674519117305}

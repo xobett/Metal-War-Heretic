@@ -473,19 +473,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  attackCooldown: 0
+  attackStateCooldown: 0
   agent: {fileID: 0}
   walkSpeed: 7
   runSpeed: 8
   stoppingDistance: 4.5
   waitingPos: {x: 0, y: 0, z: 0}
   attackPos: {x: 0, y: 0, z: 0}
+  UpdatedPosition: 0
   player: {fileID: 0}
   damage: 90
   timeBeforeAttack: 1
+  attackCooldown: 0
+  score: 200
   ableToFace: 0
-  UpdatedPosition: 0
-  attacked: 0
   distanceAttackPf: {fileID: 5543527526403652520, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
   spawnPoint: {fileID: 2194113442272978875}
   distanceAttackSpeed: 7
@@ -496,6 +497,7 @@ MonoBehaviour:
   electricAreaLifetime: 5
   electricAreaDamage: 20
   electricAttackCooldownTime: 10
+  electricAttackCoolingDown: 0
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0
