@@ -46,7 +46,6 @@ public class Health : MonoBehaviour
     public void SetHealth(float health)
     {
         CurrentHealth += health;
-        Debug.Log($"Se ha recibido {health} pts de vida. Vida actual = {CurrentHealth}");
         
         SetLifebarValue();
     }

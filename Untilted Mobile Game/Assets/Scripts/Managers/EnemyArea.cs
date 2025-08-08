@@ -7,6 +7,7 @@ public class EnemyArea : MonoBehaviour
 {
     [Header("AREA ENEMY SETTINGS")]
     [SerializeField] private GameObject[] enemiesToSpawn;
+    [SerializeField] private GameObject vfxEnemySpawn;
 
     [Header("SPAWN SETTINGS")]
     [SerializeField] private Transform spawnOrigin;
@@ -25,6 +26,8 @@ public class EnemyArea : MonoBehaviour
 
     private const float waitPositionDistance = 9.0f;
 
+    private float[] enemiesDistances = { 2f, 4.5f, 2.5f };
+
     private Vector3 playerPos;
 
     private bool enteredArea = false;
@@ -41,9 +44,15 @@ public class EnemyArea : MonoBehaviour
     {
         for (int i = 0; i < enemiesToSpawn.Length; i++)
         {
-            GameObject enemy = Instantiate(enemiesToSpawn[i], GetRandomSpawnPos(), Quaternion.identity);
+            Vector3 spawnPos = GetRandomSpawnPos();
+
+            GameObject vfx = Instantiate(vfxEnemySpawn, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
+            Destroy(vfx, 1.5f);
+            GameObject enemy = Instantiate(enemiesToSpawn[i], spawnPos, Quaternion.identity);
+
             AddEnemyToArea(enemy.GetComponent<EnemyBase>());
             enemy.GetComponent<EnemyBase>().AssignArea(this);
+
             enemy.transform.parent = transform.GetChild(0);
             enemy.name = enemiesToSpawn[i].name + $" {i}";
         }
@@ -132,6 +141,15 @@ public class EnemyArea : MonoBehaviour
     }
 
     [ContextMenu("Print Wait Positions")]
+    private void Debug_PrintAttackPositions()
+    {
+        foreach (var kvp in usedWaitPositions)
+        {
+            Debug.Log($"{kvp.Key.name} & {kvp.Value}");
+        }
+    }
+
+    [ContextMenu("Print Attack Positions")]
     private void Debug_PrintWaitPositions()
     {
         foreach (var kvp in usedWaitPositions)
@@ -142,7 +160,7 @@ public class EnemyArea : MonoBehaviour
 
     private IEnumerator CR_QueriesHandler()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.7f);
 
         playerPos = Player.Instance.gameObject.transform.position;
 
@@ -204,7 +222,7 @@ public class EnemyArea : MonoBehaviour
         {
             float angle = (360f / positions) * i;
 
-            Vector3 offsetPos = Quaternion.Euler(0, angle, 0f) * Vector3.forward * 6f;
+            Vector3 offsetPos = Quaternion.Euler(0, angle, 0f) * Vector3.forward * 8f;
             Vector3 waitPos = playerPos + offsetPos;
 
             if (!usedWaitPositions.ContainsValue(waitPos))
@@ -230,8 +248,8 @@ public class EnemyArea : MonoBehaviour
         {
             float angle = (360 / positions) * i;
 
-            Vector3 offset = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * enemy.stoppingDistance;
             //Make a variable that holds info of all the enemies positions
+            Vector3 offset = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * enemy.stoppingDistance;
             Vector3 attackPos = playerPos + offset;
 
             if (!usedAttackPositions.ContainsValue(attackPos))

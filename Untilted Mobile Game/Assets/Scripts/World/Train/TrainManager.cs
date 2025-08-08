@@ -1,0 +1,81 @@
+using System.Collections;
+using UnityEngine;
+
+public class TrainManager : MonoBehaviour
+{
+    [Header("START AND END POINTS")]
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Transform endPoint;
+
+    Vector3 debugCubeSize = new Vector3(2.5f, 3f, 1f);
+
+    [Header("TRAIN SETTINGS")]
+    private const float speed = 50f;
+    private GameObject trainGo;
+
+    private void Start()
+    {
+        Start_GetReferences();
+        Start_ResetTrain();
+    }
+
+    #region START
+
+    private void Start_GetReferences()
+    {
+        trainGo = transform.GetChild(0).gameObject;
+    }
+
+    private void Start_ResetTrain()
+    {
+        for (int i = 0; i < trainGo.transform.childCount; i++)
+        {
+            trainGo.transform.GetChild(i).gameObject.SetActive(false);
+            trainGo.transform.GetChild(i).gameObject.GetComponent<TrainWagon>().speed = speed;
+            trainGo.transform.position = startPoint.position;
+        }
+
+        StartCoroutine(CRSpawnTrain());
+    }
+
+    #endregion START
+
+    public void ResetWagon(GameObject wagon)
+    {
+        wagon.SetActive(false);
+        wagon.transform.position = startPoint.position;
+    }
+
+    public void RespawnTrain()
+    {
+        StartCoroutine(CRSpawnTrain());
+    }
+
+    private IEnumerator CRSpawnTrain()
+    {
+        yield return new WaitForSeconds(1f);
+
+        for (int i = 0; i < trainGo.transform.childCount; i++)
+        {
+            trainGo.transform.GetChild(i).gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        yield break;
+    }
+
+    #region VISUAL DEBUG
+
+    private void OnDrawGizmos()
+    {
+        if (startPoint != null && endPoint != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawCube(startPoint.position + new Vector3(0f, 1.5f, 0f), debugCubeSize);
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(endPoint.position + new Vector3(0f, 1.5f, 0f), debugCubeSize);
+        }
+    }
+
+    #endregion VISUAL DEBUG
+}

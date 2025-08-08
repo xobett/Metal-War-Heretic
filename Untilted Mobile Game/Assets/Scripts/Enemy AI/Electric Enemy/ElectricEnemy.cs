@@ -31,7 +31,7 @@ namespace EnemyAI.ElectricEnemy
         private Vector3 electricAreaSpawnPos;
 
         [SerializeField, Range(1f, 10f)] private int electricAttackCooldownTime;
-        private bool electricAttackCoolingDown;
+        [SerializeField] private bool electricAttackCoolingDown;
 
         public override void Attack()
         {
@@ -68,10 +68,10 @@ namespace EnemyAI.ElectricEnemy
 
         private void RunCooldown()
         {
-            Invoke(nameof(DisableCooldown), electricAttackCooldownTime);
+            Invoke(nameof(DisableCooldownPH), electricAttackCooldownTime);
         }
 
-        private void DisableCooldown()
+        private void DisableCooldownPH()
         {
             electricAttackCoolingDown = false;
         }

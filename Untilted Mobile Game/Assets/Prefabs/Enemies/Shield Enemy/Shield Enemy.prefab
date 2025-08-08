@@ -987,16 +987,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc08246131368d04daef84a58c951522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyState: 0
+  currentState: 0
+  attackCooldown: 0
+  agent: {fileID: 0}
   walkSpeed: 1.5
-  stoppingDistance: 3.9
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 512
-  playerDetectionRadius: 2.6
+  runSpeed: 2.5
+  stoppingDistance: 2.5
+  waitingPos: {x: 0, y: 0, z: 0}
+  attackPos: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
   damage: 5
   timeBeforeAttack: 0
   ableToFace: 1
+  UpdatedPosition: 0
+  attacked: 0
   colliders:
   - {fileID: 560008674519117305}
   - {fileID: 3234478128477429545}

@@ -246,12 +246,11 @@ namespace EnemyAI
 
         public void RunAttackCooldown()
         {
-            Invoke(nameof(DisableCooldown), Random.Range(5f, 10f));
+            Invoke(nameof(DisableCooldown), 5f);
         }
 
         private void DisableCooldown()
         {
-            Debug.Log("Cooled down");
             attacked = false;
         }
 
@@ -328,7 +327,6 @@ namespace EnemyAI
         }
 
         #endregion ROTATION
-
 
         #region ANIMATOR
 

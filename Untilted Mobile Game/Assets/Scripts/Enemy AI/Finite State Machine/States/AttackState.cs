@@ -1,5 +1,5 @@
-using UnityEngine;
 using EnemyAI;
+using UnityEngine;
 
 public class AttackState : EnemyState
 {
@@ -9,16 +9,17 @@ public class AttackState : EnemyState
     private const float maxAttackTime = 38f;
 
     private float attackNavTimer;
-    private const float timeBeforeNavigating = 7f;
+    private float timeBeforeNavigating;
 
     private bool transitionedToQueue = false;
 
     public override void Enter()
     {
+        timeBeforeNavigating = Random.Range(1.3f, 2f);
+
         Enter_SetTimerSettings();
         Enter_SetEnemySettings();
         enemy.QueryAttackPosition();
-        ResetTimer();
         transitionedToQueue = false;
     }
 
@@ -43,6 +44,9 @@ public class AttackState : EnemyState
         //Update_RunAttackTimer();
         //Update_HandleAttackTime();
 
+        Update_RunNavigationTimer();
+        Update_HandleNavigationUpdate();
+
         HandleOnArrive();
 
         enemy.currentState = State.Attack;
@@ -53,6 +57,10 @@ public class AttackState : EnemyState
     public void ResetTimer()
     {
         attackTimer = maxAttackTime;
+        if (enemy.agent.isActiveAndEnabled)
+        {
+            enemy.agent.isStopped = true;
+        }
     }
 
     private void Update_MoveToAttackPos()
@@ -96,9 +104,10 @@ public class AttackState : EnemyState
         if (attackNavTimer <= 0)
         {
             attackNavTimer = timeBeforeNavigating;
-            enemy.Attack();
+            enemy.agent.isStopped = false;
+            enemy.QueryAttackPosition();
         }
-    } 
+    }
 
 
     private void TransitionToQueue()
@@ -132,6 +141,7 @@ public class AttackState : EnemyState
         enemy.RemoveFromAttackList();
         enemy.ResetUpdatePositionValue();
     }
+
     #endregion EXIT
 
 }
