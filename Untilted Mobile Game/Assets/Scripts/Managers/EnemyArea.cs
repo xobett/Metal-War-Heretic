@@ -9,6 +9,9 @@ public class EnemyArea : MonoBehaviour
     [SerializeField] private GameObject[] enemiesToSpawn;
     [SerializeField] private GameObject vfxEnemySpawn;
 
+    [Header("LOCKED DOOR SETTINGS")]
+    [SerializeField] private GameObject[] lockedDoors;
+
     [Header("SPAWN SETTINGS")]
     [SerializeField] private Transform spawnOrigin;
     [SerializeField] private float areaRadius = 10f;
@@ -89,6 +92,28 @@ public class EnemyArea : MonoBehaviour
         }
     }
 
+    #region DEBUG
+
+    [ContextMenu("Print Wait Positions")]
+    private void Debug_PrintAttackPositions()
+    {
+        foreach (var kvp in usedWaitPositions)
+        {
+            Debug.Log($"{kvp.Key.name} & {kvp.Value}");
+        }
+    }
+
+    [ContextMenu("Print Attack Positions")]
+    private void Debug_PrintWaitPositions()
+    {
+        foreach (var kvp in usedWaitPositions)
+        {
+            Debug.Log($"{kvp.Key.name} & {kvp.Value}");
+        }
+    }
+
+    #endregion DEBUG
+
     #region QUERIES
     public void QueryAttackState(EnemyBase enemy)
     {
@@ -140,23 +165,7 @@ public class EnemyArea : MonoBehaviour
         }
     }
 
-    [ContextMenu("Print Wait Positions")]
-    private void Debug_PrintAttackPositions()
-    {
-        foreach (var kvp in usedWaitPositions)
-        {
-            Debug.Log($"{kvp.Key.name} & {kvp.Value}");
-        }
-    }
-
-    [ContextMenu("Print Attack Positions")]
-    private void Debug_PrintWaitPositions()
-    {
-        foreach (var kvp in usedWaitPositions)
-        {
-            Debug.Log($"{kvp.Key.name} & {kvp.Value}");
-        }
-    }
+    #endregion QUERIES
 
     private IEnumerator CR_QueriesHandler()
     {
@@ -164,6 +173,46 @@ public class EnemyArea : MonoBehaviour
 
         playerPos = Player.Instance.gameObject.transform.position;
 
+        HandleAttackStateQueries();
+
+        HandleGetAttackPosQueries();
+
+        HandleGetWaitPosQueries();
+
+        StartCoroutine(CR_QueriesHandler());
+    }
+
+    #region QUERY HANDLERS
+
+    private void HandleGetWaitPosQueries()
+    {
+        if (getWaitPositionQueue.Count != 0)
+        {
+            for (int i = getWaitPositionQueue.Count - 1; i >= 0; i--)
+            {
+                Vector3 pos = GetWaitingPosition(getWaitPositionQueue[i]);
+                getWaitPositionQueue[i].SetWaitPosition(pos);
+                getWaitPositionQueue.RemoveAt(i);
+            }
+        }
+    }
+
+    private void HandleGetAttackPosQueries()
+    {
+        if (getAttackPositionQueue.Count != 0)
+        {
+            for (int i = getAttackPositionQueue.Count - 1; i >= 0; i--)
+            {
+                Vector3 pos = GetAttackPosition(getAttackPositionQueue[i]);
+
+                getAttackPositionQueue[i].SetAttackPosition(pos);
+                getAttackPositionQueue.RemoveAt(i);
+            }
+        }
+    }
+
+    private void HandleAttackStateQueries()
+    {
         if (getAttackStateQueue.Count != 0)
         {
             for (int i = getAttackStateQueue.Count - 1; i >= 0; i--)
@@ -177,41 +226,27 @@ public class EnemyArea : MonoBehaviour
                 }
             }
         }
+    }
 
-        if (getAttackPositionQueue.Count != 0)
+    #endregion QUERY HANDLERS
+
+    private void UnlockLockedDoor()
+    {
+        if (lockedDoors.Length > 0)
         {
-            for (int i = getAttackPositionQueue.Count - 1; i >= 0; i--)
-            {
-                Vector3 pos = GetAttackPosition(getAttackPositionQueue[i]);
+            Animator[] anims = new Animator[lockedDoors.Length];
 
-                getAttackPositionQueue[i].SetAttackPosition(pos);
-                getAttackPositionQueue.RemoveAt(i);
+            for (int i = 0; i < anims.Length; i++)
+            {
+                anims[i] = lockedDoors[i].GetComponentInChildren<Animator>();
+            }
+
+            foreach (Animator anim in anims)
+            {
+                anim.SetTrigger("Unlock");
             }
         }
 
-        if (getWaitPositionQueue.Count != 0)
-        {
-            for (int i = getWaitPositionQueue.Count - 1; i >= 0; i--)
-            {
-                Vector3 pos = GetWaitingPosition(getWaitPositionQueue[i]);
-                getWaitPositionQueue[i].SetWaitPosition(pos);
-                getWaitPositionQueue.RemoveAt(i);
-            }
-        }
-
-        StartCoroutine(CR_QueriesHandler());
-    }
-
-    #endregion QUERIES
-
-    public void AddEnemyToArea(EnemyBase enemy)
-    {
-        aliveEnemies.Add(enemy);
-    }
-
-    public void RemoveEnemyFromArea(EnemyBase enemy)
-    {
-        aliveEnemies.Remove(enemy);
     }
 
     private Vector3 GetWaitingPosition(EnemyBase enemy)
@@ -265,7 +300,22 @@ public class EnemyArea : MonoBehaviour
 
     #endregion AREA
 
-    #region ATTACK
+    #region MODIFY AREA
+
+    public void AddEnemyToArea(EnemyBase enemy)
+    {
+        aliveEnemies.Add(enemy);
+    }
+
+    public void RemoveEnemyFromArea(EnemyBase enemy)
+    {
+        aliveEnemies.Remove(enemy);
+
+        if (aliveEnemies.Count == 0)
+        {
+            UnlockLockedDoor();
+        }
+    }
 
     public int GetTotalAttackingEnemies()
     {
@@ -277,7 +327,7 @@ public class EnemyArea : MonoBehaviour
         attackingEnemies.Remove(enemy);
     }
 
-    #endregion ATTACK
+    #endregion MODIFY AREA
 
     #region TRIGGERS
 
@@ -302,11 +352,15 @@ public class EnemyArea : MonoBehaviour
 
     #endregion TRIGGERS
 
+    #region VISUAL DEBUG
+
     private void OnDrawGizmos()
     {
-        if (spawnOrigin != null)
-        {
-            Gizmos.DrawWireSphere(spawnOrigin.position, areaRadius);
-        }
+        if (spawnOrigin == null) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(spawnOrigin.position, areaRadius);
     }
+
+    #endregion VISUAL DEBUG
 }

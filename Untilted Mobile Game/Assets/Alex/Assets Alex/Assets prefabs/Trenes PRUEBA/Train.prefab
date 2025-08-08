@@ -161,6 +161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 8640296702747988686}
   endPoint: {fileID: 5674917956305382077}
+  startDelay: 0
+  timeBeforeRespawn: 0
 --- !u!1 &8266979653551577187
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +229,440 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1001 &374358310079721427
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 929987663685492222}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.99966
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (8)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &634292493571764556 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 374358310079721427}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &881234160896203119
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 929987663685492222}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -199.99985
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &7648695916376247375 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 881234160896203119}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1008688288950136955
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8120632775420622794}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -200.00003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &7773477948694603099 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 1008688288950136955}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1159143871073842372
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2191760806434701945}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -200.00003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &8505468528748618212 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 1159143871073842372}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1193010154324294782
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4097209723386544134}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.99982
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &2122010325243929313 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 1193010154324294782}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1214119966147743205
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8120632775420622794}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -199.99979
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (7)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &2100334265571791738 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 1214119966147743205}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1355567540150176043
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5454508544496904651}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -400.00006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &2248272791436351412 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 1355567540150176043}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1496091037656736753
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -289,7 +725,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4706385424097926046}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9177875426458334208}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6483598375185557589}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2122010325243929313}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5254217238448793102}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4844878402383549102, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
       insertIndex: -1
@@ -371,6 +822,254 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7979c67a5486c4f4da1057e6f9860098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1819798084615135520
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4097209723386544134}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &9177875426458334208 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 1819798084615135520}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1908379366237265350
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 83700640778375345}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -500.00003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &1695435539463734105 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 1908379366237265350}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1918097466279948429
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2191760806434701945}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.99933
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (10)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &1685184313617788434 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 1918097466279948429}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2041920503298322622
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5812410585581066601}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.9997
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (12)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &1273061492985441825 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 2041920503298322622}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2375897894444056073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -433,7 +1132,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4210834347014236506}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3618857322805465422}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7648695916376247375}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 634292493571764556}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3388693878061662645}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4844878402383549102, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
       insertIndex: -1
@@ -515,6 +1229,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7979c67a5486c4f4da1057e6f9860098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &2520756227850821418
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 929987663685492222}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -199.99939
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (9)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &3388693878061662645 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 2520756227850821418}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3257867368193782598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -577,7 +1353,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9052383180492074165}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6619006968403393759}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4599522936477052970}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1695435539463734105}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4411210149324976485}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4844878402383549102, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
       insertIndex: -1
@@ -659,6 +1450,146 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7979c67a5486c4f4da1057e6f9860098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &3336884847626936677
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 929987663685492222}
+    m_Modifications:
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -299.99963
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833413852590810670, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_Name
+      value: Tren velocidad particles (4)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+--- !u!4 &4210834347014236506 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+  m_PrefabInstance: {fileID: 3336884847626936677}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3515988654941155322
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 83700640778375345}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -200.00003
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &4411210149324976485 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 3515988654941155322}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3635999745664459150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -721,7 +1652,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9159488844142313398}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1612483313988279747}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8505468528748618212}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1685184313617788434}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3650771936764286996}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4844878402383549102, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
       insertIndex: -1
@@ -803,6 +1749,860 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7979c67a5486c4f4da1057e6f9860098, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &3657360972537366437
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5812410585581066601}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -500.00012
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &6115584592432435845 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 3657360972537366437}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3697678252716559482
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5454508544496904651}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -99.99994
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &4516058779264307941 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 3697678252716559482}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4184450321909269805
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5812410585581066601}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -199.99963
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (13)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &4030350212116847538 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 4184450321909269805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4416276673572559459
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5454508544496904651}
+    m_Modifications:
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -300
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00004768371
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833413852590810670, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_Name
+      value: Tren velocidad particles
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+--- !u!4 &2983872994914407004 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+  m_PrefabInstance: {fileID: 4416276673572559459}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4450693745544456703
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 83700640778375345}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &6619006968403393759 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 4450693745544456703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4564025436874606219
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2191760806434701945}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -199.99948
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (11)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &3650771936764286996 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 4564025436874606219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4604152144713629045
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4097209723386544134}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -200.00006
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &6483598375185557589 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 4604152144713629045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4978223553762015377
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4097209723386544134}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -199.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &5254217238448793102 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 4978223553762015377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5534181105638946897
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5812410585581066601}
+    m_Modifications:
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -299.99927
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833413852590810670, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_Name
+      value: Tren velocidad particles (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+--- !u!4 &6407567792574984302 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+  m_PrefabInstance: {fileID: 5534181105638946897}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5790337499921817516
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8120632775420622794}
+    m_Modifications:
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.99963
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 4891263215407831070, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren izquierda (6)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+--- !u!4 &6748608895166988595 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1007831392241770143, guid: 7e790112071bf9f4696e8a4b25c19923, type: 3}
+  m_PrefabInstance: {fileID: 5790337499921817516}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6063998124544361582
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 929987663685492222}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &3618857322805465422 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 6063998124544361582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6156820956226327457
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4097209723386544134}
+    m_Modifications:
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -300.00006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00004768372
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833413852590810670, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_Name
+      value: Tren velocidad particles (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+--- !u!4 &4706385424097926046 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+  m_PrefabInstance: {fileID: 6156820956226327457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6470454510778574090
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 83700640778375345}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -199.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &4599522936477052970 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 6470454510778574090}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6678081979579143229
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -865,7 +2665,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7536808441283740703}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 438206883245669875}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7773477948694603099}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6748608895166988595}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2100334265571791738}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4844878402383549102, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
       insertIndex: -1
@@ -947,6 +2762,208 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
   m_PrefabInstance: {fileID: 6678081979579143229}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &6920826957391407315
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8120632775420622794}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.99988
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &438206883245669875 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 6920826957391407315}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7012198050456036205
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5812410585581066601}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -200.00006
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &526693953481766477 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 7012198050456036205}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7602527086884988042
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 83700640778375345}
+    m_Modifications:
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -300.00006
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00004768372
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833413852590810670, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_Name
+      value: Tren velocidad particles (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+--- !u!4 &9052383180492074165 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+  m_PrefabInstance: {fileID: 7602527086884988042}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7658118329206468433
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1009,7 +3026,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2446954971461076634, guid: 974358985f4b0524eab085aeb50691c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2983872994914407004}
+    - targetCorrespondingSourceObject: {fileID: 2446954971461076634, guid: 974358985f4b0524eab085aeb50691c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1210264693726896021}
+    - targetCorrespondingSourceObject: {fileID: 2446954971461076634, guid: 974358985f4b0524eab085aeb50691c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1291899753936321146}
+    - targetCorrespondingSourceObject: {fileID: 2446954971461076634, guid: 974358985f4b0524eab085aeb50691c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2248272791436351412}
+    - targetCorrespondingSourceObject: {fileID: 2446954971461076634, guid: 974358985f4b0524eab085aeb50691c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4516058779264307941}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3064668251891930816, guid: 974358985f4b0524eab085aeb50691c1, type: 3}
       insertIndex: -1
@@ -1091,6 +3123,270 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2446954971461076634, guid: 974358985f4b0524eab085aeb50691c1, type: 3}
   m_PrefabInstance: {fileID: 7658118329206468433}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7727075261017143177
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2191760806434701945}
+    m_Modifications:
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -299.99927
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833413852590810670, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_Name
+      value: Tren velocidad particles (5)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+--- !u!4 &9159488844142313398 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+  m_PrefabInstance: {fileID: 7727075261017143177}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8106431647986616547
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2191760806434701945}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -499.99988
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &1612483313988279747 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 8106431647986616547}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8562711741051947701
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5454508544496904651}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -400.00003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &1210264693726896021 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 8562711741051947701}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8643210734428745562
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5454508544496904651}
+    m_Modifications:
+    - target: {fileID: 2145108759429669858, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_Name
+      value: Chispas tren derecha (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -99.99988
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+--- !u!4 &1291899753936321146 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7358712078556599584, guid: 4b1468e3cb70c79428ca5baf3cd98ae1, type: 3}
+  m_PrefabInstance: {fileID: 8643210734428745562}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8986595469938408094
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1153,7 +3449,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6407567792574984302}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6115584592432435845}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 526693953481766477}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1273061492985441825}
+    - targetCorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4030350212116847538}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4844878402383549102, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
       insertIndex: -1
@@ -1234,4 +3545,82 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3179286621062669303, guid: a5ec1cf08b28ed344bc7cd5b6b0241a1, type: 3}
   m_PrefabInstance: {fileID: 8986595469938408094}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8987218697244494880
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8120632775420622794}
+    m_Modifications:
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -299.99976
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 208
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833413852590810670, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+      propertyPath: m_Name
+      value: Tren velocidad particles (3)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+--- !u!4 &7536808441283740703 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1450471966416029759, guid: 41fdeab919438804e8482c204c7205dc, type: 3}
+  m_PrefabInstance: {fileID: 8987218697244494880}
   m_PrefabAsset: {fileID: 0}

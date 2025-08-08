@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,9 +8,13 @@ public class Player : MonoBehaviour
 
     public static Player Instance { get; private set; }
 
+    public bool movementEnabled;
+
     private void Awake()
     {
         Awake_GetReferences();
+
+        movementEnabled = true;
     }
 
     #region AWAKE

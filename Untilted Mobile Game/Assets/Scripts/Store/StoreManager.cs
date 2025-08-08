@@ -10,13 +10,17 @@ public class StoreManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemCostText;
 
     [SerializeField] private Button equipButton;
+
+    [SerializeField] private Sprite equipSprite;
+    [SerializeField] private Sprite equippedSprite;
+    [SerializeField] private Sprite nonEquipableSprite;
+
     [SerializeField] private Button buyButton;
 
-    [SerializeField] private SOPlayerSkin selectedSkin;
+    [SerializeField] private Sprite buySprite;
+    [SerializeField] private Sprite boughtSprite;
 
-    /// <summary>
-    /// DISABLE BUY BUTTON UPON SKIN PURCHASED
-    /// </summary>
+    private SOPlayerSkin selectedSkin;
 
 
     private void Awake()
@@ -45,7 +49,7 @@ public class StoreManager : MonoBehaviour
         }
         else
         {
-            itemCostText.text = $"Cost: {selectedSkin.cost}";
+            itemCostText.text = selectedSkin.cost.ToString();
         }
     }
 
@@ -70,30 +74,36 @@ public class StoreManager : MonoBehaviour
         if (selectedSkin.isPurchased)
         {
             buyButton.interactable = false;
+            buyButton.image.sprite = boughtSprite;
 
             if (selectedSkin.isEquipped)
             {
-                equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIPPED";
+                //equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIPPED";
+                equipButton.image.sprite = equippedSprite;
                 equipButton.interactable = false;
             }
             else
             {
                 equipButton.interactable = true;
-                equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIP";
+                equipButton.image.sprite = equipSprite;
+                //equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIP";
             }
         }
         else
         {
             buyButton.interactable = true;
-            equipButton.interactable = false;
+            buyButton.image.sprite = buySprite;
 
-            equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIP";
+            equipButton.interactable = false;
+            equipButton.image.sprite = nonEquipableSprite;
+
+            //equipButton.GetComponentInChildren<TextMeshProUGUI>().text = "EQUIP";
         }
     }
 
     private void UpdatePlayerCoinsText()
     {
-        playerCoins.text = $"Coins: {GameManager.Instance.coins}";
+        playerCoins.text = GameManager.Instance.coins.ToString();
     }
 
     public void EquipSelectedSkin()

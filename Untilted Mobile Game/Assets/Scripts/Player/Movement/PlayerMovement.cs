@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!PauseManager.Instance.GamePaused)
+        if (!PauseManager.Instance.GamePaused && Player.Instance.movementEnabled)
         {
             MovementCheck();
             Gravity();
@@ -49,6 +49,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region MOVEMENT
+
+    public void DisableMovement()
+    {
+        animator.SetBool("isWalking", false);
+    }
 
     private void MovementCheck()
     {
@@ -192,4 +197,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #endregion START
+
+    #region VISUAL DEBUG GIZMOS
+
+    private void OnDrawGizmos()
+    {
+        if (JoystickManager.Instance == null) return;
+
+        Vector3 direction = new Vector3(JoystickManager.Instance.HorizontalInput(), 0f, JoystickManager.Instance.ForwardInput());
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position, direction * 5f);
+    }
+
+    #endregion VISUAL DEBUG GIZMOS
 }

@@ -165,17 +165,4 @@ public class MeleeAttack : MonoBehaviour
 
     #endregion CHECKS
 
-    #region VISUAL DEBUG GIZMOS
-
-    private void OnDrawGizmos()
-    {
-        if (JoystickManager.Instance == null) return;
-
-        Vector3 direction = new Vector3(JoystickManager.Instance.HorizontalInput(), 0f, JoystickManager.Instance.ForwardInput());
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position, direction * 5f);
-    }
-
-    #endregion VISUAL DEBUG GIZMOS
-
 }

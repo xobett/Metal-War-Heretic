@@ -7,9 +7,12 @@ public class TrainManager : MonoBehaviour
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
 
-    Vector3 debugCubeSize = new Vector3(2.5f, 3f, 1f);
+    Vector3 debugCubeSize = new Vector3(1f, 3f, 2.5f);
 
-    [Header("TRAIN SETTINGS")]
+    [Header("TIMING SETTINGS")]
+    [SerializeField] private float startDelay;
+    [SerializeField] private float timeBeforeRespawn; 
+
     private const float speed = 50f;
     private GameObject trainGo;
 
@@ -35,7 +38,7 @@ public class TrainManager : MonoBehaviour
             trainGo.transform.position = startPoint.position;
         }
 
-        StartCoroutine(CRSpawnTrain());
+        Invoke(nameof(SpawnTrain), startDelay);
     }
 
     #endregion START
@@ -46,19 +49,19 @@ public class TrainManager : MonoBehaviour
         wagon.transform.position = startPoint.position;
     }
 
-    public void RespawnTrain()
+    public void SpawnTrain()
     {
         StartCoroutine(CRSpawnTrain());
     }
 
     private IEnumerator CRSpawnTrain()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(timeBeforeRespawn);
 
         for (int i = 0; i < trainGo.transform.childCount; i++)
         {
             trainGo.transform.GetChild(i).gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.098f);
         }
 
         yield break;

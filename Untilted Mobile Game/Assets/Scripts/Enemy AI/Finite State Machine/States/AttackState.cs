@@ -11,16 +11,14 @@ public class AttackState : EnemyState
     private float attackNavTimer;
     private float timeBeforeNavigating;
 
-    private bool transitionedToQueue = false;
+    private bool transitionedToQueue;
+
+    private bool isStunned = false;
 
     public override void Enter()
     {
-        timeBeforeNavigating = Random.Range(1.3f, 2f);
-
         Enter_SetTimerSettings();
         Enter_SetEnemySettings();
-        enemy.QueryAttackPosition();
-        transitionedToQueue = false;
     }
 
     #region ENTER
@@ -28,11 +26,15 @@ public class AttackState : EnemyState
     private void Enter_SetTimerSettings()
     {
         attackTimer = maxAttackTime;
+        timeBeforeNavigating = Random.Range(1.3f, 2f);
     }
 
     private void Enter_SetEnemySettings()
     {
         enemy.agent.avoidancePriority = 0;
+        enemy.QueryAttackPosition();
+
+        transitionedToQueue = false;
     }
 
     #endregion ENTER
@@ -57,15 +59,17 @@ public class AttackState : EnemyState
     public void ResetTimer()
     {
         attackTimer = maxAttackTime;
+
         if (enemy.agent.isActiveAndEnabled)
         {
+            isStunned = true;
             enemy.agent.isStopped = true;
         }
     }
 
     private void Update_MoveToAttackPos()
     {
-        if (enemy.attackPos != Vector3.zero)
+        if (enemy.attackPos != Vector3.zero && !isStunned)
         {
             enemy.agent.destination = enemy.attackPos;
         }
@@ -75,8 +79,8 @@ public class AttackState : EnemyState
     {
         if (Vector3.Distance(enemy.transform.position, enemy.attackPos) < 0.2f)
         {
-            if (enemy.attacked) return;
-            enemy.attacked = true;
+            if (enemy.attackCooldown) return;
+            enemy.attackCooldown = true;
             enemy.Attack();
             enemy.RunAttackCooldown();
         }
@@ -104,6 +108,7 @@ public class AttackState : EnemyState
         if (attackNavTimer <= 0)
         {
             attackNavTimer = timeBeforeNavigating;
+            isStunned = false;
             enemy.agent.isStopped = false;
             enemy.QueryAttackPosition();
         }
@@ -121,7 +126,6 @@ public class AttackState : EnemyState
 
     public override void Exit()
     {
-        Debug.Log($"{enemy.gameObject.name} exit attack state");
         Exit_ResetSettings();
         Exit_FinishAttack();
     }

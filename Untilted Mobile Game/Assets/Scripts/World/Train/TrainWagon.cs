@@ -46,7 +46,7 @@ public class TrainWagon : MonoBehaviour
         {
             manager.ResetWagon(this.gameObject);
 
-            if (gameObject.name == "End Wagon") manager.RespawnTrain();
+            if (gameObject.name == "End Wagon") manager.SpawnTrain();
         }
     }
 

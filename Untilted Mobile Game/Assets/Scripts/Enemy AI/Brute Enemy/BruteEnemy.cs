@@ -70,7 +70,7 @@ namespace EnemyAI.BruteEnemy
 
         private void RampageRunTriggerCheck()
         {
-            if (isAttacking && !isExecutingAttack)
+            if (!isExecutingAttack)
             {
                 if (!rmpCoolingDown && playerDistance > rmpTriggerDistance)
                 {

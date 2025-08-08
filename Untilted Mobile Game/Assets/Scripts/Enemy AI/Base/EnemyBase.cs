@@ -17,7 +17,7 @@ namespace EnemyAI
     public abstract class EnemyBase : MonoBehaviour, IDamageable
     {
         [SerializeField] public State currentState;
-        [SerializeField] private bool attackCooldown;
+        [SerializeField] private bool attackStateCooldown;
 
         #region NAVIGATION
 
@@ -33,6 +33,9 @@ namespace EnemyAI
         public Vector3 waitingPos;
 
         public Vector3 attackPos;
+
+        public bool UpdatedPosition = false;
+        public bool AttackPositionsAssigned => enemyArea.UsedAttackPosCount == 3;
 
         #endregion NAVIGATION
 
@@ -58,6 +61,7 @@ namespace EnemyAI
         protected bool isExecutingAttack;
         protected bool isAttacking;
 
+        public bool attackCooldown = false;
 
         #endregion ATTACK
 
@@ -164,6 +168,11 @@ namespace EnemyAI
                         attackState.ResetTimer();
                         break;
                     }
+                default:
+                    {
+                        //Stop upon damage and change state to Attack!
+                        break;
+                    }
             }
         }
 
@@ -175,9 +184,6 @@ namespace EnemyAI
         {
             enemyArea = area;
         }
-
-        public bool AttackPositionsAssigned => enemyArea.UsedAttackPosCount == 3;
-        [SerializeField] public bool UpdatedPosition = false;
 
         public void ResetUpdatePositionValue()
         {
@@ -201,7 +207,7 @@ namespace EnemyAI
 
         public void QueryAttack()
         {
-            if (attackCooldown) return;
+            if (attackStateCooldown) return;
 
             enemyArea.QueryAttackState(this);
         }
@@ -228,21 +234,19 @@ namespace EnemyAI
 
         public void RunAttackStateCooldown()
         {
-            attackCooldown = true;
+            attackStateCooldown = true;
 
-            Invoke(nameof(DisableAttackCooldown), 6f);
+            Invoke(nameof(DisableAttackStateCooldown), 6f);
         }
 
-        private void DisableAttackCooldown()
+        private void DisableAttackStateCooldown()
         {
-            attackCooldown = false;
+            attackStateCooldown = false;
         }
 
         #endregion ENEMY AREA
 
         #region ATTACK
-
-        public bool attacked = false;
 
         public void RunAttackCooldown()
         {
@@ -251,13 +255,7 @@ namespace EnemyAI
 
         private void DisableCooldown()
         {
-            attacked = false;
-        }
-
-        public void TriggerAttack()
-        {
-            isExecutingAttack = true;
-            Invoke(nameof(Attack), timeBeforeAttack);
+            attackCooldown = false;
         }
 
         public abstract void Attack();
@@ -392,6 +390,5 @@ namespace EnemyAI
         #endregion ANIMATION EVENT METHDOS
 
         #endregion ANIMATOR
-
     }
 }

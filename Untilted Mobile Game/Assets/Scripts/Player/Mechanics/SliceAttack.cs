@@ -44,6 +44,7 @@ public class SliceAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!Player.Instance.movementEnabled) return;
         SliceCheck();
         SliceMovement();
         SnapAssist();
