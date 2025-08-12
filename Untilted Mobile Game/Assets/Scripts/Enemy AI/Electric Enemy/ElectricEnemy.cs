@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EnemyAI.ElectricEnemy
 {
-    public class ElectricEnemy : EnemyBase
+    public class ElectricEnemy : Enemy
     {
         [Header("--- ELECTRIC ENEMY SETTINGS ---\n")]
 

@@ -42,7 +42,7 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void LateUpdate()
@@ -91,14 +91,7 @@ public class CameraFollow : MonoBehaviour
     }
     private void FollowAndOrbit()
     {
-        //Se crea un Vector3 donde se almacenara la rotacion activa alrededor del objetivo.
-        Vector3 orbitValue;
-
-        //En un circulo, para calcular la posicion alrededor de este se usa la funcion de Coseno para calcular posicion en X, y la funcion Seno para calcular la posicion en Y.
-        //Dicho eso, el vector crea por asi decirlo un circulo alrededor del angulo que recibe en radianes, calculando la posicion X con el COS y la posicion Y con SIN.
-        Vector3 normalOrbit = new Vector3(Mathf.Cos(orbitAngle.x) * Mathf.Cos(orbitAngle.y), Mathf.Sin(orbitAngle.y), Mathf.Sin(orbitAngle.x) * Mathf.Cos(orbitAngle.y));
-
-        orbitValue = normalOrbit;
+        Vector3 orbitValue = new Vector3(Mathf.Cos(orbitAngle.x) * Mathf.Cos(orbitAngle.y), Mathf.Sin(orbitAngle.y), Mathf.Sin(orbitAngle.x) * Mathf.Cos(orbitAngle.y)); ;
 
         float orbitDistance = maxDistance;
         Vector3[] collisionPoints = CalculateCollisionPoints(orbitValue);
@@ -111,14 +104,16 @@ public class CameraFollow : MonoBehaviour
             }
         }
 
-        //La posicion de la camara sigue la posicion del jugador, sumandole los valores del Vector3 que controla la rotacion orbita creada, multiplicando la distancia de la orbita por un float.
         Vector3 orbitMovement = followTarget.position + orbitValue * orbitDistance;
-        //Se interpola esfericamente la posicion de la camara.
+
         transform.position = Vector3.Slerp(transform.position, orbitMovement, orbitSmooth * Time.deltaTime);
 
         Quaternion lookAtTarget = Quaternion.LookRotation(followTarget.position - transform.position, Vector3.up);
-        //Mira constantemente al jugador.
-        transform.rotation = lookAtTarget;
+
+        if (!inCombat)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookAtTarget, 0.3f);
+        }
     }
 
     #region TURN CAMERA
@@ -163,6 +158,12 @@ public class CameraFollow : MonoBehaviour
     }
 
     #endregion TURN CAMERA
+
+    #region CHECKS
+
+    private bool inCombat => Player.Instance.GetComponent<MeleeAttack>().InCombat;
+
+    #endregion CHECKS
 
     #region Inputs
     private float MouseHorizontalInput() => Input.GetAxis("Mouse X");

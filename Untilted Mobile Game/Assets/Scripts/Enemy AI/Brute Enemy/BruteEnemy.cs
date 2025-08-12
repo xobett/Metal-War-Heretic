@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EnemyAI.BruteEnemy
 {
-    public class BruteEnemy : EnemyBase
+    public class BruteEnemy : Enemy
     {
         [Header("--- BRUTE ENEMY SETTINGS ---\n")]
 

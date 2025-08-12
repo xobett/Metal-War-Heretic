@@ -9,6 +9,8 @@ public class EnemyArea : MonoBehaviour
     [SerializeField] private GameObject[] enemiesToSpawn;
     [SerializeField] private GameObject vfxEnemySpawn;
 
+    private LayerMask whatIsEnemy;
+
     [Header("LOCKED DOOR SETTINGS")]
     [SerializeField] private GameObject[] lockedDoors;
 
@@ -16,16 +18,16 @@ public class EnemyArea : MonoBehaviour
     [SerializeField] private Transform spawnOrigin;
     [SerializeField] private float areaRadius = 10f;
 
-    private List<EnemyBase> aliveEnemies = new List<EnemyBase>();
-    [SerializeField] private List<EnemyBase> attackingEnemies = new List<EnemyBase>();
+    private List<Enemy> aliveEnemies = new List<Enemy>();
+    [SerializeField] private List<Enemy> attackingEnemies = new List<Enemy>();
 
     //QUEUES
-    [SerializeField] private List<EnemyBase> getWaitPositionQueue = new List<EnemyBase>();
-    [SerializeField] private List<EnemyBase> getAttackPositionQueue = new List<EnemyBase>();
-    [SerializeField] private List<EnemyBase> getAttackStateQueue = new List<EnemyBase>();
+    [SerializeField] private List<Enemy> getWaitPositionQueue = new List<Enemy>();
+    [SerializeField] private List<Enemy> getAttackPositionQueue = new List<Enemy>();
+    [SerializeField] private List<Enemy> getAttackStateQueue = new List<Enemy>();
 
-    private Dictionary<EnemyBase, Vector3> usedWaitPositions = new Dictionary<EnemyBase, Vector3>();
-    private Dictionary<EnemyBase, Vector3> usedAttackPositions = new Dictionary<EnemyBase, Vector3>();
+    private Dictionary<Enemy, Vector3> usedWaitPositions = new Dictionary<Enemy, Vector3>();
+    private Dictionary<Enemy, Vector3> usedAttackPositions = new Dictionary<Enemy, Vector3>();
 
     private const float waitPositionDistance = 9.0f;
 
@@ -37,6 +39,7 @@ public class EnemyArea : MonoBehaviour
 
     private void Start()
     {
+        whatIsEnemy = LayerMask.GetMask("Enemy");
         Start_SpawnEnemies();
         Start_RunQueriesHandler();
     }
@@ -53,8 +56,8 @@ public class EnemyArea : MonoBehaviour
             Destroy(vfx, 1.5f);
             GameObject enemy = Instantiate(enemiesToSpawn[i], spawnPos, Quaternion.identity);
 
-            AddEnemyToArea(enemy.GetComponent<EnemyBase>());
-            enemy.GetComponent<EnemyBase>().AssignArea(this);
+            AddEnemyToArea(enemy.GetComponent<Enemy>());
+            enemy.GetComponent<Enemy>().AssignArea(this);
 
             enemy.transform.parent = transform.GetChild(0);
             enemy.name = enemiesToSpawn[i].name + $" {i}";
@@ -86,7 +89,7 @@ public class EnemyArea : MonoBehaviour
 
     public void ResetUpdatePositionValue()
     {
-        foreach (EnemyBase enemy in aliveEnemies)
+        foreach (Enemy enemy in aliveEnemies)
         {
             enemy.UpdatedPosition = false;
         }
@@ -115,31 +118,31 @@ public class EnemyArea : MonoBehaviour
     #endregion DEBUG
 
     #region QUERIES
-    public void QueryAttackState(EnemyBase enemy)
+    public void QueryAttackState(Enemy enemy)
     {
         if (getAttackStateQueue.Contains(enemy)) return;
         getAttackStateQueue.Add(enemy);
     }
 
-    public void QueryWaitPosition(EnemyBase enemy)
+    public void QueryWaitPosition(Enemy enemy)
     {
         OnQuery_RemoveUsedPositions(enemy);
         getWaitPositionQueue.Add(enemy);
     }
 
-    public void QueryAttackPos(EnemyBase enemy)
+    public void QueryAttackPos(Enemy enemy)
     {
         OnQuery_RemoveUsedPositions(enemy);
         getAttackPositionQueue.Add(enemy);
     }
 
-    private void OnQuery_RemoveUsedPositions(EnemyBase enemy)
+    private void OnQuery_RemoveUsedPositions(Enemy enemy)
     {
         RemoveWaitPos(enemy);
         RemoveAttackPos(enemy);
     }
 
-    public void RemoveWaitPos(EnemyBase enemy)
+    public void RemoveWaitPos(Enemy enemy)
     {
         if (usedWaitPositions.ContainsKey(enemy))
         {
@@ -152,7 +155,7 @@ public class EnemyArea : MonoBehaviour
         }
     }
 
-    public void RemoveAttackPos(EnemyBase enemy)
+    public void RemoveAttackPos(Enemy enemy)
     {
         if (usedAttackPositions.ContainsKey(enemy))
         {
@@ -249,7 +252,7 @@ public class EnemyArea : MonoBehaviour
 
     }
 
-    private Vector3 GetWaitingPosition(EnemyBase enemy)
+    private Vector3 GetWaitingPosition(Enemy enemy)
     {
         int positions = attackingEnemies.Count == 3 ? enemiesToSpawn.Length - 3 : enemiesToSpawn.Length;
 
@@ -260,7 +263,7 @@ public class EnemyArea : MonoBehaviour
             Vector3 offsetPos = Quaternion.Euler(0, angle, 0f) * Vector3.forward * 8f;
             Vector3 waitPos = playerPos + offsetPos;
 
-            if (!usedWaitPositions.ContainsValue(waitPos))
+            if (!usedWaitPositions.ContainsValue(waitPos) && !Physics.CheckSphere(waitPos, 1f, whatIsEnemy))
             {
                 usedWaitPositions[enemy] = waitPos;
                 return waitPos;
@@ -275,39 +278,66 @@ public class EnemyArea : MonoBehaviour
         return fallBackPos;
     }
 
-    private Vector3 GetAttackPosition(EnemyBase enemy)
+    private Vector3 GetAttackPosition(Enemy enemy)
     {
         int positions = 3;
+        float[] stoppingDistances = { 2, 4.5f };
 
         for (int i = 0; i < positions; i++)
         {
             float angle = (360 / positions) * i;
 
-            //Make a variable that holds info of all the enemies positions
             Vector3 offset = Quaternion.Euler(0f, angle, 0f) * Vector3.forward * enemy.stoppingDistance;
             Vector3 attackPos = playerPos + offset;
 
-            if (!usedAttackPositions.ContainsValue(attackPos))
+            bool isInSameAngle = false;
+
+            foreach (float sd in stoppingDistances)
+            {
+                Vector3 testPos = playerPos + Quaternion.Euler(0f, angle, 0f) * Vector3.forward * sd;
+
+                foreach (Vector3 assignedPos in usedAttackPositions.Values)
+                {
+                    Vector3 apDir = (assignedPos - playerPos).normalized;
+                    Vector3 testDir = (testPos - playerPos).normalized;
+
+                    float angleBetween = Vector3.Angle(apDir, testDir);
+
+                    if (angleBetween < 1f)
+                    {
+                        isInSameAngle = true;
+                        break;
+                    }
+
+                    if (isInSameAngle) break;
+                }
+            }
+
+            if (!usedAttackPositions.ContainsValue(attackPos) && !isInSameAngle)
             {
                 usedAttackPositions[enemy] = attackPos;
                 return attackPos;
             }
         }
 
-        Vector3 fallback = playerPos * 2f;
-        return fallback;
+        float incrementedDistance = waitPositionDistance + Random.Range(7f, 9f);
+        float fallbackAngle = (360f / positions * 2) * Random.Range(1, (positions * 2) + 1);
+        Vector3 fallBackPos = Quaternion.Euler(0f, fallbackAngle, 0) * Vector3.forward * incrementedDistance;
+        fallBackPos = playerPos + fallBackPos;
+
+        return fallBackPos;
     }
 
     #endregion AREA
 
     #region MODIFY AREA
 
-    public void AddEnemyToArea(EnemyBase enemy)
+    public void AddEnemyToArea(Enemy enemy)
     {
         aliveEnemies.Add(enemy);
     }
 
-    public void RemoveEnemyFromArea(EnemyBase enemy)
+    public void RemoveEnemyFromArea(Enemy enemy)
     {
         aliveEnemies.Remove(enemy);
 
@@ -322,7 +352,7 @@ public class EnemyArea : MonoBehaviour
         return attackingEnemies.Count;
     }
 
-    public void RemoveAttackingEnemy(EnemyBase enemy)
+    public void RemoveAttackingEnemy(Enemy enemy)
     {
         attackingEnemies.Remove(enemy);
     }
@@ -333,7 +363,7 @@ public class EnemyArea : MonoBehaviour
 
     private void OnTrigger_AttackPlayer()
     {
-        foreach (EnemyBase enemy in aliveEnemies)
+        foreach (Enemy enemy in aliveEnemies)
         {
             enemy.ChangeState(State.Chase);
         }

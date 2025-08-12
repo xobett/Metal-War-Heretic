@@ -7,7 +7,7 @@ public class EnemyHitCollider : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GetComponentInParent<EnemyBase>().HitPlayer(other);
+            GetComponentInParent<Enemy>().HitPlayer(other);
         }
     }
 }

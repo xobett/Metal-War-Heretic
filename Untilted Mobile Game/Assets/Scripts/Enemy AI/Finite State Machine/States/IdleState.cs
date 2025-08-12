@@ -4,7 +4,7 @@ using EnemyAI;
 
 public class IdleState : EnemyState
 {
-    public IdleState(EnemyBase enemy) : base(enemy) { }
+    public IdleState(Enemy enemy) : base(enemy) { }
 
     public override void Enter()
     {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EnemyAI.HammerEnemy
 {
-    public class HammerEnemy : EnemyBase
+    public class HammerEnemy : Enemy
     {
         protected override void Update()
         {

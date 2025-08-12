@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ChaseState : EnemyState
 {
-    public ChaseState(EnemyBase enemy) : base(enemy) { }
+    public ChaseState(Enemy enemy) : base(enemy) { }
 
     private bool transitionedToQueue = false;
 

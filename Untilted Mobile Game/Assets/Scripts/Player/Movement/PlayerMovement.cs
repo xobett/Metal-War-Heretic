@@ -35,10 +35,20 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        GetReferences();
+        Start_GetReferences();
     }
 
-    // Update is called once per frame
+    #region START
+
+    private void Start_GetReferences()
+    {
+        charCtrlr = GetComponent<CharacterController>();
+        groundCheck = transform.GetChild(0);
+        animator = GetComponentInChildren<Animator>();
+    }
+
+    #endregion START
+
     void Update()
     {
         if (!PauseManager.Instance.GamePaused && Player.Instance.movementEnabled)
@@ -129,9 +139,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void MeleeAssistMovement()
     {
-        Vector3 faceDirection = new Vector3(JoystickManager.Instance.HorizontalInput(), 0f, JoystickManager.Instance.ForwardInput());
+        Vector3 cameraGc = GetCameraRelativeGC();
 
-        if (Physics.Raycast(transform.position, faceDirection * 5f, out RaycastHit hit, 3f, whatIsMelee))
+        if (Physics.Raycast(transform.position, cameraGc * 5f, out RaycastHit hit, 3f, whatIsMelee))
         {
             Vector3 direction = hit.collider.transform.position - transform.position;
 
@@ -149,6 +159,22 @@ public class PlayerMovement : MonoBehaviour
                 charCtrlr.Move(moveDirection.normalized * Mathf.Pow(movementSpeed, 2) * Time.deltaTime);
             }
         }
+    }
+
+    private Vector3 GetCameraRelativeGC()
+    {
+        Vector3 camFwd = Camera.main.transform.forward;
+        camFwd.y = 0;
+        camFwd.Normalize();
+
+        Vector3 camRght = Camera.main.transform.right;
+        camRght.y = 0;
+        camRght.Normalize();
+
+        Vector3 cameraGc = (camFwd * JoystickManager.Instance.ForwardInput()) + (camRght * JoystickManager.Instance.HorizontalInput());
+        cameraGc.Normalize();
+
+        return cameraGc;
     }
 
     #endregion MELEE ASSIST MOVEMENT
@@ -187,16 +213,6 @@ public class PlayerMovement : MonoBehaviour
 
     #endregion CHECKS
 
-    #region START
-
-    private void GetReferences()
-    {
-        charCtrlr = GetComponent<CharacterController>();
-        groundCheck = transform.GetChild(0);
-        animator = GetComponentInChildren<Animator>();
-    }
-
-    #endregion START
 
     #region VISUAL DEBUG GIZMOS
 
@@ -204,9 +220,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (JoystickManager.Instance == null) return;
 
-        Vector3 direction = new Vector3(JoystickManager.Instance.HorizontalInput(), 0f, JoystickManager.Instance.ForwardInput());
+        Vector3 cameraGc = GetCameraRelativeGC();
+
         Gizmos.color = Color.yellow;
-        Gizmos.DrawRay(transform.position, direction * 5f);
+        Gizmos.DrawRay(transform.position, cameraGc * 5f);
     }
 
     #endregion VISUAL DEBUG GIZMOS

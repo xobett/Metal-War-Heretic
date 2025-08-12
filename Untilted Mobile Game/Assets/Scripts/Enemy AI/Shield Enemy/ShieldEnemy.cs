@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace EnemyAI.ShieldEnemy
 {
-    public class ShieldEnemy : EnemyBase
+    public class ShieldEnemy : Enemy
     {
         [Header("--- SHIELD ENEMY SETTINGS --- \n")]
 

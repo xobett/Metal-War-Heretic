@@ -1,12 +1,15 @@
 using EnemyAI;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class OnQueueState : EnemyState
 {
-    public OnQueueState(EnemyBase enemy) : base(enemy) { }
+    public OnQueueState(Enemy enemy) : base(enemy) { }
 
     private float timer;
-    private const float timeBeforeMoving = 5f;
+    private const float timeBeforeMoving = 8f;
+
+    private bool rotated = false;
 
     public override void Enter()
     {
@@ -19,7 +22,7 @@ public class OnQueueState : EnemyState
 
     private void Enter_ResetRotation()
     {
-        enemy.SmoothResetRotation();
+        //enemy.SmoothResetRotation();
     }
 
     #endregion ENTER
@@ -30,6 +33,7 @@ public class OnQueueState : EnemyState
         Update_MoveToWaitPos();
         Update_RunTimer();
         Update_HandleNavigation();
+        HandleOnArrive();
     }
 
     #region UPDATE
@@ -65,6 +69,17 @@ public class OnQueueState : EnemyState
             if (enemy.UpdatedPosition) return;
             enemy.UpdatedPosition = true;
             enemy.QueryWaitPosition();
+            enemy.ableToFace = false;
+        }
+    }
+
+    private void HandleOnArrive()
+    {
+        if (Vector3.Distance(enemy.transform.position, enemy.waitingPos) < 0.2f)
+        {
+            if (rotated) return;
+            rotated = true;
+            enemy.SmoothResetRotation();
         }
     }
 

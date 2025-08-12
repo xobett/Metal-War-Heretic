@@ -14,10 +14,9 @@ namespace EnemyAI
 
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Health))]
-    public abstract class EnemyBase : MonoBehaviour, IDamageable
+    public abstract class Enemy : MonoBehaviour, IDamageable
     {
         [SerializeField] public State currentState;
-        [SerializeField] private bool attackStateCooldown;
 
         #region NAVIGATION
 
@@ -34,7 +33,8 @@ namespace EnemyAI
 
         public Vector3 attackPos;
 
-        public bool UpdatedPosition = false;
+        internal bool UpdatedPosition = false;
+
         public bool AttackPositionsAssigned => enemyArea.UsedAttackPosCount == 3;
 
         #endregion NAVIGATION
@@ -58,10 +58,10 @@ namespace EnemyAI
         [SerializeField] protected float damage;
         [SerializeField] protected int timeBeforeAttack;
 
-        protected bool isExecutingAttack;
-        protected bool isAttacking;
+        internal bool isExecutingAttack;
 
         public bool attackCooldown = false;
+        private bool attackStateCooldown = false;
 
         [SerializeField] private int score;
 
@@ -188,6 +188,7 @@ namespace EnemyAI
             enemyArea = area;
         }
 
+        //Used to reassign queue positions only when attacking enemies are 3
         public void ResetUpdatePositionValue()
         {
             enemyArea.ResetUpdatePositionValue();
@@ -261,6 +262,14 @@ namespace EnemyAI
             attackCooldown = false;
         }
 
+        public void ExecuteAttack()
+        {
+            attackCooldown = true;
+            isExecutingAttack = true;
+
+            Attack();
+        }
+
         public abstract void Attack();
 
         public virtual void HitPlayer(Collider playerCollider)
@@ -295,7 +304,7 @@ namespace EnemyAI
         {
             if (ableToFace)
             {
-                transform.rotation = currentFacePlayerRot;
+                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, 0.3f);
             }
         }
 
@@ -313,16 +322,20 @@ namespace EnemyAI
 
         private IEnumerator CR_SmoothResetRotation()
         {
-            float time = 0f;
-            while (time < 1)
+            float angle = Quaternion.Angle(transform.rotation, currentFacePlayerRot);
+            float remainingAngle = angle;
+
+            while (remainingAngle > 100f)
             {
-                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, time);
-                time += Time.deltaTime * 0.1f;
+                transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, 1 - (remainingAngle / angle));
+                remainingAngle -= 25f * Time.deltaTime;
                 yield return null;
             }
 
             transform.rotation = currentFacePlayerRot;
             ableToFace = true;
+
+            Debug.Log("Reset rotation");
 
             yield break;
         }
@@ -378,6 +391,7 @@ namespace EnemyAI
         public void AnimEvent_FinishAttack()
         {
             isExecutingAttack = false;
+            RunAttackCooldown(); //////////
         }
 
         public void AnimEvent_StopFacingAtPlayer()
@@ -387,7 +401,7 @@ namespace EnemyAI
 
         public void AnimEvent_SmoothResetRotation()
         {
-            StartCoroutine(CR_SmoothResetRotation());
+            ableToFace = true;
         }
 
         #endregion ANIMATION EVENT METHDOS

@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class AttackState : EnemyState
 {
-    public AttackState(EnemyBase enemy) : base(enemy) { }
+    public AttackState(Enemy enemy) : base(enemy) { }
 
     private float attackTimer;
     private const float maxAttackTime = 38f;
 
     private float attackNavTimer;
-    private float timeBeforeNavigating;
+    private float timeBeforeNavigating = 3f;
 
     private bool transitionedToQueue;
 
@@ -26,12 +26,12 @@ public class AttackState : EnemyState
     private void Enter_SetTimerSettings()
     {
         attackTimer = maxAttackTime;
-        timeBeforeNavigating = Random.Range(1.3f, 2f);
+        attackNavTimer = timeBeforeNavigating;
     }
 
     private void Enter_SetEnemySettings()
     {
-        enemy.agent.avoidancePriority = 0;
+        enemy.agent.avoidancePriority = 10;
         enemy.QueryAttackPosition();
 
         transitionedToQueue = false;
@@ -59,6 +59,7 @@ public class AttackState : EnemyState
     public void ResetTimer()
     {
         attackTimer = maxAttackTime;
+        attackNavTimer = timeBeforeNavigating;
 
         if (enemy.agent.isActiveAndEnabled)
         {
@@ -80,9 +81,7 @@ public class AttackState : EnemyState
         if (Vector3.Distance(enemy.transform.position, enemy.attackPos) < 0.2f)
         {
             if (enemy.attackCooldown) return;
-            enemy.attackCooldown = true;
-            enemy.Attack();
-            enemy.RunAttackCooldown();
+            enemy.ExecuteAttack();
         }
     }
 
@@ -94,6 +93,7 @@ public class AttackState : EnemyState
     {
         if (attackTimer <= 0)
         {
+            if (enemy.isExecutingAttack) return;
             TransitionToQueue();
         }
     }
@@ -107,6 +107,12 @@ public class AttackState : EnemyState
     {
         if (attackNavTimer <= 0)
         {
+            if (enemy.isExecutingAttack || PlayerIsNear())
+            {
+                attackNavTimer = timeBeforeNavigating;
+                return;
+            }
+
             attackNavTimer = timeBeforeNavigating;
             isStunned = false;
             enemy.agent.isStopped = false;
@@ -114,10 +120,20 @@ public class AttackState : EnemyState
         }
     }
 
+    private bool PlayerIsNear()
+    {
+        float distance = Vector3.Distance(enemy.transform.position, enemy.player.transform.position);
+
+        return distance < 3f;
+    }
+
 
     private void TransitionToQueue()
     {
+        if (enemy.isExecutingAttack) return;
+
         if (transitionedToQueue) return;
+
         transitionedToQueue = true;
         enemy.ChangeState(State.OnQueue);
     }
