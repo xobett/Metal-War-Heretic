@@ -23,7 +23,6 @@ public class Billboard : MonoBehaviour
         Quaternion lookRotation = Quaternion.Euler(lookAtTarget.eulerAngles.x, lookAtTarget.eulerAngles.y, 0);
 
         transform.rotation = lookRotation;
-
     }
 
     private void GetReferences()

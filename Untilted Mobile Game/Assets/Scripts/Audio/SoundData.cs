@@ -6,11 +6,11 @@ public class SoundData
 {
     public string soundName;
     public AudioClip clip;
-    public SoundType soundType = SoundType.VFX;
+    public SoundType soundType = SoundType.SFX;
 }
 
 public enum SoundType
 {
-    VFX,
+    SFX,
     Music
 }

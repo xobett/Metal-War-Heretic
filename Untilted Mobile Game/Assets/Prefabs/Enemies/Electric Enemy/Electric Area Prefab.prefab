@@ -71,6 +71,7 @@ MonoBehaviour:
   damage: 15
   lifetime: 3
   ableToAutoDestroy: 0
+  hitPlayerVfx: {fileID: 2598695410427671328, guid: 5344698de6b483c48a76a9c73b04633c, type: 3}
 --- !u!1 &8901539519586035291
 GameObject:
   m_ObjectHideFlags: 0

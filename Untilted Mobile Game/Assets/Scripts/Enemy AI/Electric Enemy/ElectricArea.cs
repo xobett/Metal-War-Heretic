@@ -13,6 +13,8 @@ public class ElectricArea : MonoBehaviour
 
     [SerializeField] private bool ableToAutoDestroy;
 
+    [SerializeField] private GameObject hitPlayerVfx;
+
     private void Start()
     {
         StartCoroutine(AutoDestroy());
@@ -52,8 +54,11 @@ public class ElectricArea : MonoBehaviour
     {
         if (other.CompareTag("Player") && ableToZap)
         {
-            var cam = Camera.main;
+            Vector3 hitPos = other.transform.position + other.transform.forward * 0.4f;
+
+            GameObject vfx = Instantiate(hitPlayerVfx, hitPos, hitPlayerVfx.transform.rotation);
             other.GetComponent<Health>().TakeDamage(damage);
+            Destroy(vfx, 1);
 
             timer = timeBetweenZaps;
         }

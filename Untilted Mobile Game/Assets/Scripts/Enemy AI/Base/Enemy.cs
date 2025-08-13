@@ -18,6 +18,15 @@ namespace EnemyAI
     {
         [SerializeField] public State currentState;
 
+        #region VFX
+
+        [Header("VFX SETTINGS")]
+        [SerializeField] private GameObject onDeathVfx;
+
+        private AudioSource audioSrc;
+
+        #endregion VFX
+
         #region NAVIGATION
 
         [Header("--- ENEMY BASE SETTINGS ---\n")]
@@ -59,6 +68,7 @@ namespace EnemyAI
         [SerializeField] protected int timeBeforeAttack;
 
         internal bool isExecutingAttack;
+        internal bool forcedAttackState;
 
         public bool attackCooldown = false;
         private bool attackStateCooldown = false;
@@ -91,6 +101,7 @@ namespace EnemyAI
         {
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponentInChildren<Animator>();
+            audioSrc = GetComponentInChildren<AudioSource>();
 
             player = Player.Instance.gameObject;
         }
@@ -156,6 +167,10 @@ namespace EnemyAI
                     }
             }
 
+            GameObject vfx = Instantiate(onDeathVfx, transform.position, enemyArea.transform.rotation);
+            Destroy(vfx, 1);
+
+
             enemyArea.RemoveEnemyFromArea(this);
             GameManager.Instance.IncreaseScore(score);
         }
@@ -173,11 +188,13 @@ namespace EnemyAI
                     }
                 default:
                     {
-                        //Stop upon damage and change state to Attack!
+                        forcedAttackState = true;
+                        fsm.ChangeState(attackState);
                         break;
                     }
             }
         }
+
 
         #endregion ON DAMAGE AND DESTROY
 

@@ -3,11 +3,21 @@ using UnityEngine;
 
 public class EE_AnimEvents : MonoBehaviour
 {
-    ElectricEnemy electricEnemy;
+    private ElectricEnemy electricEnemy;
+
+    [SerializeField] private GameObject electricAreaVfx;
+    private Vector3 vfxPos;
 
     private void Start()
     {
         electricEnemy = GetComponentInParent<ElectricEnemy>();
+        vfxPos = transform.parent.transform.GetChild(4).transform.position;
+    }
+
+    public void PlayElectricAreaAnticipation()
+    {
+        GameObject vfx = Instantiate(electricAreaVfx, vfxPos, electricAreaVfx.transform.rotation);
+        Destroy(vfx, 3);
     }
 
     public void ThrowElectricBall()

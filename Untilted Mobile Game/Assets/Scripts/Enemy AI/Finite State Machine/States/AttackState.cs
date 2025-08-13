@@ -18,7 +18,7 @@ public class AttackState : EnemyState
     public override void Enter()
     {
         Enter_SetTimerSettings();
-        Enter_SetEnemySettings();
+        Enter_EntryCheck();
     }
 
     #region ENTER
@@ -29,12 +29,19 @@ public class AttackState : EnemyState
         attackNavTimer = timeBeforeNavigating;
     }
 
-    private void Enter_SetEnemySettings()
+    private void Enter_EntryCheck()
     {
         enemy.agent.avoidancePriority = 10;
-        enemy.QueryAttackPosition();
-
         transitionedToQueue = false;
+
+        if (enemy.forcedAttackState)
+        {
+            enemy.attackPos = enemy.transform.position;
+        }
+        else
+        {
+            enemy.QueryAttackPosition();
+        }
     }
 
     #endregion ENTER
@@ -107,17 +114,22 @@ public class AttackState : EnemyState
     {
         if (attackNavTimer <= 0)
         {
-            if (enemy.isExecutingAttack || PlayerIsNear())
-            {
-                attackNavTimer = timeBeforeNavigating;
-                return;
-            }
-
-            attackNavTimer = timeBeforeNavigating;
-            isStunned = false;
-            enemy.agent.isStopped = false;
-            enemy.QueryAttackPosition();
+            HandleRepositioning();
         }
+    }
+
+    private void HandleRepositioning()
+    {
+        if (enemy.isExecutingAttack || PlayerIsNear())
+        {
+            attackNavTimer = timeBeforeNavigating;
+            return;
+        }
+
+        attackNavTimer = timeBeforeNavigating;
+        isStunned = false;
+        enemy.agent.isStopped = false;
+        enemy.QueryAttackPosition();
     }
 
     private bool PlayerIsNear()

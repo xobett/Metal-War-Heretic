@@ -31,8 +31,6 @@ public class EnemyArea : MonoBehaviour
 
     private const float waitPositionDistance = 9.0f;
 
-    private float[] enemiesDistances = { 2f, 4.5f, 2.5f };
-
     private Vector3 playerPos;
 
     private bool enteredArea = false;
@@ -118,6 +116,12 @@ public class EnemyArea : MonoBehaviour
     #endregion DEBUG
 
     #region QUERIES
+
+    public void RemoveRandomEnemy()
+    {
+
+    }
+
     public void QueryAttackState(Enemy enemy)
     {
         if (getAttackStateQueue.Contains(enemy)) return;

@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7b8e24990545a48b87bcf644091ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEnemyVfx: {fileID: 6670479781032978855, guid: 8b8ad33d30fac394b8de6deeaf00d29a, type: 3}
 --- !u!1 &3823707016804825279
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,6 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7b8e24990545a48b87bcf644091ffc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEnemyVfx: {fileID: 6670479781032978855, guid: 8b8ad33d30fac394b8de6deeaf00d29a, type: 3}
 --- !u!1 &5420084097021437779
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7b888fc7ad983448943daa219e5256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementEnabled: 0
 --- !u!114 &4415241851385853430
 MonoBehaviour:
   m_ObjectHideFlags: 0

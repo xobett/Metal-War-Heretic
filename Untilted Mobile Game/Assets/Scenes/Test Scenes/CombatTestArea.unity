@@ -821,61 +821,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1 &680966968
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 680966969}
-  - component: {fileID: 680966970}
-  m_Layer: 0
-  m_Name: Audio Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &680966969
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680966968}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.1687546, y: -0.91231155, z: -9.608079}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &680966970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 680966968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fefd236cc44ce2346abf8ac01160a10c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioSources:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!4 &778735187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4564689006373723804, guid: c18b938f981128a4f874f2be4519f742, type: 3}
@@ -1719,6 +1664,63 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6, y: 4, z: 0.5}
   m_Center: {x: 0, y: 2.5, z: 0.5}
+--- !u!1001 &3250098105390261279
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039313644682303833, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7451179496938696687, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
+      propertyPath: m_Name
+      value: Audio Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a9d486cd4a391ca4cb3213d96f23dbf8, type: 3}
 --- !u!1001 &6371289821419854161
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1883,6 +1885,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turn Camera Trigger
       objectReference: {fileID: 0}
+    - target: {fileID: 3893775152610411022, guid: 8169763ced1696341927f87eb05e6805, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1901,4 +1907,4 @@ SceneRoots:
   - {fileID: 6371289821419854161}
   - {fileID: 8561221532529635526}
   - {fileID: 2044985006}
-  - {fileID: 680966969}
+  - {fileID: 3250098105390261279}

@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23ae48bfbcbc0d44aa69ef183f4f563f, type: 3}
+  m_Name: SFX Database
+  m_EditorClassIdentifier: 
+  sounds:
+  - soundName: ANT TREN
+    clip: {fileID: 8300000, guid: ca19064f245e77540b157988795e0b3b, type: 3}
+    soundType: 0
+  - soundName: ANTICIPACION BRUTO
+    clip: {fileID: 8300000, guid: d3c7dc8d57158f04bab300adc4902c52, type: 3}
+    soundType: 0
+  - soundName: ATAQUE ELECTRICIDAD SUELO
+    clip: {fileID: 8300000, guid: c71e289e3fc2f5048b09294983761944, type: 3}
+    soundType: 0
+  - soundName: BRUTO CORRER
+    clip: {fileID: 8300000, guid: e12fa7c304a004047a8b523794a9d6d3, type: 3}
+    soundType: 0
+  - soundName: BRUTO PISADAS
+    clip: {fileID: 8300000, guid: 09127ea43ebe3734495b4bfeda71560d, type: 3}
+    soundType: 0
+  - soundName: CAMINATA ESCUDOS
+    clip: {fileID: 8300000, guid: 6ab0d5de84d426647a39ea739d80945c, type: 3}
+    soundType: 0
+  - soundName: ELECTRICIDAD SUELO
+    clip: {fileID: 8300000, guid: d898df49573538140b65bb3bc067fc4f, type: 3}
+    soundType: 0
+  - soundName: ESCUDOS ATAQUE
+    clip: {fileID: 8300000, guid: 116f70f15eea6914e947ba3eeda00f9b, type: 3}
+    soundType: 0
+  - soundName: ESCUDOS ATAQUE 2
+    clip: {fileID: 8300000, guid: 3a1834db1d41c17418440d1bd6e0fcb1, type: 3}
+    soundType: 0
+  - soundName: FRENADO BRUTO
+    clip: {fileID: 8300000, guid: 2545614f10dcd2d429dae097baaaa152, type: 3}
+    soundType: 0
+  - soundName: HIT A ENEMIGO
+    clip: {fileID: 8300000, guid: 52201e6e6aef7ab4d9b024566dd383cc, type: 3}
+    soundType: 0
+  - soundName: MUERTE ENEMIGOS
+    clip: {fileID: 8300000, guid: 36cbc3c94a9b29a43b7b6979a0e196e4, type: 3}
+    soundType: 0
+  - soundName: PUERTA
+    clip: {fileID: 8300000, guid: 449d49c2c6830b84484d5ad57d4bbea5, type: 3}
+    soundType: 0
+  - soundName: TELEPORT
+    clip: {fileID: 8300000, guid: 158f1810c5ffe7e4782e32d1f4820f2e, type: 3}
+    soundType: 0
+  - soundName: TELEPORT HIT
+    clip: {fileID: 8300000, guid: d97e37a2c2c79e94c837ffbf7ee958b2, type: 3}
+    soundType: 0
+  - soundName: TREN
+    clip: {fileID: 8300000, guid: 13255d9b14830b74b847c466233f9ffa, type: 3}
+    soundType: 0

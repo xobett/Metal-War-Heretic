@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1c51ec9e2ee7134397d15b8de4b71dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitPlayerVfx: {fileID: 2598695410427671328, guid: 5344698de6b483c48a76a9c73b04633c, type: 3}
 --- !u!1 &1258352822676531469
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,6 +441,7 @@ Transform:
   m_Children:
   - {fileID: 7935799406959591767}
   - {fileID: 883241455918041028}
+  - {fileID: 4812673422223374091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &5302080847193335908
@@ -485,14 +487,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  attackStateCooldown: 0
+  onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
   agent: {fileID: 0}
   walkSpeed: 2.35
   runSpeed: 2.5
   stoppingDistance: 2.03
   waitingPos: {x: 0, y: 0, z: 0}
   attackPos: {x: 0, y: 0, z: 0}
-  UpdatedPosition: 0
   player: {fileID: 0}
   damage: 30
   timeBeforeAttack: 1
@@ -723,6 +724,68 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &4628107815327174795
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5864222057376983774}
+    m_Modifications:
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2164319521739223453, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+      propertyPath: m_Name
+      value: Enemy Audio Source
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+--- !u!4 &4812673422223374091 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 211769732458571648, guid: 73abcc19ba287a7498d91b7dd5bf74b5, type: 3}
+  m_PrefabInstance: {fileID: 4628107815327174795}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7614222470218278588
 PrefabInstance:
   m_ObjectHideFlags: 0
