@@ -167,10 +167,6 @@ namespace EnemyAI
                     }
             }
 
-            GameObject vfx = Instantiate(onDeathVfx, transform.position, enemyArea.transform.rotation);
-            Destroy(vfx, 1);
-
-
             enemyArea.RemoveEnemyFromArea(this);
             GameManager.Instance.IncreaseScore(score);
         }

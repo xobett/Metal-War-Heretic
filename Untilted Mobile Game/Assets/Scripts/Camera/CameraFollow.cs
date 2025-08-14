@@ -3,17 +3,21 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [Header("NEW CAMERA FOLLOW SETTINGS")]
+    [Header("FOLLOW SETTINGS")]
     [SerializeField] private Transform followTarget;
 
     [SerializeField] private float maxDistance;
 
     [SerializeField] private Vector2 cameraSensitivity;
 
-    Vector2 orbitAngle = new Vector2(-90 * Mathf.Deg2Rad, 35 * Mathf.Deg2Rad);
+    Vector2 orbitAngle = new Vector2(-tiltAngle * Mathf.Deg2Rad, 64 * Mathf.Deg2Rad);
+    const float tiltAngle = 42;
+    //Angle is 42
 
     [SerializeField] private float upLimit;
     [SerializeField] private float downLimit;
+
+    internal TargetCameraRotation lastTarget = TargetCameraRotation.Front;
 
     private GameObject player;
 
@@ -42,7 +46,7 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-
+        orbitAngle.x -= test * Mathf.Deg2Rad * cameraSensitivity.x * Time.deltaTime;
     }
 
     private void LateUpdate()
@@ -120,11 +124,14 @@ public class CameraFollow : MonoBehaviour
 
     public enum TargetCameraRotation
     {
+        Front,
         Right,
         Left,
+        Back
     }
     public void TurnCamera(TargetCameraRotation target)
     {
+        lastTarget = target;
         StartCoroutine(CR_TurnCamera(target));
     }
 
@@ -134,14 +141,24 @@ public class CameraFollow : MonoBehaviour
 
         switch (target)
         {
+            case TargetCameraRotation.Front:
+                {
+                    value = (0 - tiltAngle) * Mathf.Deg2Rad;
+                    break;
+                }
             case TargetCameraRotation.Right:
                 {
-                    value = orbitAngle.x + (90 * Mathf.Deg2Rad);
+                    value = (90 - tiltAngle) * Mathf.Deg2Rad;
                     break;
                 }
             case TargetCameraRotation.Left:
                 {
-                    value = orbitAngle.x + (-90 * Mathf.Deg2Rad);
+                    value = (270 - tiltAngle) * Mathf.Deg2Rad;
+                    break;
+                }
+                case TargetCameraRotation.Back:
+                {
+                    value = (180 - tiltAngle) * Mathf.Deg2Rad;
                     break;
                 }
         }
@@ -149,7 +166,7 @@ public class CameraFollow : MonoBehaviour
         float time = 0;
         while (time < 1)
         {
-            orbitAngle.x = Mathf.Lerp(orbitAngle.x, value, time);
+            orbitAngle.x = Mathf.LerpAngle(orbitAngle.x, value, time);
             time += Time.deltaTime * 0.7f;
             yield return null;
         }

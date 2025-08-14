@@ -978,6 +978,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifebar: {fileID: 4070081213568939373}
+  onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
 --- !u!114 &1175558708040406791
 MonoBehaviour:
   m_ObjectHideFlags: 0

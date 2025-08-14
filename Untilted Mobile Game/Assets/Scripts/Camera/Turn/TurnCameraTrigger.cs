@@ -2,13 +2,31 @@ using UnityEngine;
 
 public class TurnCameraTrigger : MonoBehaviour
 {
-    [SerializeField] private CameraFollow.TargetCameraRotation targetCameraRotation;
+    [Header("NORMAL FLOW TARGET")]
+    [SerializeField] private CameraFollow.TargetCameraRotation normalFlowTarget;
+
+    [Header("REVERSE FLOW TARGET")]
+    [SerializeField] private CameraFollow.TargetCameraRotation reverseFlowTarget;
+
+    private CameraFollow camFollow;
+
+    private void Start()
+    {
+        camFollow = Camera.main.GetComponentInParent<CameraFollow>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            Camera.main.GetComponentInParent<CameraFollow>().TurnCamera(targetCameraRotation);
+            if (camFollow.lastTarget == normalFlowTarget)
+            {
+                camFollow.TurnCamera(reverseFlowTarget);
+            }
+            else
+            {
+                camFollow.TurnCamera(normalFlowTarget);
+            }
         }
     }
 }

@@ -1,3 +1,4 @@
+using EnemyAI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,8 @@ public class Health : MonoBehaviour
     private const float maxHealth = 100f;
 
     [SerializeField] private Slider lifebar;
+
+    [SerializeField] private GameObject onDeathVfx;
 
     private void Awake()
     {
@@ -63,8 +66,9 @@ public class Health : MonoBehaviour
         }
         else
         {
-            Debug.Log($"{name} died");
             Destroy(gameObject);
+            GameObject vfx = Instantiate(onDeathVfx, transform.position, onDeathVfx.transform.rotation);
+            Destroy(vfx, 1);
         }
     }
 

@@ -31,7 +31,6 @@ namespace EnemyAI.BruteEnemy
 
         protected override void Update()
         {
-            base.Update();
             RampageRun_Update();
         }
 
