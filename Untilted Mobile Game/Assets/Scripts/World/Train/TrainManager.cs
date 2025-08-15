@@ -16,6 +16,11 @@ public class TrainManager : MonoBehaviour
     private const float speed = 50f;
     private GameObject trainGo;
 
+    [Header("VFX & AUDIO SETTINGS")]
+    [SerializeField] private GameObject[] vfxPfs;
+    [SerializeField] private AudioSource audioSource;
+
+
     private void Start()
     {
         Start_GetReferences();
@@ -57,6 +62,18 @@ public class TrainManager : MonoBehaviour
     private IEnumerator CRSpawnTrain()
     {
         yield return new WaitForSeconds(timeBeforeRespawn);
+
+        foreach (GameObject vfx in vfxPfs)
+        {
+            vfx.SetActive(false);
+        }
+
+        foreach (GameObject vfx in vfxPfs)
+        {
+            vfx.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(3f);
 
         for (int i = 0; i < trainGo.transform.childCount; i++)
         {
