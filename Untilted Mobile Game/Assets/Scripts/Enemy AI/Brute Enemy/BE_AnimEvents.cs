@@ -11,6 +11,15 @@ public class BE_AnimEvents : MonoBehaviour
         bruteEnemy = GetComponentInParent<BruteEnemy>();
     }
 
+    public void PlayStepSound()
+    {
+        bruteEnemy.AnimEvent_PlayStepSound();
+    }
+    public void PlayRunStepSound()
+    {
+        bruteEnemy.AnimEvent_PlayRunStepSound();
+    }
+
     public void StopMoving()
     {
         bruteEnemy.AnimEvent_StopMoving();
@@ -19,6 +28,16 @@ public class BE_AnimEvents : MonoBehaviour
     public void StartRunning() 
     {
         bruteEnemy.AnimEvent_StartRunning();
+    }
+
+    public void EnableRunVfx()
+    {
+        bruteEnemy.AnimEvents_EnableRunVfX();
+    }
+
+    public void DisableRunVfx()
+    {
+        bruteEnemy.AnimEvents_DisableRunVfx();
     }
 
     public void StopAcceleration()
@@ -44,6 +63,16 @@ public class BE_AnimEvents : MonoBehaviour
     public void FinishAttack()
     {
         bruteEnemy.AnimEvent_FinishAttack();
+    }
+
+    public void DisableCombat()
+    {
+        bruteEnemy.AnimEvent_OnDeathStart();
+    }
+
+    public void Death()
+    {
+        bruteEnemy.AnimEvent_OnDeath();
     }
 
 }

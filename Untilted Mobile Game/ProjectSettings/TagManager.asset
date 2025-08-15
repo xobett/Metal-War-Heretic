@@ -9,6 +9,7 @@ TagManager:
   - Slice Button
   - Player Lifebar
   - End Point
+  - Dead
   layers:
   - Default
   - TransparentFX

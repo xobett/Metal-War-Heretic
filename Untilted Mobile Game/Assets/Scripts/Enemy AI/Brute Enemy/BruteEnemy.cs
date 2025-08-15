@@ -6,37 +6,73 @@ namespace EnemyAI.BruteEnemy
     {
         [Header("--- BRUTE ENEMY SETTINGS ---\n")]
 
+
         [Header("RAMPAGE RUN\n")]
 
         [Header("RUN SPEED AND DAMAGE SETTINGS")]
         [SerializeField] private float rmpDamage;
         [SerializeField] private int rmpSpeed;
+
         private bool rmpPlayerHit;
-        
+
+        [SerializeField] private GameObject runVfx;
+
         private int rmpTriggerDistance;
         private float playerDistance;
+
+        private LayerMask whatIsPlayer;
 
         [Header("TIMER SETTINGS")]
         [SerializeField, Range(2f, 6f)] private int rmpRunningTime;
         [SerializeField, Range(10f, 15f)] private int rmpCooldownTime;
 
-        private bool rmpIsRunning; 
-        private bool rmpCoolingDown;
+        private bool rmpIsRunning;
+        [SerializeField] private bool rmpCoolingDown;
 
         protected override void Start()
         {
             base.Start();
+            agent.stoppingDistance = stoppingDistance;
+            whatIsPlayer = LayerMask.GetMask("Player");
             RampageRun_Start();
         }
 
         protected override void Update()
         {
+            MoveTowardsPlayer();
+            FollowPlayer_Update();
+
+            Animator_Update();
+            Rotation_Update();
             RampageRun_Update();
+        }
+
+        private void MoveTowardsPlayer()
+        {
+            if (agent.remainingDistance <= stoppingDistance && Physics.CheckSphere(transform.position, 1.5f, whatIsPlayer))
+            {
+                if (isExecutingAttack) return;
+                isExecutingAttack = true;
+                ExecuteHeavyPunch();
+            }
+        }
+
+        private void FollowPlayer_Update()
+        {
+            if (!isExecutingAttack)
+            {
+                agent.destination = player.transform.position;
+            }
         }
 
         public override void Attack()
         {
             ExecuteHeavyPunch();
+        }
+
+        public override void OnDamage(float damage)
+        {
+            GetComponent<Health>().TakeDamage(damage);
         }
 
         #region HEAVY PUNCH
@@ -52,7 +88,7 @@ namespace EnemyAI.BruteEnemy
         private void RampageRun_Start()
         {
             rmpCoolingDown = true;
-            RunCooldown();
+            RMPRunCooldown();
         }
 
         private void RampageRun_Update()
@@ -69,9 +105,9 @@ namespace EnemyAI.BruteEnemy
 
         private void RampageRunTriggerCheck()
         {
-            if (!isExecutingAttack)
+            if (!rmpCoolingDown)
             {
-                if (!rmpCoolingDown && playerDistance > rmpTriggerDistance)
+                if (!isExecutingAttack && playerDistance > rmpTriggerDistance)
                 {
                     ExecuteRampageRun();
                 }
@@ -106,12 +142,12 @@ namespace EnemyAI.BruteEnemy
             }
         }
 
-        private void RunCooldown()
+        private void RMPRunCooldown()
         {
-            Invoke(nameof(DisableCooldown), rmpCooldownTime);
+            Invoke(nameof(RMPDisableCooldown), 10);
         }
 
-        private void DisableCooldown()
+        private void RMPDisableCooldown()
         {
             rmpCoolingDown = false;
         }
@@ -119,6 +155,16 @@ namespace EnemyAI.BruteEnemy
         #endregion RAMPAGE RUN
 
         #region ANIMATION EVENT METHODS
+
+        public void AnimEvents_EnableRunVfX()
+        {
+            runVfx.SetActive(true);
+        }
+
+        public void AnimEvents_DisableRunVfx()
+        {
+            runVfx.SetActive(false);
+        }
 
         public void AnimEvent_StopMoving()
         {
@@ -153,8 +199,21 @@ namespace EnemyAI.BruteEnemy
 
         public void AnimEvent_ResetSpeed()
         {
+            Debug.Log($"Cooldown queried");
             agent.speed = walkSpeed;
-            RunCooldown();
+            RMPRunCooldown();
+        }
+
+        public void AnimEvent_PlayStepSound()
+        {
+            audioSrc.clip = AudioManager.Instance.GetClip("BRUTO PISADAS");
+            audioSrc.Play();
+        }
+
+        public void AnimEvent_PlayRunStepSound()
+        {
+            audioSrc.clip = AudioManager.Instance.GetClip("BRUTO CORRER");
+            audioSrc.Play();
         }
 
         #endregion ANIMATION EVENT METHODS

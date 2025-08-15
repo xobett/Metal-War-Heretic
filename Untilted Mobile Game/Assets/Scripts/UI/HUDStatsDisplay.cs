@@ -4,7 +4,6 @@ using UnityEngine;
 public class HUDStatsDisplay : MonoBehaviour
 {
     [Header("HUD TEXT SETTINGS")]
-    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private TextMeshProUGUI comboCountText;
 
     private ComboCounter comboCounter;
@@ -18,13 +17,7 @@ public class HUDStatsDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DisplayActualScore();
         DisplayActualComboCount();
-    }
-
-    private void DisplayActualScore()
-    {
-        scoreText.text = $"Score : {GameManager.Instance.coins.ToString()}";
     }
 
     private void DisplayActualComboCount()

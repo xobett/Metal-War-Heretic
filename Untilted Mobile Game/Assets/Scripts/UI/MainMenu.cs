@@ -1,108 +1,53 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 public class MainMenu : MonoBehaviour
 {
     [Header("MAIN MENU PANELS")]
-    [SerializeField] private GameObject optionsPanel;
-    [SerializeField] private GameObject storePanel;
-    [SerializeField] private GameObject creditsPanel;
-    [SerializeField] private GameObject exitPanel;
-
-    [SerializeField] private GameObject darkPanel;
+    [SerializeField] private Animator optionsPanel;
+    [SerializeField] private Animator settingsPanel;
+    [SerializeField] private Animator storePanel;
 
     [Header("MAIN MENU BUTTONS")]
     [SerializeField] private Button playButton;
-    [SerializeField] private Button optionsButton;
+    [SerializeField] private Button settingsButton;
     [SerializeField] private Button storeButton;
     [SerializeField] private Button creditsButton;
-    [SerializeField] private Button exitButton;
 
     [Header("EXTRA BUTTONS")]
-    [SerializeField] private Button exitGameButton;
-    [SerializeField] private Button[] backButtons;
+    [SerializeField] private Button settingsBackButton;
+    [SerializeField] private Button storeBackButton;
 
-    private List<GameObject> panels = new List<GameObject>();
-
-    void Start()
+    private void Start()
     {
-        AssignButtonEvents();
-
-
-    }
-
-    #region PLAY - EXIT METHODS
-    public void LoadGame()
-    {
-        SceneManager.LoadScene("Loading Game");
-    }
-    private void ExitGame()
-    {
-        Application.Quit();
-    }
-    #endregion
-
-    #region BUTTON EVENTS & PANELS ASSIGNMENT
-    private void AssignButtonEvents()
-    {
-        playButton.onClick.AddListener(LoadGame);
-
-        optionsButton.onClick.AddListener(ShowOptions);
+        settingsButton.onClick.AddListener(ShowSettings);
         storeButton.onClick.AddListener(ShowStore);
-        creditsButton.onClick.AddListener(ShowCredits);
-        exitButton.onClick.AddListener(ShowExit);
 
-        exitGameButton.onClick.AddListener(ExitGame);
-
-        foreach (Button button in backButtons)
-        {
-            button.onClick.AddListener(HidePanels);
-        }
-
-        panels.Add(optionsPanel);
-        panels.Add(storePanel);
-        panels.Add(creditsPanel);
-        panels.Add(exitPanel);
+        settingsBackButton.onClick.AddListener(ReturnFromSettings);
+        storeBackButton.onClick.AddListener(ReturnFromStore);
     }
-    #endregion BUTTON EVENTS & PANELS ASSIGNMENT
 
-    #region SHOW SELECTION METHODS
-    private void ShowOptions()
+    private void ShowSettings()
     {
-        darkPanel.SetActive(true);
-        optionsPanel.SetActive(true);
+        optionsPanel.SetTrigger("Swipe Up");
+        settingsPanel.SetTrigger("Swipe In");
     }
 
     private void ShowStore()
     {
-        darkPanel.SetActive(true);
-        storePanel.SetActive(true);
+        optionsPanel.SetTrigger("Swipe Up");
+        storePanel.SetTrigger("Swipe In");
     }
 
-    private void ShowCredits()
+    private void ReturnFromSettings()
     {
-        darkPanel.SetActive(true);
-        creditsPanel.SetActive(true);
+        settingsPanel.SetTrigger("Swipe Out");
+        optionsPanel.SetTrigger("Swipe Down");
     }
 
-    private void ShowExit()
+    private void ReturnFromStore()
     {
-        darkPanel.SetActive(true);
-        exitPanel.SetActive(true);
+        storePanel.SetTrigger("Swipe Out");
+        optionsPanel.SetTrigger("Swipe Down");
     }
-    #endregion SHOW SELECTION METHODS
-
-    #region GO BACK METHODS
-    private void HidePanels()
-    {
-        foreach (GameObject panel in panels)
-        {
-            panel.SetActive(false);
-        }
-
-        darkPanel.SetActive(false);
-    }
-    #endregion GO BACK METHODS
 }

@@ -10,6 +10,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Slider lifebar;
 
     [SerializeField] private GameObject onDeathVfx;
+    bool triggeredDeath;
 
     private void Awake()
     {
@@ -66,9 +67,10 @@ public class Health : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
-            GameObject vfx = Instantiate(onDeathVfx, transform.position, onDeathVfx.transform.rotation);
-            Destroy(vfx, 1);
+            if (triggeredDeath) return;
+            Animator animator = GetComponentInChildren<Animator>();
+            animator.SetTrigger("Death");
+            triggeredDeath = true;
         }
     }
 

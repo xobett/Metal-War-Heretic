@@ -1,3 +1,4 @@
+using EnemyAI.BruteEnemy;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,7 +24,7 @@ namespace EnemyAI
         [Header("VFX SETTINGS")]
         [SerializeField] private GameObject onDeathVfx;
 
-        private AudioSource audioSrc;
+        protected AudioSource audioSrc;
 
         #endregion VFX
 
@@ -99,11 +100,12 @@ namespace EnemyAI
 
         private void Start_GetReferences()
         {
+            player = Player.Instance.gameObject;
+
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponentInChildren<Animator>();
             audioSrc = GetComponentInChildren<AudioSource>();
 
-            player = Player.Instance.gameObject;
         }
 
         private void Start_CreateFSMStates()
@@ -171,7 +173,7 @@ namespace EnemyAI
             GameManager.Instance.IncreaseScore(score);
         }
 
-        public void OnDamage(float damage)
+        public virtual void OnDamage(float damage)
         {
             GetComponent<Health>().TakeDamage(damage);
 
@@ -307,7 +309,7 @@ namespace EnemyAI
 
         #region ROTATION
 
-        private void Rotation_Update()
+        protected void Rotation_Update()
         {
             GetCurrentPlayerRot();
             LookAtPlayer();
@@ -357,7 +359,7 @@ namespace EnemyAI
 
         #region ANIMATOR
 
-        private void Animator_Update()
+        protected void Animator_Update()
         {
             SetWalkAnimation();
             SetRotationAnimation();
@@ -404,7 +406,7 @@ namespace EnemyAI
         public void AnimEvent_FinishAttack()
         {
             isExecutingAttack = false;
-            RunAttackCooldown(); //////////
+            RunAttackCooldown(); 
         }
 
         public void AnimEvent_StopFacingAtPlayer()
@@ -415,6 +417,19 @@ namespace EnemyAI
         public void AnimEvent_SmoothResetRotation()
         {
             ableToFace = true;
+        }
+
+        public void AnimEvent_OnDeathStart()
+        {
+            gameObject.tag = "Dead";
+
+            GameObject vfx = Instantiate(onDeathVfx, transform.position, onDeathVfx.transform.rotation);
+            Destroy(vfx, 3);
+        }
+
+        public void AnimEvent_OnDeath()
+        {
+            Destroy(gameObject);
         }
 
         #endregion ANIMATION EVENT METHDOS

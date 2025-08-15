@@ -1,3 +1,4 @@
+using EnemyAI.BruteEnemy;
 using EnemyAI.HammerEnemy;
 using EnemyAI.ShieldEnemy;
 using UnityEngine;
@@ -25,4 +26,15 @@ public class HE_AnimEvents : MonoBehaviour
     {
         hammerEnemy.AnimEvent_FinishAttack();
     }
+
+    public void DisableCombat()
+    {
+        hammerEnemy.AnimEvent_OnDeathStart();
+    }
+
+    public void Death()
+    {
+        hammerEnemy.AnimEvent_OnDeath();
+    }
+
 }

@@ -27,7 +27,6 @@ public class AudioManager : MonoBehaviour
     void Start()
     {
         Start_InstantiateAudioSources();
-        Start_TestPlay();
     }
 
     #region START 
@@ -84,7 +83,7 @@ public class AudioManager : MonoBehaviour
         return null;
     }
 
-    private AudioClip GetClip(string soundName)
+    public AudioClip GetClip(string soundName)
     {
         if (soundDatabase.GetSound(soundName) == null)
         {

@@ -94,10 +94,9 @@ public class SliceAttack : MonoBehaviour
 
             if (inCombat)
             {
-                dashMovement = Vector3.right * JoystickManager.Instance.HorizontalInput() + Vector3.forward * JoystickManager.Instance.ForwardInput();
+                dashMovement = GetCameraRelativeGC();
 
-                Vector3 move = new Vector3(JoystickManager.Instance.HorizontalInput(), 0, JoystickManager.Instance.ForwardInput());
-                float targetAngle = Mathf.Atan2(move.x, move.z) * Mathf.Rad2Deg;
+                float targetAngle = Mathf.Atan2(dashMovement.x, dashMovement.z) * Mathf.Rad2Deg;
 
                 transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
             }
@@ -108,6 +107,22 @@ public class SliceAttack : MonoBehaviour
 
             charCtrlr.Move(dashMovement * speed * Time.deltaTime);
         }
+    }
+
+    private Vector3 GetCameraRelativeGC()
+    {
+        Vector3 camFwd = Camera.main.transform.forward;
+        camFwd.y = 0;
+        camFwd.Normalize();
+
+        Vector3 camRght = Camera.main.transform.right;
+        camRght.y = 0;
+        camRght.Normalize();
+
+        Vector3 cameraGc = (camFwd * JoystickManager.Instance.ForwardInput()) + (camRght * JoystickManager.Instance.HorizontalInput());
+        cameraGc.Normalize();
+
+        return cameraGc;
     }
 
     #endregion SLICE ATTACK
