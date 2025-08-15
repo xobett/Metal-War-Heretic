@@ -21,14 +21,9 @@ public class EE_AnimEvents : MonoBehaviour
         Destroy(vfx, 3);
     }
 
-    public void ThrowElectricBall()
+    public void ThrowLightning()
     {
-        electricEnemy.AnimEvent_ThrowElectricBall();
-    }
-
-    public void SpawnElectricVFX()
-    {
-        electricEnemy.AnimEvent_SpawnElectricVFX();
+        electricEnemy.AnimEvent_ThrowLightning();
     }
 
     public void SpawnElectricArea()

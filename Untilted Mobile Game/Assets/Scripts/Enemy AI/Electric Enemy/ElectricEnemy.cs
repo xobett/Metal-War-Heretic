@@ -14,15 +14,16 @@ namespace EnemyAI.ElectricEnemy
         [Header("DISTANCE ATTACK SETTINGS")]
         [SerializeField] private Transform spawnPoint;
 
+        [SerializeField] private GameObject lightningVfx; 
+
         [SerializeField] private float distanceAttackSpeed;
         [SerializeField] private float distanceAttackDamage;
         [SerializeField] private float distanceAttackLifetime;
 
         [Header("SECONDARY ABILITY - ELECTRIC ATTACK\n")]
 
-        [Header("ELECTRIC ATTACK PREFAB | CUE VFX")]
+        [Header("ELECTRIC ATTACK PREFAB")]
         [SerializeField] private GameObject electricAreaPf;
-        [SerializeField] private GameObject cueElectricVfx;
 
         [Header("ELECTRIC ATTACK SETTINGS")]
         [SerializeField] private int electricAreaLifetime;
@@ -80,23 +81,22 @@ namespace EnemyAI.ElectricEnemy
 
         #region Animation Event Methods
 
-        public void AnimEvent_ThrowElectricBall()
+        public void AnimEvent_ThrowLightning()
         {
-            distanceAttackPf.GetComponent<ElectricBall>().SetElectricBallSettings(transform.forward, distanceAttackDamage, distanceAttackSpeed, distanceAttackLifetime);
-            Instantiate(distanceAttackPf, spawnPoint.position, Quaternion.identity);
-        }
+            Vector3 spawnPos = spawnPoint.position;
+            spawnPos.y = 1.5f;
+            GameObject lightning = Instantiate(distanceAttackPf, spawnPos, Quaternion.identity);
+            lightning.GetComponent<LightningCollider>().SetElectricBallSettings(transform.forward, distanceAttackDamage, distanceAttackSpeed);
 
-        public void AnimEvent_SpawnElectricVFX()
-        {
-            electricAreaSpawnPos = player.transform.position;
-            electricAreaSpawnPos.y = 1.2f;
-
-            GameObject vfx = Instantiate(cueElectricVfx, electricAreaSpawnPos, cueElectricVfx.transform.rotation);
-            Destroy(vfx, 1.6f);
+            Quaternion rot = Quaternion.Euler(-90, spawnPoint.transform.eulerAngles.y, spawnPoint.eulerAngles.z);
+            GameObject vfx = Instantiate(lightningVfx, spawnPoint.position, rot);
         }
 
         public void AnimEvent_SpawnElectricArea()
         {
+            electricAreaSpawnPos = player.transform.position;
+            electricAreaSpawnPos.y = 1.3f;
+
             electricAreaPf.GetComponent<ElectricArea>().SetElectricAreaSettings(electricAreaDamage, electricAreaLifetime);
             Instantiate(electricAreaPf, electricAreaSpawnPos, electricAreaPf.transform.rotation);
             RunCooldown();

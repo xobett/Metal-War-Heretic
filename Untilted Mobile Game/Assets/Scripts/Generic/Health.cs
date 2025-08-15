@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Slider lifebar;
 
     [SerializeField] private GameObject onDeathVfx;
-    bool triggeredDeath;
+    private bool triggeredDeath;
 
     private void Awake()
     {

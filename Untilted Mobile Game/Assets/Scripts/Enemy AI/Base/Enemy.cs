@@ -31,7 +31,7 @@ namespace EnemyAI
         #region NAVIGATION
 
         [Header("--- ENEMY BASE SETTINGS ---\n")]
-        public NavMeshAgent agent;
+        internal NavMeshAgent agent;
 
         [Header("NAVIGATION SETTINGS")]
         [SerializeField] public float walkSpeed = 1.5f;
@@ -39,9 +39,9 @@ namespace EnemyAI
 
         [SerializeField] public float stoppingDistance;
 
-        public Vector3 waitingPos;
+        internal Vector3 waitingPos;
 
-        public Vector3 attackPos;
+        internal Vector3 attackPos;
 
         internal bool UpdatedPosition = false;
 

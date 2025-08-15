@@ -8,6 +8,8 @@ public class ElectricArea : MonoBehaviour
     private bool ableToZap;
     private float timer;
 
+    private bool timerEnabled = false;
+
     [SerializeField] private float damage;
     [SerializeField] private float lifetime;
 
@@ -18,7 +20,17 @@ public class ElectricArea : MonoBehaviour
     private void Start()
     {
         StartCoroutine(AutoDestroy());
+        Invoke(nameof(Start_EnableTimer), 3f);
     }
+
+    #region START
+
+    private void Start_EnableTimer()
+    {
+        timerEnabled = true;
+    }
+
+    #endregion START
 
     private void Update()
     {
@@ -70,6 +82,8 @@ public class ElectricArea : MonoBehaviour
 
     private void Timer()
     {
+        if (!timerEnabled) return;
+
         timer -= Time.deltaTime;
 
         if (timer < 0)
