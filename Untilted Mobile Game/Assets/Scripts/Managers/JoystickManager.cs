@@ -30,7 +30,7 @@ public class JoystickManager : MonoBehaviour, IDragHandler, IPointerDownHandler,
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (PauseManager.Instance.GamePaused) return;
+        if (UIManager.Instance.GamePaused) return;
 
         //Whenever there is an event where something is dragged, the IDragHandler sends to this method an event data containing data about the drag interaction.
         //Within that drag interaction, then using the following method, detects if a player touched from the screen to a point within the rect transform, needing the 

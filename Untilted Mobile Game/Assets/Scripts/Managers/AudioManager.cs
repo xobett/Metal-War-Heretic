@@ -73,6 +73,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlaySound(string soundName, int fixedIndex)
+    {
+        AudioSource src = audioSources[Random.Range(0, audioSources.Length)];
+
+        src.clip = GetClip(soundName);
+        src.Play();
+    }
+
     private AudioSource GetSource()
     {
         foreach (AudioSource source in audioSources)

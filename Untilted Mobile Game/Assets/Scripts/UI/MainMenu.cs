@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
@@ -20,11 +21,17 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        playButton.onClick.AddListener(LoadLevel);
         settingsButton.onClick.AddListener(ShowSettings);
         storeButton.onClick.AddListener(ShowStore);
 
         settingsBackButton.onClick.AddListener(ReturnFromSettings);
         storeBackButton.onClick.AddListener(ReturnFromStore);
+    }
+
+    private void LoadLevel()
+    {
+        SceneManager.LoadSceneAsync("Loading Game");
     }
 
     private void ShowSettings()

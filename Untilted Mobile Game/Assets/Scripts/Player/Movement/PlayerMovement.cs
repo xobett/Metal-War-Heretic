@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (!PauseManager.Instance.GamePaused && Player.Instance.movementEnabled)
+        if (!UIManager.Instance.GamePaused && Player.Instance.movementEnabled)
         {
             MovementCheck();
             Gravity();
@@ -60,27 +60,24 @@ public class PlayerMovement : MonoBehaviour
 
     #region MOVEMENT
 
-    public void DisableMovement()
+    public void DisableMovementAnim()
     {
         animator.SetBool("isWalking", false);
     }
 
     private void MovementCheck()
     {
-        if (!IsHit && !isDashing)
+        if (IsHit)
         {
-            if (inCombat)
-            {
-                MeleeAssistMovement();
-            }
-            else
-            {
-                NormalMovement();
-            }
+            PushedMovement();
+        }
+        else if (inCombat)
+        {
+            CombatMovement();
         }
         else
         {
-            HitMovement();
+            NormalMovement();
         }
     }
 
@@ -115,15 +112,20 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetHitMovement(Vector3 pushedDirection, float pushedForce, float pushedTime)
     {
+        if (inCombat) GetComponent<MeleeAttack>().CancelCombatState();
+
         hitDirection = pushedDirection;
         hitSpeed = pushedForce;
         hitForce = pushedTime;
 
         IsHit = true;
+        animator.SetBool("isPushed", IsHit);
+        animator.CrossFade($"Base Layer.Empuje", 0f);
+
         Invoke(nameof(DisableHitMovement), hitForce);
     }
 
-    private void HitMovement()
+    private void PushedMovement()
     {
         charCtrlr.Move(hitDirection * hitSpeed * Time.deltaTime);
     }
@@ -131,17 +133,18 @@ public class PlayerMovement : MonoBehaviour
     private void DisableHitMovement()
     {
         IsHit = false;
+        animator.SetBool("isPushed", IsHit);
     }
 
     #endregion HIT MOVEMENT
 
     #region MELEE ASSIST MOVEMENT
 
-    private void MeleeAssistMovement()
+    private void CombatMovement()
     {
         Vector3 cameraGc = GetCameraRelativeGC();
 
-        if (Physics.Raycast(transform.position, cameraGc * 5f, out RaycastHit hit, 3f, whatIsMelee))
+        if (Physics.Raycast(transform.position, cameraGc * 5f, out RaycastHit hit, 1f, whatIsMelee))
         {
             Vector3 direction = hit.collider.transform.position - transform.position;
 
@@ -149,7 +152,8 @@ public class PlayerMovement : MonoBehaviour
 
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 30f * Time.deltaTime);
 
-            Vector3 nearEnemyPos = hit.collider.transform.position + hit.transform.forward * 1.5f;
+            //Vector3 nearEnemyPos = hit.collider.transform.position + hit.transform.forward * 1.5f;
+            Vector3 nearEnemyPos = hit.transform.position + (transform.position - hit.transform.position).normalized;
             Vector3 moveDirection = nearEnemyPos - transform.position;
 
             float distance = Vector3.Distance(transform.position, nearEnemyPos);

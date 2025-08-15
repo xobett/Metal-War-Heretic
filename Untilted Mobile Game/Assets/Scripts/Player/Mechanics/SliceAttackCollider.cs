@@ -7,17 +7,29 @@ public class SliceAttackCollider : MonoBehaviour
 
     private CameraFollowPH playerCam;
 
+    [SerializeField] private GameObject hitEnemyVfx;
+
     private void Start()
     {
         playerCam = Camera.main.GetComponent<CameraFollowPH>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider enemyCollider)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && isDashing)
+        if (enemyCollider.gameObject.layer == LayerMask.NameToLayer("Enemy") && isDashing)
         {
-            other.GetComponent<IDamageable>().OnDamage(sliceDamage);
             GetComponentInParent<SliceAttack>().CancelSliceMovement();
+
+            Vector3 direction = enemyCollider.transform.position - transform.position;
+            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+            Player.Instance.DisableMovement(0.28f);
+
+            Vector3 hitPos = enemyCollider.transform.position + enemyCollider.transform.forward * 0.4f;
+            GameObject vfx = Instantiate(hitEnemyVfx, hitPos, hitEnemyVfx.transform.rotation);
+            Destroy(vfx, 1f);
+
+            enemyCollider.GetComponent<IDamageable>().OnDamage(sliceDamage);
         }
     }
 

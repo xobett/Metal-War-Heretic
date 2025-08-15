@@ -55,12 +55,12 @@ public class StoreManager : MonoBehaviour
 
     public void BuySelectedItem()
     {
-        if (GameManager.Instance.coins >= selectedSkin.cost)
+        if (GameManager.Instance.score >= selectedSkin.cost)
         {
             selectedSkin.isPurchased = true;
             selectedSkin.isEquipped = true;
 
-            GameManager.Instance.coins -= selectedSkin.cost;
+            GameManager.Instance.score -= selectedSkin.cost;
             GameManager.Instance.AddPurchasedSkin(selectedSkin);
             GameManager.Instance.EquipSkin(selectedSkin);
 
@@ -103,7 +103,7 @@ public class StoreManager : MonoBehaviour
 
     private void UpdatePlayerCoinsText()
     {
-        playerCoins.text = GameManager.Instance.coins.ToString();
+        playerCoins.text = GameManager.Instance.score.ToString();
     }
 
     public void EquipSelectedSkin()

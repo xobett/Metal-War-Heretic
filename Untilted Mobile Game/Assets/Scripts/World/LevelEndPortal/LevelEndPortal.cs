@@ -14,8 +14,7 @@ public class LevelEndPortal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Player.Instance.movementEnabled = false;
-            other.GetComponent<PlayerMovement>().DisableMovement();
+            Player.Instance.DisableMovement();
             anim.SetTrigger("Teleport");
         }
     }

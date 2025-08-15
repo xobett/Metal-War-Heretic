@@ -21,15 +21,14 @@ public class SliceAttack : MonoBehaviour
     private CameraFollowPH cam;
 
     [Header("SLICE ATTACK ASSIST SETTINGS")]
-    [SerializeField, Range(1f, 5f)] private float assistRadius;
     [SerializeField] private LayerMask whatIsEnemy;
 
     private bool isPressingSlice;
 
     [Header("SLICE COOLDOWN SETTINGS")]
-    [SerializeField, Range(0.5f, 2f)] private float cooldownTime;
-
-    [SerializeField] private bool isCooling;
+    private float cooldownTime = 0.5f;
+    private bool isCooling;
+    
     public bool IsDashing { get; private set; }
 
     //Reference to the player's character controller
@@ -45,6 +44,7 @@ public class SliceAttack : MonoBehaviour
     void Update()
     {
         if (!Player.Instance.movementEnabled) return;
+
         SliceCheck();
         SliceMovement();
         SnapAssist();
@@ -55,15 +55,18 @@ public class SliceAttack : MonoBehaviour
     public void CancelSliceMovement()
     {
         IsDashing = false;
+        animator.SetBool("isDashing", false);
     }
 
     private void SliceCheck()
     {
+        if (IsHit) return;
+
         if (!isCooling && !IsDashing && (IsSlicing() || isPressingSlice))
         {
             StartCoroutine(StartSlice());
 
-            //Change from trigger to play for better transition
+            animator.SetBool("isDashing", true);
             animator.CrossFade("Base Layer.Dash", 0f);
         }
     }
@@ -79,7 +82,12 @@ public class SliceAttack : MonoBehaviour
         isCooling = true;
         yield return new WaitForSeconds(duration);
 
-        IsDashing = false;
+        if (IsDashing)
+        {
+            IsDashing = false;
+            animator.SetBool("isDashing", false);
+        }
+
         yield return new WaitForSeconds(cooldownTime);
 
         isCooling = false;
@@ -133,12 +141,26 @@ public class SliceAttack : MonoBehaviour
     {
         if (IsDashing)
         {
-            Collider[] enemyColliders = Physics.OverlapSphere(transform.position, assistRadius, whatIsEnemy, QueryTriggerInteraction.UseGlobal);
+            Vector3 cameraGc = GetCameraRelativeGC();
 
-            if (enemyColliders.Length != 0)
+            if (Physics.Raycast(transform.position, cameraGc * 5f, out RaycastHit hit, 3f, whatIsEnemy))
             {
-                GameObject lockedEnemy = enemyColliders[0].gameObject;
-                transform.position = Vector3.MoveTowards(transform.position, lockedEnemy.transform.position, Time.deltaTime * Mathf.Pow(speed, 2));
+                Vector3 direction = hit.collider.transform.position - transform.position;
+
+                Quaternion rotation = Quaternion.LookRotation(direction, Vector3.up);
+
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 30f * Time.deltaTime);
+
+                //Vector3 nearEnemyPos = hit.collider.transform.position + hit.transform.forward * 1.5f;
+                Vector3 nearEnemyPos = hit.transform.position + (transform.position - hit.transform.position).normalized;
+                Vector3 moveDirection = nearEnemyPos - transform.position;
+
+                float distance = Vector3.Distance(transform.position, nearEnemyPos);
+
+                if (distance > 0.5f)
+                {
+                    charCtrlr.Move(moveDirection.normalized * speed * Time.deltaTime);
+                }
             }
         }
     }
@@ -148,6 +170,8 @@ public class SliceAttack : MonoBehaviour
     #endregion SNAP ASSIST
 
     #region CHECKS
+
+    private bool IsHit => GetComponent<PlayerMovement>().IsHit;
 
     private bool inCombat => GetComponent<MeleeAttack>().InCombat;
 

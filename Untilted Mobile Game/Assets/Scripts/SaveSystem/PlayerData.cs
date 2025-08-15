@@ -7,6 +7,6 @@ public class PlayerData
 
     public PlayerData(GameManager data)
     {
-        this.coins = data.coins;
+        this.coins = data.score;
     }
 }

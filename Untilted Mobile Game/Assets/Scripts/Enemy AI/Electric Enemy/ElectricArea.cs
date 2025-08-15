@@ -16,16 +16,41 @@ public class ElectricArea : MonoBehaviour
     [SerializeField] private bool ableToAutoDestroy;
 
     [SerializeField] private GameObject hitPlayerVfx;
+    private AudioSource audioSource;
 
     private void Start()
     {
-        StartCoroutine(AutoDestroy());
-        Invoke(nameof(Start_EnableTimer), 3f);
+        Start_GetReferences();
+        Start_EnableTimer();
+        Start_SetAutoDestroy();
     }
 
     #region START
 
+    private void Start_GetReferences()
+    {
+        audioSource = GetComponentInChildren<AudioSource>();
+    }
+
     private void Start_EnableTimer()
+    {
+        Invoke(nameof(EnableTimer), 3f);
+
+        audioSource.clip = AudioManager.Instance.GetClip("ELECTRICIDAD SUELO");
+        audioSource.Play();
+    }
+
+    private void Start_SetAutoDestroy()
+    {
+        Invoke(nameof(AutoDestroy), 6.7f);
+    }
+
+    private void AutoDestroy()
+    {
+        Destroy(gameObject);
+    }
+
+    private void EnableTimer()
     {
         timerEnabled = true;
     }
@@ -48,17 +73,6 @@ public class ElectricArea : MonoBehaviour
     }
 
     #endregion SET ELECTRIC AREA SETTINGS
-
-    #region AUTO DESTROY
-
-    private IEnumerator AutoDestroy()
-    {
-        yield return new WaitUntil(() => ableToAutoDestroy);
-
-        Destroy(gameObject, lifetime);
-    }
-
-    #endregion AUTO DESTROY
 
     #region ELECTRIC DAMAGE
 

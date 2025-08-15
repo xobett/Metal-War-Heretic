@@ -134,11 +134,12 @@ namespace EnemyAI.BruteEnemy
         // Pushes player when running
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player") && (rmpIsRunning && !rmpPlayerHit))
+            if (other.CompareTag("Player") && rmpIsRunning)
             {
                 rmpPlayerHit = true;
 
                 PushPlayer(rmpDamage);
+                Debug.Log("Hit player");
             }
         }
 

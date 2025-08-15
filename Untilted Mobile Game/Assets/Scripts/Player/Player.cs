@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
 
     #endregion AWAKE
 
-
     void Start()
     {
         Start_EquipSavedSkin();
@@ -40,6 +39,28 @@ public class Player : MonoBehaviour
     }
 
     #endregion START
+
+    #region MOVEMENT
+
+    public void DisableMovement()
+    {
+        movementEnabled = false;
+        GetComponent<PlayerMovement>().DisableMovementAnim();
+    }
+
+    public void DisableMovement(float time)
+    {
+        movementEnabled = false;
+        GetComponent<PlayerMovement>().DisableMovementAnim();
+        Invoke(nameof(EnableMovement), time);
+    }
+
+    public void EnableMovement()
+    {
+        movementEnabled = true;
+    }
+
+    #endregion MOVEMENT
 
     // Update is called once per frame
     void Update()

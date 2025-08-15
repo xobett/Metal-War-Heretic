@@ -158,6 +158,8 @@ namespace EnemyAI
 
         private void OnDestroy()
         {
+            GameManager.Instance.IncreaseScore(score);
+
             if (enemyArea == null) return;
 
             switch (currentState)
@@ -170,12 +172,12 @@ namespace EnemyAI
             }
 
             enemyArea.RemoveEnemyFromArea(this);
-            GameManager.Instance.IncreaseScore(score);
         }
 
         public virtual void OnDamage(float damage)
         {
             GetComponent<Health>().TakeDamage(damage);
+            transform.rotation = currentFacePlayerRot;
 
             switch (currentState)
             {

@@ -1,17 +1,15 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance {  get; private set; }
+    public static GameManager Instance { get; private set; }
 
     private List<SOPlayerSkin> purchasedSkins = new List<SOPlayerSkin>();
 
     public SOPlayerSkin EquippedSkin;
- 
-    [SerializeField] public int coins;
 
-    private const int maxAddedScore = 100;
+    [SerializeField] public int score;
 
     public int RoundCount { get; private set; }
 
@@ -30,14 +28,10 @@ public class GameManager : MonoBehaviour
 
     public void IncreaseScore(int scoreToAdd)
     {
-        if (scoreToAdd > maxAddedScore)
-        {
-            coins += maxAddedScore;
-        }
-        else
-        {
-            coins += scoreToAdd;
-        }
+        score += scoreToAdd;
+        Level.Instance.AddScore(scoreToAdd);
+
+        Debug.Log("Score was added");
     }
 
     public void EquipSkin(SOPlayerSkin skin)
