@@ -44,4 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fefd236cc44ce2346abf8ac01160a10c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicMixerGroup: {fileID: -1111653183586624673, guid: 7d7bec402e0d0b54c9a2f91dfc0c1189, type: 2}
+  sfxMixerGroup: {fileID: -3505112446358703884, guid: 7d7bec402e0d0b54c9a2f91dfc0c1189, type: 2}
   soundDatabase: {fileID: 11400000, guid: a0330e1b842904b44bc0e50d235467a0, type: 2}
+  blendTime: 0.6

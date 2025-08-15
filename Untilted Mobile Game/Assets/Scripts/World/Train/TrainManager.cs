@@ -32,6 +32,7 @@ public class TrainManager : MonoBehaviour
     private void Start_GetReferences()
     {
         trainGo = transform.GetChild(0).gameObject;
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     private void Start_ResetTrain()
@@ -73,7 +74,13 @@ public class TrainManager : MonoBehaviour
             vfx.SetActive(true);
         }
 
+        audioSource.clip = AudioManager.Instance.GetClip("ANT TREN");
+        audioSource.Play();
+
         yield return new WaitForSeconds(3f);
+
+        audioSource.clip = AudioManager.Instance.GetClip("TREN");
+        audioSource.Play();
 
         for (int i = 0; i < trainGo.transform.childCount; i++)
         {

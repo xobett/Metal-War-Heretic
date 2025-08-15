@@ -30,6 +30,7 @@ public class ElectricArea : MonoBehaviour
     private void Start_GetReferences()
     {
         audioSource = GetComponentInChildren<AudioSource>();
+        audioSource.outputAudioMixerGroup = AudioManager.Instance.sfxMixerGroup;
     }
 
     private void Start_EnableTimer()

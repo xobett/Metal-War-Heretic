@@ -1,12 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
-    private AudioSource[] audioSources = new AudioSource[5];
+    [Header("AUDIO MIXER GROUPS")]
+    [SerializeField] private AudioMixerGroup musicMixerGroup;
+    public AudioMixerGroup sfxMixerGroup;
 
+    private AudioSource[] sfxSources = new AudioSource[5];
+
+    [Header("SOUND DATABASE")]
     [SerializeField] private SOAudioDatabase soundDatabase;
 
     [SerializeField] private float blendTime = 0.6f;
@@ -33,12 +39,13 @@ public class AudioManager : MonoBehaviour
 
     private void Start_InstantiateAudioSources()
     {
-        for (int i = 0; i < audioSources.Length; i++)
+        for (int i = 0; i < sfxSources.Length; i++)
         {
             GameObject go = new GameObject($"Audio Source {i + 1}");
             go.transform.parent = transform;
             AudioSource src = go.AddComponent<AudioSource>();
-            audioSources[i] = src;
+            sfxSources[i] = src;
+            sfxSources[i].outputAudioMixerGroup = sfxMixerGroup; 
         }
     }
 
@@ -46,7 +53,7 @@ public class AudioManager : MonoBehaviour
     {
         soundDatabase.GetSound("TREN");
 
-        audioSources[0].clip = soundDatabase.GetSound("TREN").clip;
+        sfxSources[0].clip = soundDatabase.GetSound("TREN").clip;
 
         Invoke(nameof(Play), 3f);
     }
@@ -75,7 +82,7 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(string soundName, int fixedIndex)
     {
-        AudioSource src = audioSources[Random.Range(0, audioSources.Length)];
+        AudioSource src = sfxSources[Random.Range(0, sfxSources.Length)];
 
         src.clip = GetClip(soundName);
         src.Play();
@@ -83,7 +90,7 @@ public class AudioManager : MonoBehaviour
 
     private AudioSource GetSource()
     {
-        foreach (AudioSource source in audioSources)
+        foreach (AudioSource source in sfxSources)
         {
             if (!source.isPlaying) return source;
         }
@@ -104,7 +111,7 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator CR_BlendSounds(string soundName)
     {
-        AudioSource source = audioSources[Random.Range(0, audioSources.Length)];
+        AudioSource source = sfxSources[Random.Range(0, sfxSources.Length)];
 
         //Fade out
         float timeFadeOut = 1;
