@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5029783946441246543}
   - component: {fileID: 8963385495519773915}
   - component: {fileID: 1384057543106898326}
+  - component: {fileID: 5359161173876310867}
   m_Layer: 0
   m_Name: Horno
   m_TagString: Untagged
@@ -87,6 +88,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5359161173876310867
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8031160011443937704}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 135.99551, y: 392.40314, z: 129.89232}
+  m_Center: {x: -2.0316958, y: 195.46819, z: 7.561034}
 --- !u!1001 &4184321705571816898
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4602441352666187937}
   - component: {fileID: 3238561095549192246}
   - component: {fileID: 2685697180808609490}
+  - component: {fileID: 5149933244143011877}
   m_Layer: 0
   m_Name: Prensa
   m_TagString: Untagged
@@ -86,3 +87,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5149933244143011877
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510872446111746305}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 183.88062, y: 302.8288, z: 303.19577}
+  m_Center: {x: 2.7557373, y: 149.26028, z: 51.59791}

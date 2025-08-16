@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4304178142967726623}
   - component: {fileID: 8618765442571015113}
   - component: {fileID: 1845918524896766792}
+  - component: {fileID: 6136227080377356314}
   m_Layer: 0
   m_Name: Motor_mediano PRUEBA
   m_TagString: Untagged
@@ -8057,3 +8058,24 @@ MonoBehaviour:
   m_SkinMeshRef: {fileID: 0}
   m_OriginalMeshObject: {fileID: 4438561010179705628, guid: f377651178e407f4dabb3fb1ff3a91eb, type: 3}
   m_Mode: 0
+--- !u!65 &6136227080377356314
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6705997355199194147}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 400, y: 611.20386, z: 371.04248}
+  m_Center: {x: 0, y: 39.66568, z: 0}

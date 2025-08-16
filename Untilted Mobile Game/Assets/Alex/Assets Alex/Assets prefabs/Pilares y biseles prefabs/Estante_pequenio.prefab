@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2212534023339764680}
   - component: {fileID: 8430146698741949170}
   - component: {fileID: 5405665816890217832}
+  - component: {fileID: 2614009294478387074}
   m_Layer: 0
   m_Name: Estante_pequenio
   m_TagString: Untagged
@@ -86,3 +87,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &2614009294478387074
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911544857413162104}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 200, y: 200, z: 50}
+  m_Center: {x: -100, y: 100, z: -25}

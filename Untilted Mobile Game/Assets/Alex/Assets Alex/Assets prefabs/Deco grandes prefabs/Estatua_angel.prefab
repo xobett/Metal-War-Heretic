@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3403534406989604995}
   - component: {fileID: 3046443376457760302}
   - component: {fileID: 4833944836139175078}
+  - component: {fileID: 8267923665004810812}
   m_Layer: 0
   m_Name: Estatua_angel
   m_TagString: Untagged
@@ -3729,3 +3730,24 @@ MonoBehaviour:
   m_SkinMeshRef: {fileID: 0}
   m_OriginalMeshObject: {fileID: -2250095435773143309, guid: f377651178e407f4dabb3fb1ff3a91eb, type: 3}
   m_Mode: 0
+--- !u!65 &8267923665004810812
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4352780675897543429}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 117.144775, y: 494.34042, z: 110.77645}
+  m_Center: {x: -0.24719238, y: 247.17021, z: -2.7784705}
