@@ -71,6 +71,9 @@ public class Health : MonoBehaviour
             Animator animator = GetComponentInChildren<Animator>();
             animator.SetTrigger("Death");
             triggeredDeath = true;
+
+            Enemy enemy = GetComponent<Enemy>();
+            enemy.OnDeath();
         }
     }
 

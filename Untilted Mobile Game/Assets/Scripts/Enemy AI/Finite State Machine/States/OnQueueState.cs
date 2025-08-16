@@ -87,7 +87,13 @@ public class OnQueueState : EnemyState
 
     public override void Exit()
     {
+        if (enemy.forcedAttackState)
+        {
+            enemy.waitingPos = enemy.transform.position;
+            enemy.agent.destination = enemy.transform.position;
+            enemy.ableToFace = true;
+        }
+
         enemy.RemoveWaitPos();
-        Debug.Log($"{enemy.gameObject.name} exit queue ");
     }
 }

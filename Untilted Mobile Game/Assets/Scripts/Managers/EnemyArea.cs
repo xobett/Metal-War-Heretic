@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class EnemyArea : MonoBehaviour
 {
+    [Header("ENEMY PREFABS")]
+    [SerializeField] private GameObject hammerEnemyPf;
+    [SerializeField] private GameObject electricEnemyPf;
+    [SerializeField] private GameObject shieldEnemyPf;
+
     [Header("AREA ENEMY SETTINGS")]
     [SerializeField] private GameObject[] enemiesToSpawn;
     [SerializeField] private GameObject vfxEnemySpawn;
@@ -80,6 +85,57 @@ public class EnemyArea : MonoBehaviour
     }
 
     #endregion SPAWN
+
+    #region RESPAWN
+
+    public void RespawnEnemy(EnemyType enemyType, float respawnTime)
+    {
+        StartCoroutine(CR_RespawnEnemy(enemyType, respawnTime));
+    }
+
+    private IEnumerator CR_RespawnEnemy(EnemyType enemyType, float timeBeforeRespawn)
+    {
+        if (aliveEnemies.Count == 0) yield break;
+
+        yield return new WaitForSeconds(timeBeforeRespawn);
+
+        Vector3 spawnPos = GetRandomSpawnPos();
+
+        GameObject vfx = Instantiate(vfxEnemySpawn, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
+        Destroy(vfx, 1.5f);
+
+        GameObject enemyGo = new GameObject();
+
+        switch (enemyType)
+        {
+            case EnemyType.Hammer:
+                {
+                    enemyGo = Instantiate(hammerEnemyPf, spawnPos, Quaternion.identity);
+                    break;
+                }
+            case EnemyType.Electric:
+                {
+                    enemyGo = Instantiate(electricEnemyPf, spawnPos, Quaternion.identity);
+                    break;
+                }
+            case EnemyType.Shield:
+                {
+                    enemyGo = Instantiate(shieldEnemyPf, spawnPos, Quaternion.identity);
+                    break;
+                }
+        }
+
+        Enemy enemy = enemyGo.GetComponent<Enemy>();
+        AddEnemyToArea(enemy);
+        enemy.AssignArea(this);
+        enemy.OnRespawn();
+
+        enemyGo.transform.parent = transform.GetChild(0);
+
+        yield break;
+    }
+
+    #endregion RESPAWN
 
     #region AREA
 
@@ -383,7 +439,7 @@ public class EnemyArea : MonoBehaviour
     {
         if (attackingEnemies.Contains(enemy))
         {
-            attackingEnemies.Remove(enemy); 
+            attackingEnemies.Remove(enemy);
         }
     }
 

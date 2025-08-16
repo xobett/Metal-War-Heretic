@@ -487,20 +487,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398311949e50f99448fc0a34fc07b71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyPf: {fileID: 7993994855593321819}
   currentState: 0
   onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
-  agent: {fileID: 0}
   walkSpeed: 2.35
   runSpeed: 2.5
   stoppingDistance: 2.03
-  waitingPos: {x: 0, y: 0, z: 0}
-  attackPos: {x: 0, y: 0, z: 0}
   player: {fileID: 0}
   damage: 30
-  timeBeforeAttack: 1
   attackCooldown: 0
   score: 100
   ableToFace: 1
+  respawnTime: 0
   rmpDamage: 30
   rmpSpeed: 20
   runVfx: {fileID: 6308259577309416546}

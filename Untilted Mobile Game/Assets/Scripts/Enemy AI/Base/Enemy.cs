@@ -12,16 +12,27 @@ namespace EnemyAI
         OnQueue,
         Attack
     }
+    public enum EnemyType
+    {
+        Hammer,
+        Electric,
+        Shield
+    }
 
     [RequireComponent(typeof(NavMeshAgent))]
     [RequireComponent(typeof(Health))]
     public abstract class Enemy : MonoBehaviour, IDamageable
     {
-        [SerializeField] public State currentState;
+        public State currentState;
+        public EnemyType enemyType;
+
+        #region VFX & AUDIO
 
         [Header("VFX & AUDIO SETTINGS")]
         [SerializeField] private GameObject onDeathVfx;
         protected AudioSource audioSource;
+
+        #endregion VFX & AUDIO
 
         #region NAVIGATION
 
@@ -60,7 +71,7 @@ namespace EnemyAI
 
         [Header("ATTACK SETTINGS")]
         [SerializeField] protected float damage;
-        [SerializeField] protected int timeBeforeAttack;
+        protected int timeBeforeAttack = 5;
 
         internal bool isExecutingAttack;
         internal bool forcedAttackState;
@@ -82,8 +93,14 @@ namespace EnemyAI
 
         #endregion ROTATION
 
-        [Header("FSM SETTINGS")]
+        #region ENEMY AREA
+
         private EnemyArea enemyArea;
+        [SerializeField] private int respawnTime;
+
+        #endregion ENEMY AREA
+
+        #region FSM
 
         private FiniteStateMachine fsm = new FiniteStateMachine();
 
@@ -91,6 +108,8 @@ namespace EnemyAI
         private ChaseState chaseState;
         private OnQueueState onQueueState;
         private AttackState attackState;
+
+        #endregion FSM
 
         protected virtual void Start()
         {
@@ -142,6 +161,16 @@ namespace EnemyAI
             }
         }
 
+        public void OnRespawn()
+        {
+            Invoke(nameof(OnRespawnChangeToQueue), 1f);
+        }
+
+        private void OnRespawnChangeToQueue()
+        {
+            ChangeState(State.OnQueue);
+        }
+
         #endregion FSM
 
         protected virtual void Update()
@@ -152,15 +181,6 @@ namespace EnemyAI
         }
 
         #region ON DAMAGE AND DESTROY
-
-        private void OnDestroy()
-        {
-            GameManager.Instance.IncreaseScore(score);
-
-            if (enemyArea == null) return;
-
-            enemyArea.RemoveEnemyFromArea(this);
-        }
 
         public virtual void OnDamage(float damage)
         {
@@ -182,6 +202,14 @@ namespace EnemyAI
                         break;
                     }
             }
+        }
+
+        public void OnDeath()
+        {
+            GameManager.Instance.IncreaseScore(score);
+
+            enemyArea.RemoveEnemyFromArea(this);
+            enemyArea.RespawnEnemy(enemyType, respawnTime);
         }
 
         #endregion ON DAMAGE AND DESTROY
@@ -264,7 +292,7 @@ namespace EnemyAI
 
         public void RunAttackCooldown()
         {
-            Invoke(nameof(DisableCooldown), 5f);
+            Invoke(nameof(DisableCooldown), timeBeforeAttack);
         }
 
         private void DisableCooldown()

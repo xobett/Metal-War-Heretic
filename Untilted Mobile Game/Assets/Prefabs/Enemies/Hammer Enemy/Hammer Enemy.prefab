@@ -580,16 +580,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+  enemyType: 0
   onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
   walkSpeed: 7
   runSpeed: 8
   stoppingDistance: 1.5
   player: {fileID: 0}
   damage: 20
-  timeBeforeAttack: 0
   attackCooldown: 0
   score: 150
   ableToFace: 0
+  respawnTime: 10
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0

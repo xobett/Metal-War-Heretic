@@ -90,6 +90,7 @@ namespace EnemyAI.ElectricEnemy
 
             Quaternion rot = Quaternion.Euler(-90, spawnPoint.transform.eulerAngles.y, spawnPoint.eulerAngles.z);
             GameObject vfx = Instantiate(lightningVfx, spawnPoint.position, rot);
+            Destroy(vfx, 3);
         }
 
         public void AnimEvent_SpawnElectricArea()
