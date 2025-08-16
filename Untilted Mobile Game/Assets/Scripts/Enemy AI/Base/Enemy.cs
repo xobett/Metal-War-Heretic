@@ -1,4 +1,3 @@
-using EnemyAI.BruteEnemy;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -44,6 +43,7 @@ namespace EnemyAI
         [SerializeField] public float runSpeed = 2.5f;
 
         [SerializeField] public float stoppingDistance;
+        [SerializeField] public float priority;
 
         internal Vector3 waitingPos;
         internal Vector3 attackPos;
@@ -175,7 +175,10 @@ namespace EnemyAI
 
         protected virtual void Update()
         {
-            fsm.Update();
+            if (enemyArea.inArea)
+            {
+                fsm.Update();
+            }
             Rotation_Update();
             Animator_Update();
         }
@@ -185,6 +188,7 @@ namespace EnemyAI
         public virtual void OnDamage(float damage)
         {
             GetComponent<Health>().TakeDamage(damage);
+
             transform.rotation = currentFacePlayerRot;
 
             switch (currentState)
@@ -363,10 +367,10 @@ namespace EnemyAI
             float angle = Quaternion.Angle(transform.rotation, currentFacePlayerRot);
             float remainingAngle = angle;
 
-            while (remainingAngle > 100f)
+            while (remainingAngle > 110f)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, currentFacePlayerRot, 1 - (remainingAngle / angle));
-                remainingAngle -= 25f * Time.deltaTime;
+                remainingAngle -= 55f * Time.deltaTime;
                 yield return null;
             }
 
@@ -429,7 +433,7 @@ namespace EnemyAI
         public void AnimEvent_FinishAttack()
         {
             isExecutingAttack = false;
-            RunAttackCooldown(); 
+            RunAttackCooldown();
         }
 
         public void AnimEvent_StopFacingAtPlayer()

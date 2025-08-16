@@ -585,12 +585,13 @@ MonoBehaviour:
   walkSpeed: 7
   runSpeed: 8
   stoppingDistance: 1.5
+  priority: 0
   player: {fileID: 0}
   damage: 20
   attackCooldown: 0
   score: 150
   ableToFace: 0
-  respawnTime: 10
+  respawnTime: 25
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0

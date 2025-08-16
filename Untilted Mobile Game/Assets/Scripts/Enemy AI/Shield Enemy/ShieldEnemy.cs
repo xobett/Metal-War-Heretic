@@ -66,12 +66,13 @@ namespace EnemyAI.ShieldEnemy
             }
         }
 
-        private void RunCooldown()
+        private void RG_RunCooldown()
         {
-            Invoke(nameof(DisableCooldown), rgCooldownTime);
+            Debug.Log("Called cooldown");
+            Invoke(nameof(RG_DisableCooldown), rgCooldownTime);
         }
 
-        private void DisableCooldown()
+        private void RG_DisableCooldown()
         {
             rgCooldownActive = false;
         }
@@ -114,7 +115,7 @@ namespace EnemyAI.ShieldEnemy
 
         public void AnimEvent_RunCooldown()
         {
-            RunCooldown();
+            RG_RunCooldown();
         }
 
         #endregion ANIMATION EVENT METHODS

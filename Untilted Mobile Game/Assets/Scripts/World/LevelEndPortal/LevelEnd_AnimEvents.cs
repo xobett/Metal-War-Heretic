@@ -10,6 +10,6 @@ public class LevelEnd_AnimEvents : MonoBehaviour
 
     public void EndLevel()
     {
-        SceneManager.LoadScene("Credits");
+        UIManager.Instance.DisplayLevelScore();
     }
 }

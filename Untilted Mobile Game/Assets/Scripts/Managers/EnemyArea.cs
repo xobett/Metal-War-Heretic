@@ -2,6 +2,7 @@ using EnemyAI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using State = EnemyAI.State;
 
 public class EnemyArea : MonoBehaviour
 {
@@ -35,10 +36,12 @@ public class EnemyArea : MonoBehaviour
     private Dictionary<Enemy, Vector3> usedAttackPositions = new Dictionary<Enemy, Vector3>();
 
     private const float waitPositionDistance = 9.0f;
+    float[] stoppingDistances = { 1.5f, 2.5f, 4.5f };
 
     private Vector3 playerPos;
 
     private bool enteredArea = false;
+    internal bool inArea;
 
     private void Start()
     {
@@ -95,16 +98,16 @@ public class EnemyArea : MonoBehaviour
 
     private IEnumerator CR_RespawnEnemy(EnemyType enemyType, float timeBeforeRespawn)
     {
-        if (aliveEnemies.Count == 0) yield break;
-
         yield return new WaitForSeconds(timeBeforeRespawn);
+
+        if (aliveEnemies.Count == 0) yield break;
 
         Vector3 spawnPos = GetRandomSpawnPos();
 
         GameObject vfx = Instantiate(vfxEnemySpawn, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
         Destroy(vfx, 1.5f);
 
-        GameObject enemyGo = new GameObject();
+        GameObject enemyGo = null;
 
         switch (enemyType)
         {
@@ -328,6 +331,8 @@ public class EnemyArea : MonoBehaviour
                 anim.SetTrigger("Unlock");
             }
         }
+
+        Destroy(gameObject);
     }
 
     private Vector3 GetWaitingPosition(Enemy enemy)
@@ -359,7 +364,6 @@ public class EnemyArea : MonoBehaviour
     private Vector3 GetAttackPosition(Enemy enemy)
     {
         int positions = 3;
-        float[] stoppingDistances = { 1.5f, 4.5f };
 
         for (int i = 0; i < positions; i++)
         {
@@ -459,10 +463,20 @@ public class EnemyArea : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            inArea = true;
+
             if (enteredArea) return;
             enteredArea = true;
 
             OnTrigger_AttackPlayer();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            inArea = false;
         }
     }
 

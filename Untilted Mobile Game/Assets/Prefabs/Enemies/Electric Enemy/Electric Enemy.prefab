@@ -511,12 +511,13 @@ MonoBehaviour:
   walkSpeed: 7
   runSpeed: 8
   stoppingDistance: 4.5
+  priority: 0
   player: {fileID: 0}
   damage: 90
   attackCooldown: 0
   score: 200
   ableToFace: 0
-  respawnTime: 10
+  respawnTime: 25
   distanceAttackPf: {fileID: 5947752075854901732, guid: d03e52545ef01b849a6a146feba295e1, type: 3}
   spawnPoint: {fileID: 2194113442272978875}
   lightningVfx: {fileID: 6947937543973377099, guid: 8cbd6d05d60890f4d9e25fa458bdda19, type: 3}
