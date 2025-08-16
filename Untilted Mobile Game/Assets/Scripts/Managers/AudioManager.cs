@@ -7,15 +7,16 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     [Header("AUDIO MIXER GROUPS")]
-    [SerializeField] private AudioMixerGroup musicMixerGroup;
+    public AudioMixerGroup musicMixerGroup;
     public AudioMixerGroup sfxMixerGroup;
 
+    private AudioSource musicSource;
     private AudioSource[] sfxSources = new AudioSource[5];
 
     [Header("SOUND DATABASE")]
     [SerializeField] private SOAudioDatabase soundDatabase;
 
-    [SerializeField] private float blendTime = 0.6f;
+    [SerializeField] private float blendTime = 0.5f;
 
     private void Awake()
     {
@@ -41,12 +42,22 @@ public class AudioManager : MonoBehaviour
     {
         for (int i = 0; i < sfxSources.Length; i++)
         {
-            GameObject go = new GameObject($"Audio Source {i + 1}");
-            go.transform.parent = transform;
-            AudioSource src = go.AddComponent<AudioSource>();
-            sfxSources[i] = src;
-            sfxSources[i].outputAudioMixerGroup = sfxMixerGroup; 
+            GameObject sfxGo = new GameObject($"Sfx Source {i + 1}");
+            sfxGo.transform.parent = transform.GetChild(0);
+            AudioSource sfxSrc = sfxGo.AddComponent<AudioSource>();
+            sfxSources[i] = sfxSrc;
+            sfxSources[i].outputAudioMixerGroup = sfxMixerGroup;
+            sfxSources[i].playOnAwake = false;
+            sfxSources[i].loop = false;
         }
+
+        GameObject musicGo = new GameObject("Music Source");
+        musicGo.transform.parent = transform.GetChild(1);
+        AudioSource musicSrc = musicGo.AddComponent<AudioSource>();
+        musicSource = musicSrc;
+        musicSource.outputAudioMixerGroup = musicMixerGroup;
+        musicSource.playOnAwake = false;
+        musicSource.loop = true;
     }
 
     private void Start_TestPlay()
@@ -60,12 +71,25 @@ public class AudioManager : MonoBehaviour
 
     void Play()
     {
-        PlaySound("ELECTRICIDAD SUELO");
+        PlaySFX("ELECTRICIDAD SUELO");
     }
 
     #endregion START
 
-    public void PlaySound(string soundName)
+    public void PlayMusic(string soundName)
+    {
+        if (musicSource.isPlaying)
+        {
+            StartCoroutine(CR_BlendMusic(soundName));
+        }
+        else
+        {
+            musicSource.clip = GetClip(soundName);
+            musicSource.Play();
+        }
+    }
+
+    public void PlaySFX(string soundName)
     {
         AudioSource src = GetSource();
 
@@ -80,7 +104,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlaySound(string soundName, int fixedIndex)
+    public void PlaySFX(string soundName, int fixedIndex)
     {
         AudioSource src = sfxSources[Random.Range(0, sfxSources.Length)];
 
@@ -114,11 +138,11 @@ public class AudioManager : MonoBehaviour
         AudioSource source = sfxSources[Random.Range(0, sfxSources.Length)];
 
         //Fade out
-        float timeFadeOut = 1;
-        while (timeFadeOut > 0)
+        float timeFadeOut = 0;
+        while (timeFadeOut < 1)
         {
             source.volume = Mathf.Lerp(source.volume, 0, timeFadeOut);
-            timeFadeOut -= Time.deltaTime * blendTime;
+            timeFadeOut += Time.deltaTime * blendTime;
             yield return null;
         }
 
@@ -130,6 +154,32 @@ public class AudioManager : MonoBehaviour
         while (timeFadeIn < 1)
         {
             source.volume = Mathf.Lerp(source.volume, 1, timeFadeIn);
+            timeFadeIn += Time.deltaTime * blendTime;
+            yield return null;
+        }
+
+        yield break;
+    }
+
+    private IEnumerator CR_BlendMusic(string soundName)
+    {
+        //Fade out
+        float timeFadeOut = 0;
+        while (timeFadeOut < 1)
+        {
+            musicSource.volume = Mathf.Lerp(musicSource.volume, 0, timeFadeOut);
+            timeFadeOut += Time.deltaTime * blendTime;
+            yield return null;
+        }
+
+        musicSource.clip = GetClip(soundName);
+        musicSource.Play();
+
+        //Fade In
+        float timeFadeIn = 0;
+        while (timeFadeIn < 1)
+        {
+            musicSource.volume = Mathf.Lerp(musicSource.volume, 1, timeFadeIn);
             timeFadeIn += Time.deltaTime * blendTime;
             yield return null;
         }

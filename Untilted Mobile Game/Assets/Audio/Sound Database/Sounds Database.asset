@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23ae48bfbcbc0d44aa69ef183f4f563f, type: 3}
-  m_Name: SFX Database
+  m_Name: Sounds Database
   m_EditorClassIdentifier: 
   sounds:
   - soundName: ANT TREN
@@ -61,3 +61,9 @@ MonoBehaviour:
   - soundName: TREN
     clip: {fileID: 8300000, guid: 13255d9b14830b74b847c466233f9ffa, type: 3}
     soundType: 0
+  - soundName: XPMECHA MENU
+    clip: {fileID: 8300000, guid: 4bad2715ee248cd4590db7beb999bed2, type: 3}
+    soundType: 1
+  - soundName: XPMECHA GAMEPLAY
+    clip: {fileID: 8300000, guid: be9c91f3b8452224d8c17489da05e796, type: 3}
+    soundType: 1

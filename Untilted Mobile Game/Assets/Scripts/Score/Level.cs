@@ -15,6 +15,8 @@ public class Level : MonoBehaviour
     private void Start()
     {
         LevelScore = 0;
+
+        AudioManager.Instance.PlayMusic("XPMECHA GAMEPLAY");
     }
 
     public void AddScore(int score)

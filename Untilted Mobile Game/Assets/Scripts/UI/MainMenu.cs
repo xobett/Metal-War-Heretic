@@ -27,6 +27,8 @@ public class MainMenu : MonoBehaviour
 
         settingsBackButton.onClick.AddListener(ReturnFromSettings);
         storeBackButton.onClick.AddListener(ReturnFromStore);
+
+        AudioManager.Instance.PlayMusic("XPMECHA MENU");
     }
 
     private void LoadLevel()

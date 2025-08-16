@@ -14,7 +14,7 @@ public class OnQueueState : EnemyState
     public override void Enter()
     {
         Enter_ResetRotation();
-        timer = timeBeforeMoving;
+        timer = 4f;
         enemy.QueryWaitPosition();
     }
 

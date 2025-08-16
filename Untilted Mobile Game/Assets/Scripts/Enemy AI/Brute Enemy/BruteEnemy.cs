@@ -207,14 +207,14 @@ namespace EnemyAI.BruteEnemy
 
         public void AnimEvent_PlayStepSound()
         {
-            audioSrc.clip = AudioManager.Instance.GetClip("BRUTO PISADAS");
-            audioSrc.Play();
+            audioSource.clip = AudioManager.Instance.GetClip("BRUTO PISADAS");
+            audioSource.Play();
         }
 
         public void AnimEvent_PlayRunStepSound()
         {
-            audioSrc.clip = AudioManager.Instance.GetClip("BRUTO CORRER");
-            audioSrc.Play();
+            audioSource.clip = AudioManager.Instance.GetClip("BRUTO CORRER");
+            audioSource.Play();
         }
 
         #endregion ANIMATION EVENT METHODS

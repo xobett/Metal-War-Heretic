@@ -33,6 +33,7 @@ public class TrainManager : MonoBehaviour
     {
         trainGo = transform.GetChild(0).gameObject;
         audioSource = GetComponentInChildren<AudioSource>();
+        audioSource.outputAudioMixerGroup = AudioManager.Instance.sfxMixerGroup;
     }
 
     private void Start_ResetTrain()

@@ -19,14 +19,9 @@ namespace EnemyAI
     {
         [SerializeField] public State currentState;
 
-        #region VFX
-
-        [Header("VFX SETTINGS")]
+        [Header("VFX & AUDIO SETTINGS")]
         [SerializeField] private GameObject onDeathVfx;
-
-        protected AudioSource audioSrc;
-
-        #endregion VFX
+        protected AudioSource audioSource;
 
         #region NAVIGATION
 
@@ -40,7 +35,6 @@ namespace EnemyAI
         [SerializeField] public float stoppingDistance;
 
         internal Vector3 waitingPos;
-
         internal Vector3 attackPos;
 
         internal bool UpdatedPosition = false;
@@ -88,6 +82,16 @@ namespace EnemyAI
 
         #endregion ROTATION
 
+        [Header("FSM SETTINGS")]
+        private EnemyArea enemyArea;
+
+        private FiniteStateMachine fsm = new FiniteStateMachine();
+
+        private IdleState idleState;
+        private ChaseState chaseState;
+        private OnQueueState onQueueState;
+        private AttackState attackState;
+
         protected virtual void Start()
         {
             Start_GetReferences();
@@ -104,7 +108,9 @@ namespace EnemyAI
 
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponentInChildren<Animator>();
-            audioSrc = GetComponentInChildren<AudioSource>();
+            audioSource = GetComponentInChildren<AudioSource>();
+
+            audioSource.outputAudioMixerGroup = AudioManager.Instance.sfxMixerGroup;
 
         }
 
@@ -124,15 +130,6 @@ namespace EnemyAI
         #endregion START
 
         #region FSM
-
-        private EnemyArea enemyArea;
-
-        private FiniteStateMachine fsm = new FiniteStateMachine();
-
-        private IdleState idleState;
-        private ChaseState chaseState;
-        private OnQueueState onQueueState;
-        private AttackState attackState;
 
         public void ChangeState(State newState)
         {
@@ -162,15 +159,6 @@ namespace EnemyAI
 
             if (enemyArea == null) return;
 
-            switch (currentState)
-            {
-                case State.Attack:
-                    {
-                        RemoveFromAttackList();
-                        break;
-                    }
-            }
-
             enemyArea.RemoveEnemyFromArea(this);
         }
 
@@ -190,11 +178,11 @@ namespace EnemyAI
                     {
                         forcedAttackState = true;
                         fsm.ChangeState(attackState);
+                        enemyArea.OnForced_AddAttackingEnemy(this);
                         break;
                     }
             }
         }
-
 
         #endregion ON DAMAGE AND DESTROY
 
@@ -203,6 +191,11 @@ namespace EnemyAI
         public void AssignArea(EnemyArea area)
         {
             enemyArea = area;
+        }
+
+        public void OnForced_TransitionToQueue()
+        {
+            fsm.ChangeState(onQueueState);
         }
 
         //Used to reassign queue positions only when attacking enemies are 3

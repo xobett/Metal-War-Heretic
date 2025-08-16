@@ -583,7 +583,7 @@ MonoBehaviour:
   onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
   walkSpeed: 7
   runSpeed: 8
-  stoppingDistance: 2
+  stoppingDistance: 1.5
   player: {fileID: 0}
   damage: 20
   timeBeforeAttack: 0

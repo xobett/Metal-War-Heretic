@@ -117,9 +117,28 @@ public class EnemyArea : MonoBehaviour
 
     #region QUERIES
 
+    public void OnForced_AddAttackingEnemy(Enemy enemy)
+    {
+        attackingEnemies.Add(enemy);
+        RemoveRandomEnemy();
+    }
+
     public void RemoveRandomEnemy()
     {
+        Enemy removedEnemy = attackingEnemies[0];
+        removedEnemy.OnForced_TransitionToQueue();
+        Invoke(nameof(RepositionEnemies), 1f);
+    }
 
+    public void RepositionEnemies()
+    {
+        foreach (Enemy enemy in aliveEnemies)
+        {
+            if (enemy.currentState == State.OnQueue)
+            {
+                enemy.QueryWaitPosition();
+            }
+        }
     }
 
     public void QueryAttackState(Enemy enemy)
@@ -253,7 +272,6 @@ public class EnemyArea : MonoBehaviour
                 anim.SetTrigger("Unlock");
             }
         }
-
     }
 
     private Vector3 GetWaitingPosition(Enemy enemy)
@@ -285,7 +303,7 @@ public class EnemyArea : MonoBehaviour
     private Vector3 GetAttackPosition(Enemy enemy)
     {
         int positions = 3;
-        float[] stoppingDistances = { 2, 4.5f };
+        float[] stoppingDistances = { 1.5f, 4.5f };
 
         for (int i = 0; i < positions; i++)
         {
@@ -343,8 +361,13 @@ public class EnemyArea : MonoBehaviour
 
     public void RemoveEnemyFromArea(Enemy enemy)
     {
-        aliveEnemies.Remove(enemy);
+        if (getAttackStateQueue.Contains(enemy)) getAttackStateQueue.Remove(enemy);
 
+        RemoveAttackingEnemy(enemy);
+        RemoveAttackPos(enemy);
+        RemoveWaitPos(enemy);
+
+        aliveEnemies.Remove(enemy);
         if (aliveEnemies.Count == 0)
         {
             UnlockLockedDoor();
@@ -358,7 +381,10 @@ public class EnemyArea : MonoBehaviour
 
     public void RemoveAttackingEnemy(Enemy enemy)
     {
-        attackingEnemies.Remove(enemy);
+        if (attackingEnemies.Contains(enemy))
+        {
+            attackingEnemies.Remove(enemy); 
+        }
     }
 
     #endregion MODIFY AREA

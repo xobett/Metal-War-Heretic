@@ -8,7 +8,7 @@ public class MeleeHandCollider : MonoBehaviour
     {
         if (enemyCollider.CompareTag("Enemy"))
         {
-            AudioManager.Instance.PlaySound("HIT A ENEMIGO", 0);
+            AudioManager.Instance.PlaySFX("HIT A ENEMIGO", 0);
 
             Vector3 hitPos = enemyCollider.transform.position + enemyCollider.transform.forward * 0.4f;
             GameObject vfx = Instantiate(hitEnemyVfx, hitPos, hitEnemyVfx.transform.rotation);
