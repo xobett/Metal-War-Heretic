@@ -1,11 +1,10 @@
-using EnemyAI;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
     public float CurrentHealth { get; private set; }
-    private const float maxHealth = 100f;
+    [SerializeField] private float maxHealth = 100f;
 
     [SerializeField] private Slider lifebar;
 
@@ -15,7 +14,7 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         Start_GetReferences();
-        
+
     }
 
     void Start()
@@ -29,19 +28,18 @@ public class Health : MonoBehaviour
         {
             lifebar = GameObject.FindGameObjectWithTag("Player Lifebar").GetComponentInChildren<Slider>();
         }
-        else
-        {
-            lifebar = GetComponentInChildren<Slider>();
-        }
     }
 
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
 
-        SetLifebarValue();
+        if (lifebar != null)
+        {
+            SetLifebarValue();
+        }
 
-        if (CurrentHealth <= 0 )
+        if (CurrentHealth <= 0)
         {
             Death();
         }
@@ -50,7 +48,7 @@ public class Health : MonoBehaviour
     public void SetHealth(float health)
     {
         CurrentHealth += health;
-        
+
         SetLifebarValue();
     }
 
@@ -68,12 +66,12 @@ public class Health : MonoBehaviour
         else
         {
             if (triggeredDeath) return;
-            Animator animator = GetComponentInChildren<Animator>();
-            animator.SetTrigger("Death");
             triggeredDeath = true;
 
-            Enemy enemy = GetComponent<Enemy>();
-            enemy.OnDeath();
+            AudioManager.Instance.PlaySFX("MUERTE ENEMIGOS");
+
+            Animator animator = GetComponentInChildren<Animator>();
+            animator.SetTrigger("Death");
         }
     }
 

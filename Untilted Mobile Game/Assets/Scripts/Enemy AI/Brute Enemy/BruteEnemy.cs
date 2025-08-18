@@ -20,7 +20,7 @@ namespace EnemyAI.BruteEnemy
         private int rmpTriggerDistance;
         private float playerDistance;
 
-        private LayerMask whatIsPlayer;
+        private float viewAngle;
 
         [Header("TIMER SETTINGS")]
         [SerializeField, Range(2f, 6f)] private int rmpRunningTime;
@@ -33,36 +33,16 @@ namespace EnemyAI.BruteEnemy
         {
             base.Start();
             agent.stoppingDistance = stoppingDistance;
-            whatIsPlayer = LayerMask.GetMask("Player");
             RampageRun_Start();
         }
 
         protected override void Update()
         {
-            MoveTowardsPlayer();
-            FollowPlayer_Update();
+            SelfBehavior_Update();
 
             Animator_Update();
             Rotation_Update();
             RampageRun_Update();
-        }
-
-        private void MoveTowardsPlayer()
-        {
-            if (agent.remainingDistance <= stoppingDistance && Physics.CheckSphere(transform.position, 1.5f, whatIsPlayer))
-            {
-                if (isExecutingAttack) return;
-                isExecutingAttack = true;
-                ExecuteHeavyPunch();
-            }
-        }
-
-        private void FollowPlayer_Update()
-        {
-            if (!isExecutingAttack)
-            {
-                agent.destination = player.transform.position;
-            }
         }
 
         public override void Attack()
@@ -93,10 +73,17 @@ namespace EnemyAI.BruteEnemy
 
         private void RampageRun_Update()
         {
+            if (!enemyArea.playerIsOnArea) return;
+
             SetRunningMovement();
             RampageRunTriggerCheck();
             GetDistanceFromPlayer();
         }
+
+        //private void GetViewAngle()
+        //{
+        //    viewAngle = Quaternion.Angle()
+        //}
 
         private void GetDistanceFromPlayer()
         {
@@ -157,6 +144,29 @@ namespace EnemyAI.BruteEnemy
 
         #region ANIMATION EVENT METHODS
 
+        public void AnimEvent_PlayStepSound()
+        {
+            audioSource.clip = AudioManager.Instance.GetClip("BRUTO PISADAS");
+            audioSource.Play();
+        }
+
+        public void AnimEvent_PlayRunStepSound()
+        {
+            audioSource.clip = AudioManager.Instance.GetClip("BRUTO CORRER");
+            audioSource.Play();
+        }
+
+        public void AnimEvent_PlayAnticipationSound()
+        {
+            audioSource.clip = AudioManager.Instance.GetClip("ANTICIPACION BRUTO");
+            audioSource.Play();
+        }
+
+        public void AnimEvent_PlayDriftSound()
+        {
+            AudioManager.Instance.PlaySFX("FRENADO BRUTO");
+        }
+
         public void AnimEvents_EnableRunVfX()
         {
             runVfx.SetActive(true);
@@ -205,17 +215,6 @@ namespace EnemyAI.BruteEnemy
             RMPRunCooldown();
         }
 
-        public void AnimEvent_PlayStepSound()
-        {
-            audioSource.clip = AudioManager.Instance.GetClip("BRUTO PISADAS");
-            audioSource.Play();
-        }
-
-        public void AnimEvent_PlayRunStepSound()
-        {
-            audioSource.clip = AudioManager.Instance.GetClip("BRUTO CORRER");
-            audioSource.Play();
-        }
 
         #endregion ANIMATION EVENT METHODS
     }

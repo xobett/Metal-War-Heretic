@@ -24,7 +24,10 @@ namespace EnemyAI.ShieldEnemy
 
         protected override void Update()
         {
-            base.Update();
+            SelfBehavior_Update();
+
+            Animator_Update();
+            Rotation_Update();
             RoyalGuard_Update();
         }
 
@@ -80,6 +83,24 @@ namespace EnemyAI.ShieldEnemy
         #endregion ROYAL GUARD
 
         #region ANIMATION EVENT METHODS
+
+        public void AnimEvent_PlayStepSound()
+        {
+            audioSource.clip = AudioManager.Instance.GetClip("CAMINATA ESCUDOS");
+            audioSource.Play();
+        }
+
+        public void AnimEvent_PlayShieldsStompSound()
+        {
+            audioSource.clip = AudioManager.Instance.GetClip("ESCUDOS ATAQUE");
+            audioSource.Play();
+        }
+
+        public void AnimEvent_PlayPushShieldsSound()
+        {
+            audioSource.clip = AudioManager.Instance.GetClip("ESCUDOS ATAQUE 2");
+            audioSource.Play();
+        }
 
         public void AnimEvent_EnablePush()
         {

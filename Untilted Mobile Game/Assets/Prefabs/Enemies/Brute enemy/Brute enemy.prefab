@@ -487,12 +487,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 398311949e50f99448fc0a34fc07b71d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPf: {fileID: 7993994855593321819}
   currentState: 0
+  enemyType: 0
   onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
   walkSpeed: 2.35
   runSpeed: 2.5
   stoppingDistance: 2.03
+  priority: 0
   player: {fileID: 0}
   damage: 30
   attackCooldown: 0
@@ -517,6 +518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea7ae45d0bbf10489c757c524bceea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 1000
   lifebar: {fileID: 4070081213568939373}
   onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
 --- !u!65 &3585895775364187851
@@ -538,8 +540,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.9, y: 2.8, z: 1.21}
-  m_Center: {x: 0, y: 0.4, z: 0}
+  m_Size: {x: 2.9, y: 2.8, z: 2.0164104}
+  m_Center: {x: 0, y: 0.39999998, z: 0.4032059}
 --- !u!65 &2189191770009877324
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -559,8 +561,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.27, y: 2.8, z: 1.557899}
-  m_Center: {x: 0, y: 0.39999998, z: 0.17394957}
+  m_Size: {x: 3.27, y: 2.8, z: 2.5448308}
+  m_Center: {x: 0, y: 0.39999998, z: 0.66741574}
 --- !u!1 &8894705603017414051
 GameObject:
   m_ObjectHideFlags: 0

@@ -467,7 +467,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.7
+  m_Radius: 1.08
   m_Height: 2.3
   m_Direction: 1
   m_Center: {x: 0, y: 0.15, z: 0}
@@ -541,6 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea7ae45d0bbf10489c757c524bceea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   lifebar: {fileID: 4070081213568939373}
   onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
 --- !u!1 &8894705603017414051

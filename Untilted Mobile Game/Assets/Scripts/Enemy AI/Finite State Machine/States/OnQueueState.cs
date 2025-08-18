@@ -13,16 +13,15 @@ public class OnQueueState : EnemyState
 
     public override void Enter()
     {
-        Enter_ResetRotation();
-        timer = 4f;
-        enemy.QueryWaitPosition();
+        Enter_RunQueries();
     }
 
     #region ENTER
 
-    private void Enter_ResetRotation()
+    private void Enter_RunQueries()
     {
-        //enemy.SmoothResetRotation();
+        timer = 4f;
+        enemy.QueryWaitPosition();
     }
 
     #endregion ENTER
@@ -30,6 +29,9 @@ public class OnQueueState : EnemyState
     public override void Update()
     {
         enemy.currentState = State.OnQueue;
+
+        if (enemy.forcedAttackState) return;
+
         Update_MoveToWaitPos();
         Update_RunTimer();
         Update_HandleNavigation();
@@ -79,7 +81,7 @@ public class OnQueueState : EnemyState
         {
             if (rotated) return;
             rotated = true;
-            enemy.SmoothResetRotation();
+            enemy.ableToFace = true;
         }
     }
 

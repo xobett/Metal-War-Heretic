@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -151,7 +152,6 @@ public class SliceAttack : MonoBehaviour
 
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotation, 30f * Time.deltaTime);
 
-                //Vector3 nearEnemyPos = hit.collider.transform.position + hit.transform.forward * 1.5f;
                 Vector3 nearEnemyPos = hit.transform.position + (transform.position - hit.transform.position).normalized;
                 Vector3 moveDirection = nearEnemyPos - transform.position;
 
@@ -164,8 +164,6 @@ public class SliceAttack : MonoBehaviour
             }
         }
     }
-
-    private bool aimAssistActive => gameObject.GetComponent<MeleeAttack>().aimAssitActive;
 
     #endregion SNAP ASSIST
 

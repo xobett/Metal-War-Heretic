@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
+            if (isDashing) return;
             NormalMovement();
         }
     }

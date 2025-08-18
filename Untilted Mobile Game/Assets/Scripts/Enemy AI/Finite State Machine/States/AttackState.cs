@@ -31,11 +31,12 @@ public class AttackState : EnemyState
 
     private void Enter_EntryCheck()
     {
-        enemy.agent.avoidancePriority = 10;
+        enemy.agent.avoidancePriority = Random.Range(8, 15);
         transitionedToQueue = false;
 
         if (enemy.forcedAttackState)
         {
+            Debug.Log("Did not query position");
             enemy.attackPos = enemy.transform.position;
         }
         else
@@ -68,16 +69,12 @@ public class AttackState : EnemyState
         attackTimer = maxAttackTime;
         attackNavTimer = timeBeforeNavigating;
 
-        if (enemy.agent.isActiveAndEnabled)
-        {
-            isStunned = true;
-            enemy.agent.isStopped = true;
-        }
+        enemy.attackPos = enemy.transform.position;
     }
 
     private void Update_MoveToAttackPos()
     {
-        if (enemy.attackPos != Vector3.zero && !isStunned)
+        if (enemy.attackPos != Vector3.zero)
         {
             enemy.agent.destination = enemy.attackPos;
         }
@@ -127,8 +124,6 @@ public class AttackState : EnemyState
         }
 
         attackNavTimer = timeBeforeNavigating;
-        isStunned = false;
-        enemy.agent.isStopped = false;
         enemy.QueryAttackPosition();
     }
 
@@ -168,6 +163,8 @@ public class AttackState : EnemyState
 
     private void Exit_FinishAttack()
     {
+        if (enemy.forcedAttackState) enemy.forcedAttackState = false; 
+
         enemy.RunAttackStateCooldown();
         enemy.RemoveAttackPos();
         enemy.RemoveFromAttackList();

@@ -15,7 +15,8 @@ namespace EnemyAI
     {
         Hammer,
         Electric,
-        Shield
+        Shield,
+        Brute
     }
 
     [RequireComponent(typeof(NavMeshAgent))]
@@ -49,6 +50,8 @@ namespace EnemyAI
         internal Vector3 attackPos;
 
         internal bool UpdatedPosition = false;
+
+        protected LayerMask whatIsPlayer;
 
         public bool AttackPositionsAssigned => enemyArea.UsedAttackPosCount == 3;
 
@@ -95,7 +98,7 @@ namespace EnemyAI
 
         #region ENEMY AREA
 
-        private EnemyArea enemyArea;
+        protected EnemyArea enemyArea;
         [SerializeField] private int respawnTime;
 
         #endregion ENEMY AREA
@@ -124,6 +127,7 @@ namespace EnemyAI
         private void Start_GetReferences()
         {
             player = Player.Instance.gameObject;
+            whatIsPlayer = LayerMask.GetMask("Player");
 
             agent = GetComponent<NavMeshAgent>();
             animator = GetComponentInChildren<Animator>();
@@ -143,6 +147,8 @@ namespace EnemyAI
 
         private void Start_InitializeFSM()
         {
+            forcedAttackState = false;
+
             fsm.Initialize(idleState);
         }
 
@@ -161,21 +167,12 @@ namespace EnemyAI
             }
         }
 
-        public void OnRespawn()
-        {
-            Invoke(nameof(OnRespawnChangeToQueue), 1f);
-        }
-
-        private void OnRespawnChangeToQueue()
-        {
-            ChangeState(State.OnQueue);
-        }
 
         #endregion FSM
 
         protected virtual void Update()
         {
-            if (enemyArea.inArea)
+            if (enemyArea.playerIsOnArea)
             {
                 fsm.Update();
             }
@@ -183,7 +180,7 @@ namespace EnemyAI
             Animator_Update();
         }
 
-        #region ON DAMAGE AND DESTROY
+        #region ON DAMAGE AND DEATH
 
         public virtual void OnDamage(float damage)
         {
@@ -200,6 +197,8 @@ namespace EnemyAI
                     }
                 default:
                     {
+                        if (forcedAttackState) return;
+                        Debug.Log("Entered");
                         forcedAttackState = true;
                         fsm.ChangeState(attackState);
                         enemyArea.OnForced_AddAttackingEnemy(this);
@@ -213,10 +212,50 @@ namespace EnemyAI
             GameManager.Instance.IncreaseScore(score);
 
             enemyArea.RemoveEnemyFromArea(this);
-            enemyArea.RespawnEnemy(enemyType, respawnTime);
+            enemyArea.RespawnEnemy(this, respawnTime);
         }
 
-        #endregion ON DAMAGE AND DESTROY
+        public void OnRespawn()
+        {
+            Invoke(nameof(OnRespawnChangeToQueue), 1f);
+        }
+
+        private void OnRespawnChangeToQueue()
+        {
+            ChangeState(State.OnQueue);
+        }
+
+        #endregion ON DAMAGE AND DEATH
+
+        #region SELF BEHAVIOR
+
+        protected void SelfBehavior_Update()
+        {
+            if (!enemyArea.playerIsOnArea) return;
+
+            Self_FollowPlayer_Update();
+            Self_OnNavArrive_Update();
+        }
+
+        private void Self_FollowPlayer_Update()
+        {
+            if (!isExecutingAttack)
+            {
+                agent.destination = player.transform.position;
+            }
+        }
+
+        private void Self_OnNavArrive_Update()
+        {
+            if (agent.remainingDistance <= stoppingDistance && Physics.CheckSphere(transform.position, 1.5f, whatIsPlayer))
+            {
+                if (isExecutingAttack) return;
+                isExecutingAttack = true;
+                Attack();
+            }
+        }
+
+        #endregion SELF BEHAVIOR
 
         #region ENEMY AREA
 
@@ -228,6 +267,7 @@ namespace EnemyAI
         public void OnForced_TransitionToQueue()
         {
             fsm.ChangeState(onQueueState);
+            Debug.Log("Transitioned to queue");
         }
 
         //Used to reassign queue positions only when attacking enemies are 3
@@ -456,6 +496,7 @@ namespace EnemyAI
 
         public void AnimEvent_OnDeath()
         {
+            OnDeath();
             Destroy(gameObject);
         }
 

@@ -6,14 +6,16 @@ public class MeleeHandCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider enemyCollider)
     {
+        if (enemyCollider.isTrigger) return;
+
+        AudioManager.Instance.PlaySFX("HIT A ENEMIGO", 0);
+
+        Vector3 hitPos = enemyCollider.transform.position + enemyCollider.transform.forward * 0.4f;
+        GameObject vfx = Instantiate(hitEnemyVfx, hitPos, Quaternion.identity);
+        Destroy(vfx, 1f);
+
         if (enemyCollider.CompareTag("Enemy"))
         {
-            AudioManager.Instance.PlaySFX("HIT A ENEMIGO", 0);
-
-            Vector3 hitPos = enemyCollider.transform.position + enemyCollider.transform.forward * 0.4f;
-            GameObject vfx = Instantiate(hitEnemyVfx, hitPos, hitEnemyVfx.transform.rotation);
-            Destroy(vfx, 1f);
-
             GetComponentInParent<MeleeAttack>().HitEnemy(enemyCollider);
         }
     }

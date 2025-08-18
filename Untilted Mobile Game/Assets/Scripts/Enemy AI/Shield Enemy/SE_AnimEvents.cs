@@ -11,6 +11,21 @@ public class SE_AnimEvents : MonoBehaviour
         shieldEnemy = GetComponentInParent<ShieldEnemy>();
     }
 
+    public void PlayStepSound()
+    {
+        shieldEnemy.AnimEvent_PlayStepSound();
+    }
+
+    public void PlayShieldStompSound()
+    {
+        shieldEnemy.AnimEvent_PlayShieldsStompSound();
+    }
+
+    public void PlayPushShieldsSound()
+    {
+        shieldEnemy.AnimEvent_PlayPushShieldsSound();
+    }
+
     public void EnablePush()
     {
         shieldEnemy.AnimEvent_EnablePush();

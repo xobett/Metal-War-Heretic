@@ -20,6 +20,16 @@ public class BE_AnimEvents : MonoBehaviour
         bruteEnemy.AnimEvent_PlayRunStepSound();
     }
 
+    public void PlayAnticipationSound()
+    {
+        bruteEnemy.AnimEvent_PlayAnticipationSound();
+    }
+
+    public void PlayDriftSound()
+    {
+        bruteEnemy.AnimEvent_PlayDriftSound();
+    }
+
     public void StopMoving()
     {
         bruteEnemy.AnimEvent_StopMoving();

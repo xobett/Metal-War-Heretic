@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -106,10 +107,22 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(string soundName, int fixedIndex)
     {
-        AudioSource src = sfxSources[Random.Range(0, sfxSources.Length)];
+        AudioSource src = sfxSources[fixedIndex];
 
         src.clip = GetClip(soundName);
+        src.pitch = Random.Range(0.5f, 1.5f);
+        src.volume = 0.2f;
         src.Play();
+    }
+
+    public void PlayDelayedDoorSound()
+    {
+        Invoke(nameof(PlayOpenDoorSound), 0.5f);
+    }
+
+    private void PlayOpenDoorSound()
+    {
+        PlaySFX("PUERTA");
     }
 
     private AudioSource GetSource()
@@ -135,7 +148,7 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator CR_BlendSounds(string soundName)
     {
-        AudioSource source = sfxSources[Random.Range(0, sfxSources.Length)];
+        AudioSource source = sfxSources[Random.Range(1, sfxSources.Length)];
 
         //Fade out
         float timeFadeOut = 0;

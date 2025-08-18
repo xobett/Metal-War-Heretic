@@ -10,6 +10,8 @@ public class EnemyArea : MonoBehaviour
     [SerializeField] private GameObject hammerEnemyPf;
     [SerializeField] private GameObject electricEnemyPf;
     [SerializeField] private GameObject shieldEnemyPf;
+    [SerializeField] private GameObject bruteEnemyPf;
+
 
     [Header("AREA ENEMY SETTINGS")]
     [SerializeField] private GameObject[] enemiesToSpawn;
@@ -18,7 +20,7 @@ public class EnemyArea : MonoBehaviour
     private LayerMask whatIsEnemy;
 
     [Header("LOCKED DOOR SETTINGS")]
-    [SerializeField] private GameObject[] lockedDoors;
+    [SerializeField] private GameObject lockedDoor;
 
     [Header("SPAWN SETTINGS")]
     [SerializeField] private Transform spawnOrigin;
@@ -36,12 +38,12 @@ public class EnemyArea : MonoBehaviour
     private Dictionary<Enemy, Vector3> usedAttackPositions = new Dictionary<Enemy, Vector3>();
 
     private const float waitPositionDistance = 9.0f;
-    float[] stoppingDistances = { 1.5f, 2.5f, 4.5f };
+    float[] stoppingDistances = { 1.5f, 4.5f };
 
     private Vector3 playerPos;
 
     private bool enteredArea = false;
-    internal bool inArea;
+    internal bool playerIsOnArea;
 
     private void Start()
     {
@@ -91,12 +93,12 @@ public class EnemyArea : MonoBehaviour
 
     #region RESPAWN
 
-    public void RespawnEnemy(EnemyType enemyType, float respawnTime)
+    public void RespawnEnemy(Enemy enemy, float respawnTime)
     {
-        StartCoroutine(CR_RespawnEnemy(enemyType, respawnTime));
+        StartCoroutine(CR_RespawnEnemy(enemy, respawnTime));
     }
 
-    private IEnumerator CR_RespawnEnemy(EnemyType enemyType, float timeBeforeRespawn)
+    private IEnumerator CR_RespawnEnemy(Enemy enemy, float timeBeforeRespawn)
     {
         yield return new WaitForSeconds(timeBeforeRespawn);
 
@@ -107,35 +109,47 @@ public class EnemyArea : MonoBehaviour
         GameObject vfx = Instantiate(vfxEnemySpawn, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
         Destroy(vfx, 1.5f);
 
+        GameObject enemyPf = Instantiate(GetEnemyPf(enemy), spawnPos, Quaternion.identity); ; 
+
+        Enemy respawnedEnemy = enemyPf.GetComponent<Enemy>();
+        AddEnemyToArea(respawnedEnemy);
+        respawnedEnemy.AssignArea(this);
+        respawnedEnemy.OnRespawn();
+
+        enemyPf.transform.parent = transform.GetChild(0);
+
+        yield break;
+    }
+
+    private GameObject GetEnemyPf(Enemy enemy)
+    {
         GameObject enemyGo = null;
 
-        switch (enemyType)
+        switch (enemy.enemyType)
         {
             case EnemyType.Hammer:
                 {
-                    enemyGo = Instantiate(hammerEnemyPf, spawnPos, Quaternion.identity);
+                    enemyGo = hammerEnemyPf;
                     break;
                 }
             case EnemyType.Electric:
                 {
-                    enemyGo = Instantiate(electricEnemyPf, spawnPos, Quaternion.identity);
+                    enemyGo = electricEnemyPf;
                     break;
                 }
             case EnemyType.Shield:
                 {
-                    enemyGo = Instantiate(shieldEnemyPf, spawnPos, Quaternion.identity);
+                    enemyGo = shieldEnemyPf;
+                    break;
+                }
+            case EnemyType.Brute:
+                {
+                    enemyGo = bruteEnemyPf;
                     break;
                 }
         }
 
-        Enemy enemy = enemyGo.GetComponent<Enemy>();
-        AddEnemyToArea(enemy);
-        enemy.AssignArea(this);
-        enemy.OnRespawn();
-
-        enemyGo.transform.parent = transform.GetChild(0);
-
-        yield break;
+        return enemyGo;
     }
 
     #endregion RESPAWN
@@ -176,16 +190,32 @@ public class EnemyArea : MonoBehaviour
 
     #region QUERIES
 
-    public void OnForced_AddAttackingEnemy(Enemy enemy)
+    public void OnForced_AddAttackingEnemy(Enemy forcedAddedEnemy)
     {
-        attackingEnemies.Add(enemy);
-        RemoveRandomEnemy();
+        Debug.Log("Entered");
+        attackingEnemies.Add(forcedAddedEnemy);
+        RemoveRandomEnemy(forcedAddedEnemy);
     }
 
-    public void RemoveRandomEnemy()
+    public void RemoveRandomEnemy(Enemy forcedAddedEnemy)
     {
-        Enemy removedEnemy = attackingEnemies[0];
-        removedEnemy.OnForced_TransitionToQueue();
+        if (attackingEnemies.Count == 1)
+        {
+            Debug.Log("RETURNED");
+            return;
+        }
+
+        Enemy removedEnemy = null;
+
+        foreach(Enemy enemy in attackingEnemies)
+        {
+            if (enemy != forcedAddedEnemy)
+            {
+                Debug.Log($"Removed {enemy.gameObject.name}");
+                removedEnemy = enemy;
+            }
+        }
+
         Invoke(nameof(RepositionEnemies), 1f);
     }
 
@@ -252,6 +282,8 @@ public class EnemyArea : MonoBehaviour
 
     #endregion QUERIES
 
+    #region QUERY HANDLERS
+
     private IEnumerator CR_QueriesHandler()
     {
         yield return new WaitForSeconds(0.7f);
@@ -266,8 +298,6 @@ public class EnemyArea : MonoBehaviour
 
         StartCoroutine(CR_QueriesHandler());
     }
-
-    #region QUERY HANDLERS
 
     private void HandleGetWaitPosQueries()
     {
@@ -317,14 +347,12 @@ public class EnemyArea : MonoBehaviour
 
     private void UnlockLockedDoor()
     {
-        if (lockedDoors.Length > 0)
+        if (lockedDoor != null)
         {
-            Animator[] anims = new Animator[lockedDoors.Length];
+            Animator[] anims = new Animator[2];
 
-            for (int i = 0; i < anims.Length; i++)
-            {
-                anims[i] = lockedDoors[i].GetComponentInChildren<Animator>();
-            }
+            anims[0] = lockedDoor.transform.GetChild(0).GetComponent<Animator>();
+            anims[1] = lockedDoor.transform.GetChild(1).GetComponent<Animator>();
 
             foreach (Animator anim in anims)
             {
@@ -332,6 +360,7 @@ public class EnemyArea : MonoBehaviour
             }
         }
 
+        AudioManager.Instance.PlayDelayedDoorSound();
         Destroy(gameObject);
     }
 
@@ -451,11 +480,12 @@ public class EnemyArea : MonoBehaviour
 
     #region TRIGGERS
 
-    private void OnTrigger_AttackPlayer()
+    private void OnEnterArea_AttackPlayer()
     {
         foreach (Enemy enemy in aliveEnemies)
         {
-            enemy.ChangeState(State.Chase);
+            if (enemy.enemyType == EnemyType.Shield || enemy.enemyType == EnemyType.Brute) continue;
+            enemy.ChangeState(State.OnQueue);
         }
     }
 
@@ -463,12 +493,12 @@ public class EnemyArea : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            inArea = true;
+            playerIsOnArea = true;
 
             if (enteredArea) return;
             enteredArea = true;
 
-            OnTrigger_AttackPlayer();
+            OnEnterArea_AttackPlayer();
         }
     }
 
@@ -476,7 +506,7 @@ public class EnemyArea : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            inArea = false;
+            playerIsOnArea = false;
         }
     }
 
