@@ -425,12 +425,9 @@ MonoBehaviour:
   sliceButton: {fileID: 0}
   speed: 15
   duration: 0.6
-  assistRadius: 1.6
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
-  cooldownTime: 0.5
-  isCooling: 0
 --- !u!114 &2862152783596723406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -449,6 +446,7 @@ MonoBehaviour:
   whatIsMelee:
     serializedVersion: 2
     m_Bits: 128
+  playerHitShake: {fileID: 11400000, guid: e33999d8134e09d40843d509251d395c, type: 2}
   radius: 2.2
   aimAssitActive: 0
 --- !u!114 &6663795009258736236
@@ -491,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea7ae45d0bbf10489c757c524bceea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   lifebar: {fileID: 0}
   onDeathVfx: {fileID: 0}
 --- !u!114 &6090061871705627530

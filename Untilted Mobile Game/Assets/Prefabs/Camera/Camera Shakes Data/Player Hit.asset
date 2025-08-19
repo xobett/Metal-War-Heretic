@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Player Hit
   m_EditorClassIdentifier: 
   shakeType: 0
-  amplitude: 1
-  frequency: 1
-  duration: 1
+  amplitude: 0.5
+  frequency: 9.11
+  duration: 0.28
   lifetimeCurve:
     serializedVersion: 2
     m_Curve:

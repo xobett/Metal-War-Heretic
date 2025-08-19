@@ -14,6 +14,8 @@ public class MeleeHandCollider : MonoBehaviour
         GameObject vfx = Instantiate(hitEnemyVfx, hitPos, Quaternion.identity);
         Destroy(vfx, 1f);
 
+        ShakeEventManager.Instance.AddShakeEvent(GetComponentInParent<MeleeAttack>().playerHitShake);
+
         if (enemyCollider.CompareTag("Enemy"))
         {
             GetComponentInParent<MeleeAttack>().HitEnemy(enemyCollider);

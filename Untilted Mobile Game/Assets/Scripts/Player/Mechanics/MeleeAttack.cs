@@ -16,6 +16,8 @@ public class MeleeAttack : MonoBehaviour
     [SerializeField] private float range = 0.5f;
     [SerializeField] private LayerMask whatIsMelee;
 
+    [SerializeField] public SOShakeData playerHitShake;
+
     [Header("MELEE COOLDOWN SETTINGS")]
 
     private float cooldownTimer;

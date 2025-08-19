@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f262d49a67fa04ea2ae2f8ce04aa58, type: 3}
   m_Name: Enemy Hit
   m_EditorClassIdentifier: 
-  shakeType: 0
-  amplitude: 1
-  frequency: 1
-  duration: 1
+  shakeType: 1
+  amplitude: 2
+  frequency: 7.63
+  duration: 0.4
   lifetimeCurve:
     serializedVersion: 2
     m_Curve:

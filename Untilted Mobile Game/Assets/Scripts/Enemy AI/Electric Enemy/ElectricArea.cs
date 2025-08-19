@@ -1,3 +1,5 @@
+using EnemyAI;
+using EnemyAI.ElectricEnemy;
 using System.Collections;
 using UnityEngine;
 
@@ -16,6 +18,7 @@ public class ElectricArea : MonoBehaviour
     [SerializeField] private bool ableToAutoDestroy;
 
     [SerializeField] private GameObject hitPlayerVfx;
+    [SerializeField] private SOShakeData enemyHitShake;
     private AudioSource audioSource;
 
     private void Start()
@@ -86,6 +89,8 @@ public class ElectricArea : MonoBehaviour
             GameObject vfx = Instantiate(hitPlayerVfx, hitPos, hitPlayerVfx.transform.rotation);
             other.GetComponent<Health>().TakeDamage(damage);
             Destroy(vfx, 1);
+
+            ShakeEventManager.Instance.AddShakeEvent(enemyHitShake);
 
             timer = timeBetweenZaps;
         }

@@ -1,3 +1,4 @@
+using EnemyAI;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -14,6 +15,7 @@ public class LightningCollider : MonoBehaviour
     private Vector3 moveDirection;
 
     [SerializeField] private GameObject hitPlayerVfx;
+    [SerializeField] private SOShakeData enemyHitShake;
 
     Vector3 debugCubeSize;
 
@@ -83,6 +85,8 @@ public class LightningCollider : MonoBehaviour
 
             other.GetComponent<Health>().TakeDamage(damage);
             Destroy(gameObject);
+
+            ShakeEventManager.Instance.AddShakeEvent(enemyHitShake);
         }
     }
 

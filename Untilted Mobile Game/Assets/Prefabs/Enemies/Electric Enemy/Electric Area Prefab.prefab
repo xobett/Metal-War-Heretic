@@ -73,6 +73,7 @@ MonoBehaviour:
   lifetime: 3
   ableToAutoDestroy: 0
   hitPlayerVfx: {fileID: 2598695410427671328, guid: 5344698de6b483c48a76a9c73b04633c, type: 3}
+  enemyHitShake: {fileID: 11400000, guid: 790c31330e538a64db2d38ea1f1db574, type: 2}
 --- !u!1001 &4391796438657083518
 PrefabInstance:
   m_ObjectHideFlags: 0

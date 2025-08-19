@@ -1,11 +1,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShakeEventHandler : MonoBehaviour
+public class ShakeEventManager : MonoBehaviour
 {
     /// <summary>
     /// Keeps track of all active Shake Events, removing them after finishing their duration
     /// </summary>
+
+    public static ShakeEventManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private List<ShakeEvent> shakeEvents = new List<ShakeEvent>();
 

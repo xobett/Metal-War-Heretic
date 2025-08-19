@@ -98,3 +98,4 @@ MonoBehaviour:
   lifetime: 5
   speed: 1
   hitPlayerVfx: {fileID: 2598695410427671328, guid: 5344698de6b483c48a76a9c73b04633c, type: 3}
+  enemyHitShake: {fileID: 11400000, guid: 790c31330e538a64db2d38ea1f1db574, type: 2}

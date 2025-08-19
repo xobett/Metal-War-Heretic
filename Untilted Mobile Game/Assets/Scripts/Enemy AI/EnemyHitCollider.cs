@@ -14,6 +14,8 @@ public class EnemyHitCollider : MonoBehaviour
             GameObject vfx = Instantiate(hitPlayerVfx, hitPos, hitPlayerVfx.transform.rotation);
             GetComponentInParent<Enemy>().HitPlayer(other);
             Destroy(vfx, 1f);
+
+            ShakeEventManager.Instance.AddShakeEvent(GetComponentInParent<Enemy>().enemyHitShake);
         }
     }
 }

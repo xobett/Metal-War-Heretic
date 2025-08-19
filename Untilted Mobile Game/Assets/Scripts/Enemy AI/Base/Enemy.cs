@@ -32,6 +32,8 @@ namespace EnemyAI
         [SerializeField] private GameObject onDeathVfx;
         protected AudioSource audioSource;
 
+        [SerializeField] public SOShakeData enemyHitShake;
+
         #endregion VFX & AUDIO
 
         #region NAVIGATION

@@ -582,6 +582,7 @@ MonoBehaviour:
   currentState: 0
   enemyType: 0
   onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
+  enemyHitShake: {fileID: 11400000, guid: 790c31330e538a64db2d38ea1f1db574, type: 2}
   walkSpeed: 7
   runSpeed: 8
   stoppingDistance: 1.5
