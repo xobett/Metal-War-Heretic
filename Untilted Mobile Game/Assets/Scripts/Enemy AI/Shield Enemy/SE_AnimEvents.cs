@@ -61,14 +61,8 @@ public class SE_AnimEvents : MonoBehaviour
         shieldEnemy.AnimEvent_FinishAttack();
     }
 
-    public void DisableCombat()
-    {
-        shieldEnemy.AnimEvent_OnDeathStart();
-    }
-
     public void Death()
     {
         shieldEnemy.AnimEvent_OnDeath();
     }
-
 }

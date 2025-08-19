@@ -159,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
 
             float distance = Vector3.Distance(transform.position, nearEnemyPos);
 
-            if (distance > 0.5f)
+            if (distance > 1f)
             {
                 charCtrlr.Move(moveDirection.normalized * Mathf.Pow(movementSpeed, 2) * Time.deltaTime);
             }

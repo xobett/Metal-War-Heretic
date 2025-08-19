@@ -54,6 +54,8 @@ public class Health : MonoBehaviour
 
     private void SetLifebarValue()
     {
+        if (lifebar == null) return;
+
         lifebar.value = CurrentHealth / maxHealth;
     }
 

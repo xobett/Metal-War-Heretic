@@ -8,6 +8,7 @@ public class SliceAttackCollider : MonoBehaviour
     private CameraFollowPH playerCam;
 
     [SerializeField] private GameObject hitEnemyVfx;
+    [SerializeField] private SOShakeData playerHitShake;
 
     private void Start()
     {
@@ -28,6 +29,8 @@ public class SliceAttackCollider : MonoBehaviour
             Vector3 hitPos = enemyCollider.transform.position + enemyCollider.transform.forward * 0.4f;
             GameObject vfx = Instantiate(hitEnemyVfx, hitPos, hitEnemyVfx.transform.rotation);
             Destroy(vfx, 1f);
+
+            ShakeEventManager.Instance.AddShakeEvent(playerHitShake);
 
             enemyCollider.GetComponent<IDamageable>().OnDamage(sliceDamage);
         }

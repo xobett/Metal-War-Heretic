@@ -32,7 +32,6 @@ namespace EnemyAI.BruteEnemy
         protected override void Start()
         {
             base.Start();
-            agent.stoppingDistance = stoppingDistance;
             RampageRun_Start();
         }
 
@@ -48,11 +47,6 @@ namespace EnemyAI.BruteEnemy
         public override void Attack()
         {
             ExecuteHeavyPunch();
-        }
-
-        public override void OnDamage(float damage)
-        {
-            GetComponent<Health>().TakeDamage(damage);
         }
 
         #region HEAVY PUNCH

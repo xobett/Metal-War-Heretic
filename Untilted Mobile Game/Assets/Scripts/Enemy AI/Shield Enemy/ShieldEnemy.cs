@@ -22,6 +22,12 @@ namespace EnemyAI.ShieldEnemy
         [Header("GUARDING ROTATION SPEED")]
         [SerializeField] private float guardLookSpeed = 0.8f;
 
+        protected override void Start()
+        {
+            base.Start();
+            agent.stoppingDistance = stoppingDistance;
+        }
+
         protected override void Update()
         {
             SelfBehavior_Update();

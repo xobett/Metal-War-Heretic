@@ -27,14 +27,8 @@ public class HE_AnimEvents : MonoBehaviour
         hammerEnemy.AnimEvent_FinishAttack();
     }
 
-    public void DisableCombat()
-    {
-        hammerEnemy.AnimEvent_OnDeathStart();
-    }
-
     public void Death()
     {
         hammerEnemy.AnimEvent_OnDeath();
     }
-
 }

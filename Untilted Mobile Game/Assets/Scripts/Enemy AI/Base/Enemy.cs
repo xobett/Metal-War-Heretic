@@ -188,7 +188,12 @@ namespace EnemyAI
         {
             GetComponent<Health>().TakeDamage(damage);
 
-            transform.rotation = currentFacePlayerRot;
+            if (enemyType != EnemyType.Shield || enemyType != EnemyType.Brute)
+            {
+                transform.rotation = currentFacePlayerRot;
+            }
+
+            if (enemyType == EnemyType.Brute || enemyType == EnemyType.Shield) return;
 
             switch (currentState)
             {
@@ -239,17 +244,17 @@ namespace EnemyAI
             Self_OnNavArrive_Update();
         }
 
+
         private void Self_FollowPlayer_Update()
         {
-            if (!isExecutingAttack)
-            {
-                agent.destination = player.transform.position;
-            }
+            if (isExecutingAttack) return;
+
+            agent.destination = player.transform.position;
         }
 
         private void Self_OnNavArrive_Update()
         {
-            if (agent.remainingDistance <= stoppingDistance && Physics.CheckSphere(transform.position, 1.5f, whatIsPlayer))
+            if (agent.remainingDistance <= stoppingDistance && Physics.CheckSphere(transform.position, stoppingDistance, whatIsPlayer))
             {
                 if (isExecutingAttack) return;
                 isExecutingAttack = true;
@@ -488,18 +493,15 @@ namespace EnemyAI
             ableToFace = true;
         }
 
-        public void AnimEvent_OnDeathStart()
+        public void AnimEvent_OnDeath()
         {
             gameObject.tag = "Dead";
+            OnDeath();
 
             GameObject vfx = Instantiate(onDeathVfx, transform.position, onDeathVfx.transform.rotation);
             Destroy(vfx, 3);
-        }
 
-        public void AnimEvent_OnDeath()
-        {
-            OnDeath();
-            Destroy(gameObject);
+            Destroy(gameObject, 0.2f);
         }
 
         #endregion ANIMATION EVENT METHDOS

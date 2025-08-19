@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -18,8 +19,6 @@ public class CameraFollow : MonoBehaviour
 
     internal TargetCameraRotation lastTarget = TargetCameraRotation.Front;
 
-    private GameObject player;
-
     private const float orbitSmooth = 15f;
 
     [SerializeField] private float test;
@@ -34,14 +33,37 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
-        //Establece el frame rate a 60 fps.
-        Application.targetFrameRate = 60;
+        Start_GetReferences();
+        Start_SetSettings();
+    }
 
-        player = Player.Instance.gameObject;
-        cam = Camera.main;
+    #region START
+
+    private void Start_SetSettings()
+    {
+        Application.targetFrameRate = 60;
 
         GetCameraNearPlaneSize();
     }
+
+    private void Start_GetReferences()
+    {
+        cam = Camera.main;
+
+        if (followTarget == null)
+        {
+            try
+            {
+                followTarget = GameObject.FindGameObjectWithTag("Camera Target").transform;
+            }
+            catch
+            {
+                Debug.LogError("No follow target reference / tag has been assigned!");
+            }
+        }
+    }
+
+    #endregion START
 
     void Update()
     {
@@ -161,7 +183,7 @@ public class CameraFollow : MonoBehaviour
                     value = (270 - tiltAngle);
                     break;
                 }
-                case TargetCameraRotation.Back:
+            case TargetCameraRotation.Back:
                 {
                     value = (180 - tiltAngle);
                     break;

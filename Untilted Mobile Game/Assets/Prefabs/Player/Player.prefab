@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7171846183333394904}
   m_Layer: 9
   m_Name: Camera Target
-  m_TagString: Untagged
+  m_TagString: Camera Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEnemyVfx: {fileID: 6670479781032978855, guid: 8b8ad33d30fac394b8de6deeaf00d29a, type: 3}
+  playerHitShake: {fileID: 11400000, guid: e33999d8134e09d40843d509251d395c, type: 2}
 --- !u!1 &3823707016804825279
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitEnemyVfx: {fileID: 6670479781032978855, guid: 8b8ad33d30fac394b8de6deeaf00d29a, type: 3}
+  playerHitShake: {fileID: 11400000, guid: e33999d8134e09d40843d509251d395c, type: 2}
 --- !u!1 &5420084097021437779
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,6 +272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sliceDamage: 20
   hitEnemyVfx: {fileID: 6670479781032978855, guid: 8b8ad33d30fac394b8de6deeaf00d29a, type: 3}
+  playerHitShake: {fileID: 11400000, guid: e33999d8134e09d40843d509251d395c, type: 2}
 --- !u!1 &7667774295053278460
 GameObject:
   m_ObjectHideFlags: 0

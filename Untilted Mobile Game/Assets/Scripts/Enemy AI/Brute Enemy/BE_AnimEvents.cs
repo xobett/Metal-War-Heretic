@@ -75,14 +75,8 @@ public class BE_AnimEvents : MonoBehaviour
         bruteEnemy.AnimEvent_FinishAttack();
     }
 
-    public void DisableCombat()
-    {
-        bruteEnemy.AnimEvent_OnDeathStart();
-    }
-
     public void Death()
     {
         bruteEnemy.AnimEvent_OnDeath();
     }
-
 }

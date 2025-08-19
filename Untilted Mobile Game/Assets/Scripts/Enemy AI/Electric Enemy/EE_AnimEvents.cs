@@ -46,14 +46,8 @@ public class EE_AnimEvents : MonoBehaviour
         electricEnemy.AnimEvent_FinishAttack();
     }
 
-    public void DisableCombat()
-    {
-        electricEnemy.AnimEvent_OnDeathStart();
-    }
-
     public void Death()
     {
         electricEnemy.AnimEvent_OnDeath();
     }
-
 }
