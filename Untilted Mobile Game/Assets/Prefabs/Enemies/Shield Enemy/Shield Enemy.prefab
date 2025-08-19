@@ -580,7 +580,7 @@ MonoBehaviour:
   attackCooldown: 0
   score: 250
   ableToFace: 1
-  respawnTime: 20
+  respawnTime: 25
   colliders:
   - {fileID: 560008674519117305}
   - {fileID: 3234478128477429545}

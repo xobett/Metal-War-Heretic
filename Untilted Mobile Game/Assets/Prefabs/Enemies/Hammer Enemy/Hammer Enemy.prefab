@@ -592,7 +592,7 @@ MonoBehaviour:
   attackCooldown: 0
   score: 150
   ableToFace: 0
-  respawnTime: 20
+  respawnTime: 25
 --- !u!114 &1752446631520181859
 MonoBehaviour:
   m_ObjectHideFlags: 0
