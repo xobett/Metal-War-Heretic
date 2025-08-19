@@ -10,9 +10,8 @@ public class CameraFollow : MonoBehaviour
 
     [SerializeField] private Vector2 cameraSensitivity;
 
-    Vector2 orbitAngle = new Vector2(-tiltAngle * Mathf.Deg2Rad, 64 * Mathf.Deg2Rad);
+    Vector2 orbitAngle = new Vector2(-tiltAngle, 64);
     const float tiltAngle = 42;
-    //Angle is 42
 
     [SerializeField] private float upLimit;
     [SerializeField] private float downLimit;
@@ -46,7 +45,7 @@ public class CameraFollow : MonoBehaviour
 
     void Update()
     {
-        orbitAngle.x -= test * Mathf.Deg2Rad * cameraSensitivity.x * Time.deltaTime;
+        orbitAngle.x -= test * cameraSensitivity.x * Time.deltaTime;
     }
 
     private void LateUpdate()
@@ -83,19 +82,25 @@ public class CameraFollow : MonoBehaviour
     {
         if (MouseHorizontalInput() != 0)
         {
-            orbitAngle.x -= MouseHorizontalInput() * Mathf.Deg2Rad * cameraSensitivity.x * Time.deltaTime;
+            orbitAngle.x -= MouseHorizontalInput() * cameraSensitivity.x * Time.deltaTime;
         }
 
         if (MouseVerticalInput() != 0)
         {
-            orbitAngle.y -= MouseVerticalInput() * Mathf.Deg2Rad * cameraSensitivity.y * Time.deltaTime;
+            orbitAngle.y -= MouseVerticalInput() * cameraSensitivity.y * Time.deltaTime;
 
-            orbitAngle.y = Mathf.Clamp(orbitAngle.y, downLimit * Mathf.Deg2Rad, upLimit * Mathf.Deg2Rad);
+            orbitAngle.y = Mathf.Clamp(orbitAngle.y, downLimit, upLimit);
         }
     }
     private void FollowAndOrbit()
     {
-        Vector3 orbitValue = new Vector3(Mathf.Cos(orbitAngle.x) * Mathf.Cos(orbitAngle.y), Mathf.Sin(orbitAngle.y), Mathf.Sin(orbitAngle.x) * Mathf.Cos(orbitAngle.y)); ;
+        float radX = orbitAngle.x * Mathf.Deg2Rad;
+        float radY = orbitAngle.y * Mathf.Deg2Rad;
+
+        Vector3 orbitValue = new Vector3(
+            Mathf.Cos(radX) * Mathf.Cos(radY),
+            Mathf.Sin(radY),
+            Mathf.Sin(radX) * Mathf.Cos(radY)); ;
 
         float orbitDistance = maxDistance;
         Vector3[] collisionPoints = CalculateCollisionPoints(orbitValue);
@@ -143,22 +148,22 @@ public class CameraFollow : MonoBehaviour
         {
             case TargetCameraRotation.Front:
                 {
-                    value = (0 - tiltAngle) * Mathf.Deg2Rad;
+                    value = (0 - tiltAngle);
                     break;
                 }
             case TargetCameraRotation.Right:
                 {
-                    value = (90 - tiltAngle) * Mathf.Deg2Rad;
+                    value = (90 - tiltAngle);
                     break;
                 }
             case TargetCameraRotation.Left:
                 {
-                    value = (270 - tiltAngle) * Mathf.Deg2Rad;
+                    value = (270 - tiltAngle);
                     break;
                 }
                 case TargetCameraRotation.Back:
                 {
-                    value = (180 - tiltAngle) * Mathf.Deg2Rad;
+                    value = (180 - tiltAngle);
                     break;
                 }
         }
