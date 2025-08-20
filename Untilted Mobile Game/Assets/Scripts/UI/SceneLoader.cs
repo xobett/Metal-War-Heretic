@@ -7,31 +7,23 @@ public class SceneLoader : MonoBehaviour
 {
     [Header("LOADING SCENE SETTINGS")]
     [SerializeField] private string sceneName;
-    [SerializeField] private Slider loadingBar;
-    [SerializeField] private Button continueButton;
 
-    private float targetValue;
-    private const float loadingBarSpeed = 1.2f;
+    [SerializeField] private GameObject loadingIcon;
+    [SerializeField] private GameObject loadingText;
+
+    [SerializeField] private Button continueButton;
 
     private bool changeScene;
     
     void Start()
     {
-        //Deactivate interaction with continue button
-        loadingBar.interactable = false;
+        loadingIcon.SetActive(true);
+        loadingText.SetActive(true);
+
         continueButton.interactable = false;
+        continueButton.gameObject.SetActive(false);
         
         StartCoroutine(CR_LoadScene());
-    }
-
-    private void Update()
-    {
-        UpdateLoadingSceneBar();
-    }
-
-    private void UpdateLoadingSceneBar()
-    {
-        loadingBar.value = Mathf.MoveTowards(loadingBar.value, targetValue, loadingBarSpeed * Time.deltaTime);
     }
 
     private IEnumerator CR_LoadScene()
@@ -47,14 +39,17 @@ public class SceneLoader : MonoBehaviour
             yield return new WaitForSeconds(1f);
 
             loadProgress = Mathf.Clamp01(loadSceneOp.progress / 0.9f);
-            targetValue = loadProgress;
         }
         while (loadProgress < 1);
 
-        yield return new WaitUntil(() => loadingBar.value == 1);
+        yield return new WaitForSeconds(1);
 
-        continueButton.interactable = true;
+        loadingIcon.SetActive(false);
+        loadingText.SetActive(false);
+
         continueButton.onClick.AddListener(AllowSceneChange);
+        continueButton.interactable = true;
+        continueButton.gameObject.SetActive(true);
 
         yield return new WaitUntil(() => changeScene);
 

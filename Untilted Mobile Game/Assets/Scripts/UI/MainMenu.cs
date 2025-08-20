@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
 
     private void LoadLevel()
     {
-        SceneManager.LoadSceneAsync("Loading Game");
+        SceneManager.LoadSceneAsync("Loading Level 1");
     }
 
     private void ShowSettings()

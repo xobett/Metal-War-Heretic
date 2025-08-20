@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup sfxMixerGroup;
 
     private AudioSource musicSource;
-    private AudioSource[] sfxSources = new AudioSource[5];
+    private AudioSource[] sfxSources = new AudioSource[7];
 
     [Header("SOUND DATABASE")]
     [SerializeField] private SOAudioDatabase soundDatabase;
@@ -50,6 +50,7 @@ public class AudioManager : MonoBehaviour
             sfxSources[i].outputAudioMixerGroup = sfxMixerGroup;
             sfxSources[i].playOnAwake = false;
             sfxSources[i].loop = false;
+            sfxSources[i].volume = 0.3f;
         }
 
         GameObject musicGo = new GameObject("Music Source");
@@ -59,6 +60,7 @@ public class AudioManager : MonoBehaviour
         musicSource.outputAudioMixerGroup = musicMixerGroup;
         musicSource.playOnAwake = false;
         musicSource.loop = true;
+        musicSource.volume = 0.5f;
     }
 
     private void Start_TestPlay()
@@ -148,7 +150,7 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator CR_BlendSounds(string soundName)
     {
-        AudioSource source = sfxSources[Random.Range(1, sfxSources.Length)];
+        AudioSource source = sfxSources[Random.Range(2, sfxSources.Length)];
 
         //Fade out
         float timeFadeOut = 0;

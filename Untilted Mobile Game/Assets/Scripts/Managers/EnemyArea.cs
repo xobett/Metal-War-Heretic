@@ -12,17 +12,22 @@ public class EnemyArea : MonoBehaviour
     [SerializeField] private GameObject shieldEnemyPf;
     [SerializeField] private GameObject bruteEnemyPf;
 
-
     [Header("AREA ENEMY SETTINGS")]
     [SerializeField] private GameObject[] enemiesToSpawn;
-    [SerializeField] private GameObject vfxEnemySpawn;
 
     private LayerMask whatIsEnemy;
 
     [Header("LOCKED DOOR SETTINGS")]
     [SerializeField] private GameObject lockedDoor;
+    [SerializeField] private SOShakeData openDoorShake;
 
     [Header("SPAWN SETTINGS")]
+    [SerializeField] private GameObject vfxEnemySpawn;
+    [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private SOShakeData respawnPosShake;
+    [SerializeField] private SOShakeData respawnRotShake;
+
     [SerializeField] private Transform spawnOrigin;
     [SerializeField] private float areaRadius = 10f;
 
@@ -47,12 +52,18 @@ public class EnemyArea : MonoBehaviour
 
     private void Start()
     {
-        whatIsEnemy = LayerMask.GetMask("Enemy");
+        Start_GetReferences();
         Start_SpawnEnemies();
         Start_RunQueriesHandler();
     }
 
     #region START
+
+    private void Start_GetReferences()
+    {
+        audioSource = GetComponentInChildren<AudioSource>();
+        whatIsEnemy = LayerMask.GetMask("Enemy");
+    }
 
     private void Start_SpawnEnemies()
     {
@@ -109,7 +120,13 @@ public class EnemyArea : MonoBehaviour
         GameObject vfx = Instantiate(vfxEnemySpawn, spawnPos, Quaternion.Euler(-90f, 0f, 0f));
         Destroy(vfx, 1.5f);
 
-        GameObject enemyPf = Instantiate(GetEnemyPf(enemy), spawnPos, Quaternion.identity); ; 
+        audioSource.clip = AudioManager.Instance.GetClip("SPAWN ENEMIGOS");
+        audioSource.Play();
+
+        ShakeEventManager.Instance.AddShakeEvent(respawnPosShake);
+        ShakeEventManager.Instance.AddShakeEvent(respawnRotShake);
+
+        GameObject enemyPf = Instantiate(GetEnemyPf(enemy), spawnPos, Quaternion.identity);
 
         Enemy respawnedEnemy = enemyPf.GetComponent<Enemy>();
         AddEnemyToArea(respawnedEnemy);
@@ -156,6 +173,8 @@ public class EnemyArea : MonoBehaviour
 
     #region AREA
 
+    #region QUERIES
+
     public int UsedAttackPosCount => usedAttackPositions.Count;
 
     public void ResetUpdatePositionValue()
@@ -165,60 +184,6 @@ public class EnemyArea : MonoBehaviour
             enemy.UpdatedPosition = false;
         }
     }
-
-    #region DEBUG
-
-    [ContextMenu("Print Wait Positions")]
-    private void Debug_PrintAttackPositions()
-    {
-        foreach (var kvp in usedWaitPositions)
-        {
-            Debug.Log($"{kvp.Key.name} & {kvp.Value}");
-        }
-    }
-
-    [ContextMenu("Print Attack Positions")]
-    private void Debug_PrintWaitPositions()
-    {
-        foreach (var kvp in usedWaitPositions)
-        {
-            Debug.Log($"{kvp.Key.name} & {kvp.Value}");
-        }
-    }
-
-    #endregion DEBUG
-
-    #region QUERIES
-
-    public void OnForced_AddAttackingEnemy(Enemy forcedAddedEnemy)
-    {
-        Debug.Log("Entered");
-        attackingEnemies.Add(forcedAddedEnemy);
-        RemoveRandomEnemy(forcedAddedEnemy);
-    }
-
-    public void RemoveRandomEnemy(Enemy forcedAddedEnemy)
-    {
-        if (attackingEnemies.Count == 1)
-        {
-            Debug.Log("RETURNED");
-            return;
-        }
-
-        Enemy removedEnemy = null;
-
-        foreach(Enemy enemy in attackingEnemies)
-        {
-            if (enemy != forcedAddedEnemy)
-            {
-                Debug.Log($"Removed {enemy.gameObject.name}");
-                removedEnemy = enemy;
-            }
-        }
-
-        Invoke(nameof(RepositionEnemies), 1f);
-    }
-
     public void RepositionEnemies()
     {
         foreach (Enemy enemy in aliveEnemies)
@@ -278,90 +243,6 @@ public class EnemyArea : MonoBehaviour
         {
             getAttackPositionQueue.Remove(enemy);
         }
-    }
-
-    #endregion QUERIES
-
-    #region QUERY HANDLERS
-
-    private IEnumerator CR_QueriesHandler()
-    {
-        yield return new WaitForSeconds(0.7f);
-
-        playerPos = Player.Instance.gameObject.transform.position;
-
-        HandleAttackStateQueries();
-
-        HandleGetAttackPosQueries();
-
-        HandleGetWaitPosQueries();
-
-        StartCoroutine(CR_QueriesHandler());
-    }
-
-    private void HandleGetWaitPosQueries()
-    {
-        if (getWaitPositionQueue.Count != 0)
-        {
-            for (int i = getWaitPositionQueue.Count - 1; i >= 0; i--)
-            {
-                Vector3 pos = GetWaitingPosition(getWaitPositionQueue[i]);
-                getWaitPositionQueue[i].SetWaitPosition(pos);
-                getWaitPositionQueue.RemoveAt(i);
-            }
-        }
-    }
-
-    private void HandleGetAttackPosQueries()
-    {
-        if (getAttackPositionQueue.Count != 0)
-        {
-            for (int i = getAttackPositionQueue.Count - 1; i >= 0; i--)
-            {
-                Vector3 pos = GetAttackPosition(getAttackPositionQueue[i]);
-
-                getAttackPositionQueue[i].SetAttackPosition(pos);
-                getAttackPositionQueue.RemoveAt(i);
-            }
-        }
-    }
-
-    private void HandleAttackStateQueries()
-    {
-        if (getAttackStateQueue.Count != 0)
-        {
-            for (int i = getAttackStateQueue.Count - 1; i >= 0; i--)
-            {
-                if (attackingEnemies.Count < 3)
-                {
-                    attackingEnemies.Add(getAttackStateQueue[i]);
-
-                    getAttackStateQueue[i].ChangeState(State.Attack);
-                    getAttackStateQueue.RemoveAt(i);
-                }
-            }
-        }
-    }
-
-    #endregion QUERY HANDLERS
-
-    private void UnlockLockedDoor()
-    {
-        if (lockedDoor != null)
-        {
-            Animator[] anims = new Animator[2];
-
-            anims[0] = lockedDoor.transform.GetChild(0).GetComponent<Animator>();
-            anims[1] = lockedDoor.transform.GetChild(1).GetComponent<Animator>();
-
-            foreach (Animator anim in anims)
-            {
-                anim.SetTrigger("Unlock");
-            }
-        }
-
-        AudioManager.Instance.PlayDelayedDoorSound();
-        Destroy(gameObject);
     }
 
     private Vector3 GetWaitingPosition(Enemy enemy)
@@ -439,9 +320,70 @@ public class EnemyArea : MonoBehaviour
         return fallBackPos;
     }
 
-    #endregion AREA
+    #endregion QUERIES
 
-    #region MODIFY AREA
+    #region QUERY HANDLERS
+
+    private IEnumerator CR_QueriesHandler()
+    {
+        yield return new WaitForSeconds(0.7f);
+
+        playerPos = Player.Instance.gameObject.transform.position;
+
+        HandleAttackStateQueries();
+
+        HandleGetAttackPosQueries();
+
+        HandleGetWaitPosQueries();
+
+        StartCoroutine(CR_QueriesHandler());
+    }
+
+    private void HandleGetWaitPosQueries()
+    {
+        if (getWaitPositionQueue.Count != 0)
+        {
+            for (int i = getWaitPositionQueue.Count - 1; i >= 0; i--)
+            {
+                Vector3 pos = GetWaitingPosition(getWaitPositionQueue[i]);
+                getWaitPositionQueue[i].SetWaitPosition(pos);
+                getWaitPositionQueue.RemoveAt(i);
+            }
+        }
+    }
+
+    private void HandleGetAttackPosQueries()
+    {
+        if (getAttackPositionQueue.Count != 0)
+        {
+            for (int i = getAttackPositionQueue.Count - 1; i >= 0; i--)
+            {
+                Vector3 pos = GetAttackPosition(getAttackPositionQueue[i]);
+
+                getAttackPositionQueue[i].SetAttackPosition(pos);
+                getAttackPositionQueue.RemoveAt(i);
+            }
+        }
+    }
+
+    private void HandleAttackStateQueries()
+    {
+        if (getAttackStateQueue.Count != 0)
+        {
+            for (int i = getAttackStateQueue.Count - 1; i >= 0; i--)
+            {
+                if (attackingEnemies.Count < 3)
+                {
+                    attackingEnemies.Add(getAttackStateQueue[i]);
+
+                    getAttackStateQueue[i].ChangeState(State.Attack);
+                    getAttackStateQueue.RemoveAt(i);
+                }
+            }
+        }
+    }
+
+    #endregion QUERY HANDLERS
 
     public void AddEnemyToArea(Enemy enemy)
     {
@@ -462,12 +404,7 @@ public class EnemyArea : MonoBehaviour
             UnlockLockedDoor();
         }
     }
-
-    public int GetTotalAttackingEnemies()
-    {
-        return attackingEnemies.Count;
-    }
-
+    
     public void RemoveAttackingEnemy(Enemy enemy)
     {
         if (attackingEnemies.Contains(enemy))
@@ -476,7 +413,62 @@ public class EnemyArea : MonoBehaviour
         }
     }
 
-    #endregion MODIFY AREA
+    public int GetTotalAttackingEnemies()
+    {
+        return attackingEnemies.Count;
+    }
+
+    public void OnForced_AddAttackingEnemy(Enemy forcedAddedEnemy)
+    {
+        Debug.Log("Entered");
+        attackingEnemies.Add(forcedAddedEnemy);
+        RemoveRandomEnemy(forcedAddedEnemy);
+    }
+
+    public void RemoveRandomEnemy(Enemy forcedAddedEnemy)
+    {
+        if (attackingEnemies.Count == 1)
+        {
+            Debug.Log("RETURNED");
+            return;
+        }
+
+        Enemy removedEnemy = null;
+
+        foreach(Enemy enemy in attackingEnemies)
+        {
+            if (enemy != forcedAddedEnemy)
+            {
+                Debug.Log($"Removed {enemy.gameObject.name}");
+                removedEnemy = enemy;
+                break;
+            }
+        }
+
+        Invoke(nameof(RepositionEnemies), 1f);
+    }
+
+    private void UnlockLockedDoor()
+    {
+        if (lockedDoor != null)
+        {
+            Animator[] anims = new Animator[2];
+
+            anims[0] = lockedDoor.transform.GetChild(0).GetComponent<Animator>();
+            anims[1] = lockedDoor.transform.GetChild(1).GetComponent<Animator>();
+
+            foreach (Animator anim in anims)
+            {
+                anim.SetTrigger("Unlock");
+            }
+        }
+
+        AudioManager.Instance.PlayDelayedDoorSound();
+        ShakeEventManager.Instance.AddShakeEvent(openDoorShake);
+        Destroy(gameObject);
+    }
+
+    #endregion AREA
 
     #region TRIGGERS
 

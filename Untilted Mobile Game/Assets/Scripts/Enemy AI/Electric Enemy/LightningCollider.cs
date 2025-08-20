@@ -47,7 +47,7 @@ public class LightningCollider : MonoBehaviour
 
     #region SET ELECTRIC BALL SETTINGS
 
-    public void SetElectricBallSettings(Vector3 moveDirection, float damage, float speed)
+    public void SetLightningSettings(Vector3 moveDirection, float damage, float speed)
     {
         this.moveDirection = moveDirection;
 
@@ -61,10 +61,10 @@ public class LightningCollider : MonoBehaviour
 
     private void FixedUpdate()
     {
-        BallMovement();
+        Movement();
     }
 
-    private void BallMovement()
+    private void Movement()
     {
         rb.MovePosition(transform.position + moveDirection * speed * Time.deltaTime);
     }

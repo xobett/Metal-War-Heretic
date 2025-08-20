@@ -14,18 +14,15 @@ public class Score : MonoBehaviour
 
     private void AssignContinueButton()
     {
-        //var currentScene = SceneManager.GetActiveScene();
+        var currentScene = SceneManager.GetActiveScene();
 
-        //if (currentScene.name == "Level 1")
-        //{
-        //    continueButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Level 2"));
-        //}
-        //else
-        //{
-        //    continueButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Main Menu"));
-        //}
-
-        continueButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Main Menu"));
-        menuButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Main Menu"));
+        if (currentScene.name == "Level 1")
+        {
+            continueButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Loading Level 2"));
+        }
+        else
+        {
+            continueButton.onClick.AddListener(() => SceneManager.LoadSceneAsync("Main Menu"));
+        }
     }
 }

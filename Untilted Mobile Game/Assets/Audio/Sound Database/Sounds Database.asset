@@ -67,3 +67,12 @@ MonoBehaviour:
   - soundName: XPMECHA GAMEPLAY
     clip: {fileID: 8300000, guid: be9c91f3b8452224d8c17489da05e796, type: 3}
     soundType: 1
+  - soundName: DASH
+    clip: {fileID: 8300000, guid: 9db44d3fe4a45bf4a8500b79aee175e4, type: 3}
+    soundType: 0
+  - soundName: SPAWN ENEMIGOS
+    clip: {fileID: 8300000, guid: ca6cbb6a9a3b0914d926837ce7d49db2, type: 3}
+    soundType: 0
+  - soundName: TAKE DAMAGE
+    clip: {fileID: 8300000, guid: 60c93aa2b8447194e9ef52935244a805, type: 3}
+    soundType: 0

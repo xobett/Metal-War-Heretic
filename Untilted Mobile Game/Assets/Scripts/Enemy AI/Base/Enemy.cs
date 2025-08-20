@@ -136,7 +136,6 @@ namespace EnemyAI
             audioSource = GetComponentInChildren<AudioSource>();
 
             audioSource.outputAudioMixerGroup = AudioManager.Instance.sfxMixerGroup;
-
         }
 
         private void Start_CreateFSMStates()
@@ -239,6 +238,7 @@ namespace EnemyAI
         protected void SelfBehavior_Update()
         {
             if (!enemyArea.playerIsOnArea) return;
+            Debug.Log("On behavior");
 
             Self_FollowPlayer_Update();
             Self_OnNavArrive_Update();

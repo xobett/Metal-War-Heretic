@@ -81,6 +81,9 @@ public class SliceAttack : MonoBehaviour
 
         IsDashing = true;
         isCooling = true;
+
+        AudioManager.Instance.PlaySFX("DASH", 1);
+
         yield return new WaitForSeconds(duration);
 
         if (IsDashing)

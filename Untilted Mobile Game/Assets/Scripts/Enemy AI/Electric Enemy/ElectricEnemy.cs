@@ -86,11 +86,14 @@ namespace EnemyAI.ElectricEnemy
             Vector3 spawnPos = spawnPoint.position;
             spawnPos.y = 1.5f;
             GameObject lightning = Instantiate(distanceAttackPf, spawnPos, Quaternion.identity);
-            lightning.GetComponent<LightningCollider>().SetElectricBallSettings(transform.forward, distanceAttackDamage, distanceAttackSpeed);
+            lightning.GetComponent<LightningCollider>().SetLightningSettings(transform.forward, distanceAttackDamage, distanceAttackSpeed);
 
             Quaternion rot = Quaternion.Euler(-90, spawnPoint.transform.eulerAngles.y, spawnPoint.eulerAngles.z);
             GameObject vfx = Instantiate(lightningVfx, spawnPoint.position, rot);
             Destroy(vfx, 3);
+
+            audioSource.clip = AudioManager.Instance.GetClip("ATAQUE ELECTRICIDAD SUELO");
+            audioSource.Play();
         }
 
         public void AnimEvent_SpawnElectricArea()

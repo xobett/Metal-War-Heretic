@@ -7,10 +7,9 @@ public class MeleeHandCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider enemyCollider)
     {
-        if (enemyCollider.isTrigger) return;
+        if (enemyCollider.isTrigger || enemyCollider.CompareTag("Player")) return;
 
         AudioManager.Instance.PlaySFX("HIT A ENEMIGO", 0);
-
         ShakeEventManager.Instance.AddShakeEvent(playerHitShake);
 
         if (enemyCollider.CompareTag("Enemy"))

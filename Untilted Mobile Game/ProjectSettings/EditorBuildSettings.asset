@@ -9,14 +9,17 @@ EditorBuildSettings:
     path: Assets/Scenes/Build Scenes/Main Menu.unity
     guid: c28897a36d9ddcb489abbe92e39ce342
   - enabled: 1
-    path: Assets/Scenes/Build Scenes/Loading Game.unity
+    path: Assets/Scenes/Build Scenes/Loading Level 1.unity
     guid: 92f67b9d0ff13b94ca89a8a3e8323096
   - enabled: 1
     path: Assets/Scenes/Build Scenes/Level 1.unity
     guid: 6de01bf6495b03443ab4f19fc506145a
   - enabled: 1
-    path: Assets/Scenes/Build Scenes/Credits.unity
-    guid: 1a41276d9900d33499633d2b41677bef
+    path: Assets/Scenes/Build Scenes/Level 2.unity
+    guid: 4ebcc5b06daaa3a4a9b0dbedbde90709
+  - enabled: 1
+    path: Assets/Scenes/Build Scenes/Loading Level 2.unity
+    guid: 5b233c165d2f6504f88513c130ef5dde
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -34,6 +34,11 @@ public class Health : MonoBehaviour
     {
         CurrentHealth -= damage;
 
+        if (CompareTag("Player"))
+        {
+            AudioManager.Instance.PlaySFX("TAKE DAMAGE");
+        }
+
         if (lifebar != null)
         {
             SetLifebarValue();
