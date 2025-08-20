@@ -17,7 +17,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float upLimit;
     [SerializeField] private float downLimit;
 
-    internal TargetCameraRotation lastTarget = TargetCameraRotation.Front;
+    public TargetCameraRotation lastTarget = TargetCameraRotation.Front;
 
     private const float orbitSmooth = 15f;
 
