@@ -8,6 +8,12 @@ public class Player : MonoBehaviour
 
     public static Player Instance { get; private set; }
 
+    private float timeBeforeNextHealth = 10;
+    private Health playerHealth;
+
+    private MeleeAttack melee;
+    private EnemyArea lastEnemyAreaEntered;
+
     public bool movementEnabled;
 
     private bool healthRegained = false;
@@ -24,6 +30,8 @@ public class Player : MonoBehaviour
     {
         Instance = this;
         rndr = GetComponentInChildren<Renderer>();
+        playerHealth = GetComponent<Health>();
+        melee = GetComponent<MeleeAttack>();
     }
 
     #endregion AWAKE
@@ -66,17 +74,42 @@ public class Player : MonoBehaviour
 
     #region HEALTH
 
-    private void PassiveHealthRegain()
+    private void PassiveHealthRegain_Update()
     {
         if (healthRegained) return;
+        if (playerHealth.CurrentHealth == 100 || melee.InCombat) return;
 
+        healthRegained = true;
+
+        playerHealth.AddHealth(10);
+        Invoke(nameof(EnableHealthRegain), timeBeforeNextHealth);
+    }
+
+    private void EnableHealthRegain()
+    {
+        healthRegained = false;
     }
 
     #endregion HEALTH
 
+    #region ENEMY AREA
+
+    public void SetEnemyArea(EnemyArea area)
+    {
+        lastEnemyAreaEntered = area;
+    }
+
+    public void ResetOnAreaValue()
+    {
+        if (lastEnemyAreaEntered == null) return;
+        lastEnemyAreaEntered.playerIsOnArea = false;
+    }
+
+    #endregion ENEMY AREA
+
     // Update is called once per frame
     void Update()
     {
-        
+        PassiveHealthRegain_Update();
     }
 }

@@ -486,11 +486,12 @@ public class EnemyArea : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerIsOnArea = true;
+            other.GetComponent<Player>().SetEnemyArea(this);
 
             if (enteredArea) return;
             enteredArea = true;
 
-            OnEnterArea_AttackPlayer();
+            Invoke(nameof(OnEnterArea_AttackPlayer), 1);
         }
     }
 

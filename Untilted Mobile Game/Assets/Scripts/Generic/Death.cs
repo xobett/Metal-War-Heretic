@@ -8,5 +8,9 @@ public class Death : MonoBehaviour
         {
             other.GetComponent<Health>().PlayerDeath();
         }
+        else if(other.CompareTag("Enemy"))
+        {
+            other.GetComponent<Health>().TakeDamage(1000);
+        }
     }
 }

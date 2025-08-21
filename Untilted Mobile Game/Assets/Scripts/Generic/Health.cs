@@ -84,9 +84,11 @@ public class Health : MonoBehaviour
 
     public void PlayerDeath()
     {
-        gameObject.GetComponent<CharacterController>().enabled = false;
+        GetComponent<CharacterController>().enabled = false;
         transform.position = gameObject.GetComponent<CheckpointSaver>().lastCheckpoint;
-        gameObject.GetComponent<CharacterController>().enabled = true;
+        GetComponent<CharacterController>().enabled = true;
+
+        GetComponent<Player>().ResetOnAreaValue();
 
         AddHealth(maxHealth);
     }
