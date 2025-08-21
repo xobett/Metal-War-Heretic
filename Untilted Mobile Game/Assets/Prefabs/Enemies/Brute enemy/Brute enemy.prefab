@@ -19,7 +19,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &883241455918041028
 RectTransform:
   m_ObjectHideFlags: 0
@@ -290,7 +290,7 @@ RectTransform:
   m_Father: {fileID: 4329566051490540259}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -520,8 +520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ea7ae45d0bbf10489c757c524bceea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 300
-  lifebar: {fileID: 4070081213568939373}
+  maxHealth: 250
+  lifebar: {fileID: 0}
   onDeathVfx: {fileID: 7158611392866055621, guid: e6340d4a0c64f374c9c6181319cbed6d, type: 3}
 --- !u!65 &3585895775364187851
 BoxCollider:
@@ -688,7 +688,7 @@ RectTransform:
   m_Father: {fileID: 5551001527289982922}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
