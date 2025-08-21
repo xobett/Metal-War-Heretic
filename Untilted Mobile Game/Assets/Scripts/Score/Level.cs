@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Level : MonoBehaviour
 {
@@ -23,9 +22,10 @@ public class Level : MonoBehaviour
     private void Start_SetLevelSettings()
     {
         LevelScore = 0;
+        Debug.Log("Called audio manager");
+        PlayLevelMusic();
 
-        Invoke(nameof(PlayLevelMusic), 2f);
-
+        //Invoke(nameof(PlayLevelMusic), 2f);
     }
 
     #endregion START

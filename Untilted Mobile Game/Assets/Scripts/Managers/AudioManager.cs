@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -24,6 +23,7 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            Debug.Log("Audio Manager instanced");
             DontDestroyOnLoad(gameObject);
         }
         else

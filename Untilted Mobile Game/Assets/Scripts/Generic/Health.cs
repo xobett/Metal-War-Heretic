@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        SetHealth(maxHealth);
+        AddHealth(maxHealth);
     }
 
     private void Start_GetReferences()
@@ -50,7 +50,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void SetHealth(float health)
+    public void AddHealth(float health)
     {
         CurrentHealth += health;
 
@@ -88,6 +88,6 @@ public class Health : MonoBehaviour
         transform.position = gameObject.GetComponent<CheckpointSaver>().lastCheckpoint;
         gameObject.GetComponent<CharacterController>().enabled = true;
 
-        SetHealth(maxHealth);
+        AddHealth(maxHealth);
     }
 }

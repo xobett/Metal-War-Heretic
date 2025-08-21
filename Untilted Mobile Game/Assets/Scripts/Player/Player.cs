@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
 
     public bool movementEnabled;
 
+    private bool healthRegained = false;
+
     private void Awake()
     {
         Awake_GetReferences();
@@ -61,6 +63,16 @@ public class Player : MonoBehaviour
     }
 
     #endregion MOVEMENT
+
+    #region HEALTH
+
+    private void PassiveHealthRegain()
+    {
+        if (healthRegained) return;
+
+    }
+
+    #endregion HEALTH
 
     // Update is called once per frame
     void Update()

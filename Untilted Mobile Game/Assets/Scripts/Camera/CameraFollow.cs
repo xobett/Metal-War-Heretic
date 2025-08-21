@@ -35,6 +35,7 @@ public class CameraFollow : MonoBehaviour
     {
         Start_GetReferences();
         Start_SetSettings();
+        TurnCamera(lastTarget);
     }
 
     #region START
