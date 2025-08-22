@@ -4,6 +4,13 @@ using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
+    [Header("LEVEL SELECTOR PANEL")]
+    [SerializeField] private GameObject levelSelectorPanel;
+
+    [SerializeField] private Button loadLevelOneButton;
+    [SerializeField] private Button loadLevelTwoButton;
+    [SerializeField] private Button menuButton;
+
     [Header("MAIN MENU PANELS")]
     [SerializeField] private Animator optionsPanel;
     [SerializeField] private Animator settingsPanel;
@@ -21,7 +28,11 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        playButton.onClick.AddListener(LoadLevel);
+        playButton.onClick.AddListener(ShowLevelSelector);
+        loadLevelOneButton.onClick.AddListener(LoadLevelOne);
+        loadLevelTwoButton.onClick.AddListener(LoadLevelTwo);
+        menuButton.onClick.AddListener(ShowMenu);
+
         settingsButton.onClick.AddListener(ShowSettings);
         storeButton.onClick.AddListener(ShowStore);
 
@@ -31,9 +42,25 @@ public class MainMenu : MonoBehaviour
         AudioManager.Instance.PlayMusic("XPMECHA MENU");
     }
 
-    private void LoadLevel()
+    private void ShowLevelSelector()
+    {
+        optionsPanel.gameObject.SetActive(false);
+        levelSelectorPanel.SetActive(true);
+    }
+    private void ShowMenu()
+    {
+        levelSelectorPanel.SetActive(false);
+        optionsPanel.gameObject.SetActive(true);
+    }
+
+    private void LoadLevelOne()
     {
         SceneManager.LoadSceneAsync("Loading Level 1");
+    }
+
+    private void LoadLevelTwo()
+    {
+        SceneManager.LoadSceneAsync("Loading Level 2");
     }
 
     private void ShowSettings()
@@ -41,6 +68,7 @@ public class MainMenu : MonoBehaviour
         optionsPanel.SetTrigger("Swipe Up");
         settingsPanel.SetTrigger("Swipe In");
     }
+
 
     private void ShowStore()
     {

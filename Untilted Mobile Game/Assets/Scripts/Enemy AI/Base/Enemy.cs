@@ -168,7 +168,6 @@ namespace EnemyAI
             }
         }
 
-
         #endregion FSM
 
         protected virtual void Update()
@@ -177,6 +176,7 @@ namespace EnemyAI
             {
                 fsm.Update();
             }
+
             Rotation_Update();
             Animator_Update();
         }
@@ -238,7 +238,6 @@ namespace EnemyAI
         protected void SelfBehavior_Update()
         {
             if (!enemyArea.playerIsOnArea) return;
-            Debug.Log("On behavior");
 
             Self_FollowPlayer_Update();
             Self_OnNavArrive_Update();

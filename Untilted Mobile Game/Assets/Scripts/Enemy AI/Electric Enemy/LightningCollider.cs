@@ -80,7 +80,7 @@ public class LightningCollider : MonoBehaviour
             var cam = Camera.main;
 
             Vector3 hitPos = other.transform.position + other.transform.forward * 0.4f;
-            GameObject vfx = Instantiate(hitPlayerVfx, hitPos, hitPlayerVfx.transform.rotation);
+            GameObject vfx = Instantiate(hitPlayerVfx, hitPos, Quaternion.identity);
             Destroy(vfx, 1);
 
             other.GetComponent<Health>().TakeDamage(damage);

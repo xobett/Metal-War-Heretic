@@ -17,7 +17,7 @@ public class EE_AnimEvents : MonoBehaviour
 
     public void PlayElectricAreaAnticipation()
     {
-        GameObject vfx = Instantiate(electricAreaVfx, vfxPos, electricAreaVfx.transform.rotation);
+        GameObject vfx = Instantiate(electricAreaVfx, vfxPos, Quaternion.identity);
         Destroy(vfx, 3);
     }
 

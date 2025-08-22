@@ -31,7 +31,7 @@ public class ComboCounter : MonoBehaviour
 
     public void IncreaseComboCount()
     {
-        ActualComboCount++;
+        ActualComboCount += 2;
         timeWithinCombo -= timeWithinCombo <= 1 ? 0 : 0.1f;
         timer = timeWithinCombo;
     }

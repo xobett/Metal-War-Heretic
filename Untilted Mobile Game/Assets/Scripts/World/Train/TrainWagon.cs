@@ -52,6 +52,11 @@ public class TrainWagon : MonoBehaviour
         {
             other.GetComponent<Health>().TakeDamage(100);
         }
+        else if (other.CompareTag("Enemy"))
+        {
+            //Easter egg
+            other.GetComponent<Health>().TakeDamage(10000);
+        }
     }
 
     #endregion TRIGGER

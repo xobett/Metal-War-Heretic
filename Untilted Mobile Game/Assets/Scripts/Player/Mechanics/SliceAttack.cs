@@ -19,8 +19,6 @@ public class SliceAttack : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private float duration = 0.2f;
 
-    private CameraFollowPH cam;
-
     [Header("SLICE ATTACK ASSIST SETTINGS")]
     [SerializeField] private LayerMask whatIsEnemy;
 
@@ -202,7 +200,6 @@ public class SliceAttack : MonoBehaviour
     private void GetReferences()
     {
         charCtrlr = GetComponent<CharacterController>();
-        cam = Camera.main.GetComponent<CameraFollowPH>();
         animator = GetComponentInChildren<Animator>();
         sliceButton = GameObject.FindGameObjectWithTag("Slice Button").GetComponent<Button>();
     }

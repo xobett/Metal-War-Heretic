@@ -10,15 +10,16 @@ public class Health : MonoBehaviour
 
     [SerializeField] private GameObject onDeathVfx;
     private bool triggeredDeath;
+    private Animator animator;
 
     private void Awake()
     {
         Start_GetReferences();
-
     }
 
     void Start()
     {
+        animator = GetComponentInChildren<Animator>();
         AddHealth(maxHealth);
     }
 
@@ -77,18 +78,31 @@ public class Health : MonoBehaviour
 
             AudioManager.Instance.PlaySFX("MUERTE ENEMIGOS");
 
-            Animator animator = GetComponentInChildren<Animator>();
             animator.SetTrigger("Death");
         }
     }
 
     public void PlayerDeath()
     {
+        Player.Instance.DisableMovement();
+        Player.Instance.ResetOnAreaValue();
+        gameObject.tag = "Dead";
+
+        animator.CrossFade("Base Layer.Muerte", 0);
+
+        Invoke(nameof(RespawnPlayer), 2.8f);
+    }
+
+    private void RespawnPlayer()
+    {
+        gameObject.tag = "Player";
+        Player.Instance.EnableMovement();
+
+        animator.CrossFade("Base Layer.Idle", 0);
+
         GetComponent<CharacterController>().enabled = false;
         transform.position = gameObject.GetComponent<CheckpointSaver>().lastCheckpoint;
         GetComponent<CharacterController>().enabled = true;
-
-        GetComponent<Player>().ResetOnAreaValue();
 
         AddHealth(maxHealth);
     }

@@ -5,15 +5,8 @@ public class SliceAttackCollider : MonoBehaviour
     [Header("SLICE ATTACK SETTINGS")]
     [SerializeField] private float sliceDamage;
 
-    private CameraFollowPH playerCam;
-
     [SerializeField] private GameObject hitEnemyVfx;
     [SerializeField] private SOShakeData playerHitShake;
-
-    private void Start()
-    {
-        playerCam = Camera.main.GetComponent<CameraFollowPH>();
-    }
 
     private void OnTriggerEnter(Collider enemyCollider)
     {

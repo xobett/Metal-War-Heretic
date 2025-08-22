@@ -60,22 +60,9 @@ public class AudioManager : MonoBehaviour
         musicSource.outputAudioMixerGroup = musicMixerGroup;
         musicSource.playOnAwake = false;
         musicSource.loop = true;
-        musicSource.volume = 0.5f;
+        musicSource.volume = 0.4f;
     }
 
-    private void Start_TestPlay()
-    {
-        soundDatabase.GetSound("TREN");
-
-        sfxSources[0].clip = soundDatabase.GetSound("TREN").clip;
-
-        Invoke(nameof(Play), 3f);
-    }
-
-    void Play()
-    {
-        PlaySFX("ELECTRICIDAD SUELO");
-    }
 
     #endregion START
 
@@ -168,7 +155,7 @@ public class AudioManager : MonoBehaviour
         float timeFadeIn = 0;
         while (timeFadeIn < 1)
         {
-            source.volume = Mathf.Lerp(source.volume, 1, timeFadeIn);
+            source.volume = Mathf.Lerp(source.volume, 0.4f, timeFadeIn);
             timeFadeIn += Time.deltaTime * blendTime;
             yield return null;
         }
@@ -194,7 +181,7 @@ public class AudioManager : MonoBehaviour
         float timeFadeIn = 0;
         while (timeFadeIn < 1)
         {
-            musicSource.volume = Mathf.Lerp(musicSource.volume, 1, timeFadeIn);
+            musicSource.volume = Mathf.Lerp(musicSource.volume, 0.4f, timeFadeIn);
             timeFadeIn += Time.deltaTime * blendTime;
             yield return null;
         }

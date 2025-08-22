@@ -10,7 +10,7 @@ public class Death : MonoBehaviour
         }
         else if(other.CompareTag("Enemy"))
         {
-            other.GetComponent<Health>().TakeDamage(1000);
+            other.GetComponent<Health>().TakeDamage(10000);
         }
     }
 }
