@@ -20,6 +20,14 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
+        SetInstance_Awake();
+        InstantiateAudioSources_Awake();
+    }
+
+    #region AWAKE 
+
+    private void SetInstance_Awake()
+    {
         if (Instance == null)
         {
             Instance = this;
@@ -32,14 +40,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        Start_InstantiateAudioSources();
-    }
-
-    #region START 
-
-    private void Start_InstantiateAudioSources()
+    private void InstantiateAudioSources_Awake()
     {
         for (int i = 0; i < sfxSources.Length; i++)
         {
@@ -63,8 +64,7 @@ public class AudioManager : MonoBehaviour
         musicSource.volume = 0.4f;
     }
 
-
-    #endregion START
+    #endregion AWAKE
 
     public void PlayMusic(string soundName)
     {

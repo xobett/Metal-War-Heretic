@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
     private void PassiveHealthRegain_Update()
     {
         if (healthRegained) return;
-        if (playerHealth.CurrentHealth == 100 || melee.InCombat) return;
+        if (playerHealth.CurrentHealth == 100 || melee.InCombat || playerHealth.damaged) return;
 
         healthRegained = true;
 

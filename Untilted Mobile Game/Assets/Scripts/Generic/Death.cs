@@ -6,6 +6,7 @@ public class Death : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            other.GetComponent<Health>().deathByFalling = true;
             other.GetComponent<Health>().PlayerDeath();
         }
         else if(other.CompareTag("Enemy"))

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,9 @@ public class Health : MonoBehaviour
     [SerializeField] private GameObject onDeathVfx;
     private bool triggeredDeath;
     private Animator animator;
+
+    internal bool damaged = false;
+    internal bool deathByFalling = false;
 
     private void Awake()
     {
@@ -34,6 +38,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
+        
 
         if (CompareTag("Player"))
         {
@@ -49,6 +54,15 @@ public class Health : MonoBehaviour
         {
             Death();
         }
+
+        if (damaged) return;
+        damaged = true;
+        Invoke(nameof(DisableDamagedState), 5);
+    }
+
+    private void DisableDamagedState()
+    {
+        damaged = false;
     }
 
     public void AddHealth(float health)
@@ -84,17 +98,26 @@ public class Health : MonoBehaviour
 
     public void PlayerDeath()
     {
-        Player.Instance.DisableMovement();
-        Player.Instance.ResetOnAreaValue();
-        gameObject.tag = "Dead";
+        if (deathByFalling)
+        {
+            RespawnPlayer();
+        }
+        else
+        {
+            Player.Instance.DisableMovement();
+            Player.Instance.ResetOnAreaValue();
+            gameObject.tag = "Dead";
 
-        animator.CrossFade("Base Layer.Muerte", 0);
+            animator.CrossFade("Base Layer.Muerte", 0);
 
-        Invoke(nameof(RespawnPlayer), 2.8f);
+            Invoke(nameof(RespawnPlayer), 2.8f);
+        }
     }
 
     private void RespawnPlayer()
     {
+        deathByFalling = false;
+
         gameObject.tag = "Player";
         Player.Instance.EnableMovement();
 
