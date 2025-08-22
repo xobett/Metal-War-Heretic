@@ -76,3 +76,6 @@ MonoBehaviour:
   - soundName: TAKE DAMAGE
     clip: {fileID: 8300000, guid: 60c93aa2b8447194e9ef52935244a805, type: 3}
     soundType: 0
+  - soundName: UPPERCUT
+    clip: {fileID: 8300000, guid: 622400ff8b1b6a24db98b3ba33da4571, type: 3}
+    soundType: 0

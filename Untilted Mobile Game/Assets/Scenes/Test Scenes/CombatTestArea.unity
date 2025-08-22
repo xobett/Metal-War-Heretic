@@ -971,7 +971,19 @@ MonoBehaviour:
         m_MethodName: AddShakeEvent
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 7fa0f1afd967dd447a997e5cb85bb68d, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: d6d0701bcd97c1345bec4eb9d4ca00b4, type: 2}
+          m_ObjectArgumentAssemblyTypeName: SOShakeData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1288503185}
+        m_TargetAssemblyTypeName: ShakeEventManager, Assembly-CSharp
+        m_MethodName: AddShakeEvent
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 2452f6a1e7dd09e47838328ebecae852, type: 2}
           m_ObjectArgumentAssemblyTypeName: SOShakeData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0

@@ -392,7 +392,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7b888fc7ad983448943daa219e5256, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementEnabled: 0
 --- !u!114 &4415241851385853430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +450,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   playerHitShake: {fileID: 11400000, guid: e33999d8134e09d40843d509251d395c, type: 2}
+  uppercutPosShake: {fileID: 11400000, guid: d6d0701bcd97c1345bec4eb9d4ca00b4, type: 2}
+  uppercutRotShake: {fileID: 11400000, guid: 2452f6a1e7dd09e47838328ebecae852, type: 2}
   radius: 2.2
   aimAssitActive: 0
 --- !u!114 &6663795009258736236

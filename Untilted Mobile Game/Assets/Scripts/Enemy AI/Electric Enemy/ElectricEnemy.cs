@@ -99,7 +99,7 @@ namespace EnemyAI.ElectricEnemy
         public void AnimEvent_SpawnElectricArea()
         {
             electricAreaSpawnPos = player.transform.position;
-            electricAreaSpawnPos.y = 1f;
+            electricAreaSpawnPos.y = 0.8f;
 
             electricAreaPf.GetComponent<ElectricArea>().SetElectricAreaSettings(electricAreaDamage, electricAreaLifetime);
             Instantiate(electricAreaPf, electricAreaSpawnPos, Quaternion.identity);

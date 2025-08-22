@@ -17,6 +17,8 @@ public class MeleeAttack : MonoBehaviour
     [SerializeField] private LayerMask whatIsMelee;
 
     [SerializeField] public SOShakeData playerHitShake;
+    [SerializeField] public SOShakeData uppercutPosShake;
+    [SerializeField] public SOShakeData uppercutRotShake;
 
     [Header("MELEE COOLDOWN SETTINGS")]
 
@@ -136,7 +138,12 @@ public class MeleeAttack : MonoBehaviour
     private IEnumerator CR_FinishingUpperCut(Collider enemyCollider)
     {
         Player.Instance.DisableMovement();
+
         yield return new WaitForSeconds(0.44f);
+        AudioManager.Instance.PlaySFX("UPPERCUT");
+        ShakeEventManager.Instance.AddShakeEvent(uppercutPosShake);
+        ShakeEventManager.Instance.AddShakeEvent(uppercutRotShake);
+
         enemyCollider.GetComponent<IDamageable>().OnDamage(damage);
         GetComponent<ComboCounter>().IncreaseComboCount();
 
