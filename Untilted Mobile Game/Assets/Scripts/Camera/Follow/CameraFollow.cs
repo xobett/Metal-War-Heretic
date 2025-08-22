@@ -66,11 +66,6 @@ public class CameraFollow : MonoBehaviour
 
     #endregion START
 
-    void Update()
-    {
-        orbitAngle.x -= test * cameraSensitivity.x * Time.deltaTime;
-    }
-
     private void LateUpdate()
     {
         FollowAndOrbit();

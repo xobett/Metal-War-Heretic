@@ -42,7 +42,7 @@ public class SceneLoader : MonoBehaviour
         }
         while (loadProgress < 1);
 
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
 
         loadingIcon.SetActive(false);
         loadingText.SetActive(false);

@@ -145,7 +145,7 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 cameraGc = GetCameraRelativeGC();
 
-        if (Physics.Raycast(transform.position, cameraGc * 5f, out RaycastHit hit, 1f, whatIsMelee))
+        if (Physics.Raycast(transform.position, cameraGc * 5f, out RaycastHit hit, 1.9f, whatIsMelee))
         {
             Vector3 direction = hit.collider.transform.position - transform.position;
 

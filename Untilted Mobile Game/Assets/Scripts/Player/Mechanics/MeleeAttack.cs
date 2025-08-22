@@ -40,6 +40,8 @@ public class MeleeAttack : MonoBehaviour
 
     private void Update()
     {
+        if (!Player.Instance.combatEnabled) return;
+
         Melee_Update();
         CombatState_Update();
     }
@@ -113,14 +115,6 @@ public class MeleeAttack : MonoBehaviour
         GetComponent<ComboCounter>().IncreaseComboCount();
     }
 
-    private void CheckUpperCutTrigger()
-    {
-        //Enemies spawned per area
-        //Get the EnemyAreaManager
-        //If its the last enemy and its health is below the damage dealth
-        //Play uppercut animation
-    }
-
     private void SetMeleeAnimations()
     {
         if (!InCombat)
@@ -128,6 +122,7 @@ public class MeleeAttack : MonoBehaviour
             animator.CrossFade($"Base Layer.Golpes TODOS", 0f);
         }
     }
+
     #endregion MELEE
 
     #region GET REFERENCES

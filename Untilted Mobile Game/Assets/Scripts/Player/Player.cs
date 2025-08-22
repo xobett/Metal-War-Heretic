@@ -1,10 +1,8 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     private Renderer rndr;
-    private Material newMTL;
 
     public static Player Instance { get; private set; }
 
@@ -12,9 +10,10 @@ public class Player : MonoBehaviour
     private Health playerHealth;
 
     private MeleeAttack melee;
-    private EnemyArea lastEnemyAreaEntered;
+    internal EnemyArea lastEnemyAreaEntered;
 
-    public bool movementEnabled;
+    internal bool movementEnabled;
+    internal bool combatEnabled;
 
     private bool healthRegained = false;
 
@@ -23,6 +22,7 @@ public class Player : MonoBehaviour
         Awake_GetReferences();
 
         movementEnabled = true;
+        combatEnabled = true;
     }
 
     #region AWAKE

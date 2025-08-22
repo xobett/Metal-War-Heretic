@@ -418,9 +418,12 @@ public class EnemyArea : MonoBehaviour
         return attackingEnemies.Count;
     }
 
+    public int TotalAliveEnemies => aliveEnemies.Count;
+
+    public Enemy lastAliveEnemy => aliveEnemies[0];
+
     public void OnForced_AddAttackingEnemy(Enemy forcedAddedEnemy)
     {
-        Debug.Log("Entered");
         attackingEnemies.Add(forcedAddedEnemy);
         RemoveRandomEnemy(forcedAddedEnemy);
     }
@@ -429,7 +432,6 @@ public class EnemyArea : MonoBehaviour
     {
         if (attackingEnemies.Count == 1)
         {
-            Debug.Log("RETURNED");
             return;
         }
 
