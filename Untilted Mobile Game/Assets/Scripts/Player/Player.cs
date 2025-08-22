@@ -6,7 +6,7 @@ public class Player : MonoBehaviour
 
     public static Player Instance { get; private set; }
 
-    private float timeBeforeNextHealth = 10;
+    private float timeBeforeNextHealth = 5;
     private Health playerHealth;
 
     private MeleeAttack melee;

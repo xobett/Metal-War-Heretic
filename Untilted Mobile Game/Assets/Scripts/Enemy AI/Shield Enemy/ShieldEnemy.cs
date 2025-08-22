@@ -12,6 +12,9 @@ namespace EnemyAI.ShieldEnemy
         [SerializeField] private Collider[] colliders;
         private bool ableToPush;
 
+        [SerializeField] private SOShakeData posShake;
+        [SerializeField] private SOShakeData rotshake;
+
         [Header("TIMER SETTINGS")]
         [SerializeField, Range(1f, 10f)] private int rgGuardingTime;
         [SerializeField, Range(5f, 10f)] private int rgCooldownTime;
@@ -52,6 +55,8 @@ namespace EnemyAI.ShieldEnemy
         public override void HitPlayer(Collider playerCollider)
         {
             PushPlayer(damage);
+            ShakeEventManager.Instance.AddShakeEvent(posShake);
+            ShakeEventManager.Instance.AddShakeEvent(rotshake);
         }
 
         #region ROYAL GUARD

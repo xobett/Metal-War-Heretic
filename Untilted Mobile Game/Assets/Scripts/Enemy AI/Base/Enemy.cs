@@ -100,7 +100,7 @@ namespace EnemyAI
 
         #region ENEMY AREA
 
-        protected EnemyArea enemyArea;
+        internal EnemyArea enemyArea;
         [SerializeField] private int respawnTime;
 
         #endregion ENEMY AREA

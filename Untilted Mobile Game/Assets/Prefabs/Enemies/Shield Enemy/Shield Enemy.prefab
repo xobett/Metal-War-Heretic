@@ -585,6 +585,8 @@ MonoBehaviour:
   colliders:
   - {fileID: 560008674519117305}
   - {fileID: 3234478128477429545}
+  posShake: {fileID: 11400000, guid: d6d0701bcd97c1345bec4eb9d4ca00b4, type: 2}
+  rotshake: {fileID: 11400000, guid: 2452f6a1e7dd09e47838328ebecae852, type: 2}
   rgGuardingTime: 4
   rgCooldownTime: 5
   guardLookSpeed: 0.8

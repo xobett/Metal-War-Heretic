@@ -505,6 +505,8 @@ MonoBehaviour:
   rmpDamage: 30
   rmpSpeed: 20
   runVfx: {fileID: 6308259577309416546}
+  posShake: {fileID: 11400000, guid: d6d0701bcd97c1345bec4eb9d4ca00b4, type: 2}
+  rotshake: {fileID: 11400000, guid: 2452f6a1e7dd09e47838328ebecae852, type: 2}
   rmpRunningTime: 2
   rmpCooldownTime: 10
   rmpCoolingDown: 0

@@ -7,6 +7,9 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance;
 
+    [Header("TUTORIAL HINT PANEL")]
+    [SerializeField] public GameObject tutorialHintPanel;
+
     [Header("PAUSE MENU SETTINGS")]
     [SerializeField] private GameObject pausePanel;
     [SerializeField] private Button pauseGameButton;
@@ -47,6 +50,22 @@ public class UIManager : MonoBehaviour
             UnPauseGame();
         }
     }
+
+    #region TUTORIAL
+
+    public void DisplayTutorialHint()
+    {
+        tutorialHintPanel.SetActive(true);
+
+        Invoke(nameof(DisableTutorialHint), 10f);
+    }
+
+    private void DisableTutorialHint()
+    {
+        tutorialHintPanel.SetActive(false);
+    }
+
+    #endregion TUTORIAL
 
     private void AdddButtonsEvents()
     {

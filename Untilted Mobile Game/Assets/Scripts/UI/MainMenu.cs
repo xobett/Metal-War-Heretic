@@ -11,6 +11,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button loadLevelTwoButton;
     [SerializeField] private Button menuButton;
 
+    [Header("CREDITS PANEL")]
+    [SerializeField] private GameObject creditsPanel;
+
     [Header("MAIN MENU PANELS")]
     [SerializeField] private Animator optionsPanel;
     [SerializeField] private Animator settingsPanel;
@@ -25,6 +28,7 @@ public class MainMenu : MonoBehaviour
     [Header("EXTRA BUTTONS")]
     [SerializeField] private Button settingsBackButton;
     [SerializeField] private Button storeBackButton;
+    [SerializeField] private Button creditsBackButton;
 
     private void Start()
     {
@@ -35,9 +39,11 @@ public class MainMenu : MonoBehaviour
 
         settingsButton.onClick.AddListener(ShowSettings);
         storeButton.onClick.AddListener(ShowStore);
+        creditsButton.onClick.AddListener(ShowCredits);
 
         settingsBackButton.onClick.AddListener(ReturnFromSettings);
         storeBackButton.onClick.AddListener(ReturnFromStore);
+        creditsBackButton.onClick.AddListener(HideCredits);
 
         AudioManager.Instance.PlayMusic("XPMECHA MENU");
     }
@@ -69,6 +75,15 @@ public class MainMenu : MonoBehaviour
         settingsPanel.SetTrigger("Swipe In");
     }
 
+    private void ShowCredits()
+    {
+        creditsPanel.SetActive(true);
+    }
+
+    private void HideCredits()
+    {
+        creditsPanel.SetActive(false);
+    }
 
     private void ShowStore()
     {

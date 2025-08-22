@@ -17,6 +17,9 @@ namespace EnemyAI.BruteEnemy
 
         [SerializeField] private GameObject runVfx;
 
+        [SerializeField] private SOShakeData posShake;
+        [SerializeField] private SOShakeData rotshake;
+
         private int rmpTriggerDistance;
         private float playerDistance;
 
@@ -125,6 +128,9 @@ namespace EnemyAI.BruteEnemy
                 rmpPlayerHit = true;
 
                 PushPlayer(rmpDamage);
+                ShakeEventManager.Instance.AddShakeEvent(posShake);
+                ShakeEventManager.Instance.AddShakeEvent(rotshake);
+
                 Debug.Log("Hit player");
             }
         }

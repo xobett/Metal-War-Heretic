@@ -1,3 +1,4 @@
+using EnemyAI;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -55,7 +56,12 @@ public class TrainWagon : MonoBehaviour
         else if (other.CompareTag("Enemy"))
         {
             //Easter egg
-            other.GetComponent<Health>().TakeDamage(10000);
+            Enemy enemy = other.GetComponent<Enemy>();
+
+            if (enemy.enemyArea.playerIsOnArea)
+            {
+                other.GetComponent<Health>().TakeDamage(10000);
+            }
         }
     }
 

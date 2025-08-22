@@ -25,6 +25,8 @@ public class Level : MonoBehaviour
         Debug.Log("Called audio manager");
         PlayLevelMusic();
 
+        UIManager.Instance.DisplayTutorialHint();
+
         //Invoke(nameof(PlayLevelMusic), 2f);
     }
 
