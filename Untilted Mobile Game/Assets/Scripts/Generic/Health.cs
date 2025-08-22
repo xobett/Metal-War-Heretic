@@ -117,9 +117,7 @@ public class Health : MonoBehaviour
     private void RespawnPlayer()
     {
         deathByFalling = false;
-
         gameObject.tag = "Player";
-        Player.Instance.EnableMovement();
 
         animator.CrossFade("Base Layer.Idle", 0);
 
@@ -127,6 +125,7 @@ public class Health : MonoBehaviour
         transform.position = gameObject.GetComponent<CheckpointSaver>().lastCheckpoint;
         GetComponent<CharacterController>().enabled = true;
 
+        Player.Instance.EnableMovement();
         AddHealth(maxHealth);
     }
 }
