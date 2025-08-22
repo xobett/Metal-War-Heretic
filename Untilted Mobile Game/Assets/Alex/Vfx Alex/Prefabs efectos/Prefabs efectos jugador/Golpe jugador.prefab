@@ -225,7 +225,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.28235295}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.41960785}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -1328,7 +1328,7 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 15001
-        atime2: 61180
+        atime2: 39473
         atime3: 65535
         atime4: 0
         atime5: 0
@@ -4782,7 +4782,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3d04558606dd70c4eb5fb92a23c8502b, type: 2}
+  - {fileID: 2100000, guid: 6c78a1ea901740b4ebe5656a853c1f42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -9988,7 +9988,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 0.28235295}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.6862745}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -11073,7 +11073,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 1, b: 1, a: 0}
+        key0: {r: 1, g: 0.47358483, b: 0.47358483, a: 0}
         key1: {r: 1, g: 0.32219562, b: 0.2471698, a: 1}
         key2: {r: 0.6005044, g: 0, b: 0.6745098, a: 1}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -11091,9 +11091,9 @@ ParticleSystem:
         ctime7: 0
         atime0: 0
         atime1: 15001
-        atime2: 61180
+        atime2: 39197
         atime3: 65535
-        atime4: 0
+        atime4: 65535
         atime5: 0
         atime6: 0
         atime7: 0
@@ -14545,7 +14545,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 3d04558606dd70c4eb5fb92a23c8502b, type: 2}
+  - {fileID: 2100000, guid: 6c78a1ea901740b4ebe5656a853c1f42, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
