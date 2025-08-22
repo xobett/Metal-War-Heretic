@@ -33,6 +33,7 @@ namespace EnemyAI.BruteEnemy
         {
             base.Start();
             RampageRun_Start();
+            agent.stoppingDistance = stoppingDistance;
         }
 
         protected override void Update()
@@ -74,10 +75,14 @@ namespace EnemyAI.BruteEnemy
             GetDistanceFromPlayer();
         }
 
-        //private void GetViewAngle()
-        //{
-        //    viewAngle = Quaternion.Angle()
-        //}
+        private float ViewAngle()
+        {
+            Vector3 dir = player.transform.position - transform.position;
+
+            Quaternion targetRot = Quaternion.LookRotation(dir);
+
+            return Quaternion.Angle(targetRot, transform.rotation);
+        }
 
         private void GetDistanceFromPlayer()
         {
@@ -88,7 +93,7 @@ namespace EnemyAI.BruteEnemy
         {
             if (!rmpCoolingDown)
             {
-                if (!isExecutingAttack && playerDistance > rmpTriggerDistance)
+                if (!isExecutingAttack && playerDistance > rmpTriggerDistance && ViewAngle() <= 10)
                 {
                     ExecuteRampageRun();
                 }

@@ -494,7 +494,7 @@ MonoBehaviour:
   enemyHitShake: {fileID: 11400000, guid: 790c31330e538a64db2d38ea1f1db574, type: 2}
   walkSpeed: 2.35
   runSpeed: 2.5
-  stoppingDistance: 2.03
+  stoppingDistance: 2
   priority: 0
   player: {fileID: 0}
   damage: 30

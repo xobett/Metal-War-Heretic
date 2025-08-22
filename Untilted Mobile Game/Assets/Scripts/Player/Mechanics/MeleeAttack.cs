@@ -1,3 +1,5 @@
+using EnemyAI;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -111,8 +113,37 @@ public class MeleeAttack : MonoBehaviour
 
     public void HitEnemy(Collider enemyCollider)
     {
+        if (Player.Instance.lastEnemyAreaEntered != null)
+        {
+            EnemyArea currentArea = Player.Instance.lastEnemyAreaEntered;
+            Enemy lastEnemy = currentArea.lastAliveEnemy;
+
+            if (currentArea.TotalAliveEnemies == 1)
+            {
+                if (lastEnemy.GetComponent<Health>().CurrentHealth - damage <= 0)
+                {
+                    animator.CrossFade("Base Layer.Uppercut", 0f);
+                    StartCoroutine(CR_FinishingUpperCut(enemyCollider));
+                    return;
+                }
+            }
+        }
+
         enemyCollider.GetComponent<IDamageable>().OnDamage(damage);
         GetComponent<ComboCounter>().IncreaseComboCount();
+    }
+
+    private IEnumerator CR_FinishingUpperCut(Collider enemyCollider)
+    {
+        Player.Instance.DisableMovement();
+        yield return new WaitForSeconds(0.44f);
+        enemyCollider.GetComponent<IDamageable>().OnDamage(damage);
+        GetComponent<ComboCounter>().IncreaseComboCount();
+
+        yield return new WaitForSeconds(1.24f);
+        Player.Instance.EnableMovement();
+
+        yield break;
     }
 
     private void SetMeleeAnimations()

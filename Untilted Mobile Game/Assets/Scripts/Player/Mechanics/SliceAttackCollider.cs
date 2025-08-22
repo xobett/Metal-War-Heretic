@@ -12,6 +12,8 @@ public class SliceAttackCollider : MonoBehaviour
     {
         if (enemyCollider.gameObject.layer == LayerMask.NameToLayer("Enemy") && isDashing)
         {
+            AudioManager.Instance.PlaySFX("HIT A ENEMIGO", 0);
+
             GetComponentInParent<SliceAttack>().CancelSliceMovement();
 
             Vector3 direction = enemyCollider.transform.position - transform.position;

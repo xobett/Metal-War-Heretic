@@ -529,7 +529,7 @@ MonoBehaviour:
   electricAreaPf: {fileID: 2278451330885868786, guid: f575cf7367972ec4caaf35b2a0efd4f0, type: 3}
   electricAreaLifetime: 6
   electricAreaDamage: 20
-  electricAttackCooldownTime: 8
+  electricAttackCooldownTime: 19
   electricAttackCoolingDown: 0
 --- !u!114 &1752446631520181859
 MonoBehaviour:

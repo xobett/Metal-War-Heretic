@@ -31,7 +31,7 @@ namespace EnemyAI.ElectricEnemy
 
         private Vector3 electricAreaSpawnPos;
 
-        [SerializeField, Range(1f, 15f)] private int electricAttackCooldownTime;
+        [SerializeField, Range(1f, 55f)] private int electricAttackCooldownTime;
         [SerializeField] private bool electricAttackCoolingDown;
 
         public override void Attack()
